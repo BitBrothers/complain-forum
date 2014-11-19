@@ -1,6 +1,6 @@
-var User=require('../models/user');
+var User=require('../models/User');
 
-exports.add_user=function(req,res){
+exports.addUser=function(req,res){
 
     var user = new User();
    
@@ -30,7 +30,7 @@ exports.add_user=function(req,res){
 }
 
 
-exports.update_user=function(req,res){
+exports.updateUser=function(req,res){
 
    User.findById(req.params.user_id, function(err, user) {
 		if (err)
@@ -65,7 +65,7 @@ exports.update_user=function(req,res){
 
 //admin
 
-exports.getall_user=function(req, res) {
+exports.getAllUser=function(req, res) {
 		User.find(function(err, user) {
 			if (err)
 				res.send(err);
@@ -76,7 +76,7 @@ exports.getall_user=function(req, res) {
 
 }
 
-exports.delete_user=function(req, res){
+exports.deleteUser=function(req, res){
 	User.remove({_id: req.params.user_id}, function(err, user) {
 			if (err)
 				res.send(err);
@@ -85,7 +85,7 @@ exports.delete_user=function(req, res){
 		});
 }
 
-exports.searchuser_id=function(req, res){
+exports.searchUserId=function(req, res){
 	User.findById(req.params.user_id, function(err, user) {
 			if (err)
 				res.send(err);

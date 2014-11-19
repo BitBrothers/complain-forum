@@ -26,9 +26,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Controllers
-var complaintcontroller=require('./controllers/complaint');
-var usercontroller=require('./controllers/user');
-
+var complaintController=require('./controllers/complaint');
+var userController=require('./controllers/user');
+var homeController=require('./controllers/home');
 
 
 
@@ -47,60 +47,26 @@ mongoose.connection.on('error', function() {
 
 
 //user
-app.post('/user',usercontroller.add_user);
-app.put('/user/:user_id',usercontroller.update_user);
+app.get('/',homeController.index);
+
+app.post('/user',userController.addUser);
+app.put('/user/:user_id',userController.updateUser);
 
 
-app.post('/complaint',complaintcontroller.add_complaint);
-app.get('/complaint',complaintcontroller.getall_complaints);
-app.put('/complaint/:complaint_id',complaintcontroller.update_complaint);
-app.get('/complaint/:complaint_id',complaintcontroller.searchcomplaint_id);
+app.post('/complaint',complaintController.addComplaint);
+app.get('/complaint',complaintController.getallComplaints);
+app.put('/complaint/:complaint_id',complaintController.updateComplaint);
+app.get('/complaint/:complaint_id',complaintController.searchComplaintId);
 
 
 //staff
-app.delete('/complaint/staff/:complaint_id',complaintcontroller.delete_complaint);
-app.put('/complaint/staff/:complaint_id',complaintcontroller.staff_update_complaint);
+app.delete('/complaint/staff/:complaint_id',complaintController.deleteComplaint);
+app.put('/complaint/staff/:complaint_id',complaintController.staffUpdateComplaint);
 
 //admin
-app.get('/admin/user',usercontroller.getall_user);
-app.delete('/admin/user/:user_id',usercontroller.delete_user);
-app.get('/admin/user/:user_id',usercontroller.searchuser_id);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.get('/admin/user',userController.getAllUser);
+app.delete('/admin/user/:user_id',userController.deleteUser);
+app.get('/admin/user/:user_id',userController.searchUserId);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

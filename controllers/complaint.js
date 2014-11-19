@@ -1,9 +1,9 @@
-var Complaint = require('../models/complaint');
+var Complaint = require('../models/Complaint');
 
 
 //user
 
-exports.add_complaint=function(req,res){
+exports.addComplaint=function(req,res){
 
     var complaint = new Complaint();
    
@@ -24,7 +24,7 @@ exports.add_complaint=function(req,res){
 }
 
 
-exports.getall_complaints=function(req, res) {
+exports.getallComplaints=function(req, res) {
 		Complaint.find(function(err, complaint) {
 			if (err)
 				res.send(err);
@@ -35,7 +35,7 @@ exports.getall_complaints=function(req, res) {
 
 }
 
-exports.update_complaint=function(req, res){
+exports.updateComplaint=function(req, res){
 
 		Complaint.findById(req.params.complaint_id, function(err, complaint) {
 
@@ -60,7 +60,7 @@ exports.update_complaint=function(req, res){
 
 }
 
-exports.searchcomplaint_id=function(req, res){
+exports.searchComplaintId=function(req, res){
 	Complaint.findById(req.params.complaint_id, function(err, complaint) {
 			if (err)
 				res.send(err);
@@ -77,7 +77,7 @@ exports.searchcomplaint_id=function(req, res){
 
 //staff
 
-exports.delete_complaint=function(req, res){
+exports.deleteComplaint=function(req, res){
 	Complaint.remove({_id: req.params.complaint_id}, function(err, complaint) {
 			if (err)
 				res.send(err);
@@ -86,7 +86,7 @@ exports.delete_complaint=function(req, res){
 		});
 }
 
-exports.staff_update_complaint=function(req, res){
+exports.staffUpdateComplaint=function(req, res){
 
 Complaint.findById(req.params.complaint_id, function(err, complaint) {
 
