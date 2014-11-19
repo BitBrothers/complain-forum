@@ -1,0 +1,14 @@
+<p>{{test}}</p>
+<div ng-repeat="post in posts">
+      <span ng-click="incrementUpvotes(post)">^</span>
+  {{post.title}} - upvotes: {{post.upvotes}}
+</div>
+<form ng-submit="addPost()">
+  <input type="text" ng-model="title"></input>
+  <button type="submit">Post</button>
+</form>
+
+<button ng-click="displayComplaints()">Click here to view complaints</button>
+<div ng-repeat="complaint in complaints">
+        {{complaint.title}} - description: {{complaint.description}}
+</div>
