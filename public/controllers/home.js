@@ -1,5 +1,5 @@
-angular.module('MyApp')
-.controller('HomeCtrl', function($scope,Complaint){
+angular.module('complaintForum')
+.controller('HomeCtrl', function($scope,Home){
 
   $scope.test = 'Hello world!';
 $scope.posts = [
@@ -23,7 +23,7 @@ $scope.addPost = function(){
 };
     
     $scope.displayComplaints=function(){
-        $scope.complaints= Complaint.query();
+        $scope.complaints= Home.query();
     };
 });
 

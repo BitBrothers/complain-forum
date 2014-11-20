@@ -11,6 +11,7 @@ exports.addComplaint=function(req,res){
     complaint.description=req.body.description;
     complaint.category=req.body.category;
     complaint.subcategory=req.body.subcategory;
+    complaint.location=req.body.location;
   
     
 

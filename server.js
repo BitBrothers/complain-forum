@@ -36,7 +36,7 @@ var homeController=require('./controllers/home');
 //Mongo db
 
 
-
+//TODO Create a secrets.js file
 mongoose.connect('mongodb://localhost:27017/');
 mongoose.connection.on('error', function() {
   console.error('MongoDB Connection Error. Make sure MongoDB is running.');
@@ -45,28 +45,29 @@ mongoose.connection.on('error', function() {
 
 
 
-
 //user
 app.get('/',homeController.index);
 
-app.post('/user',userController.addUser);
-app.put('/user/:user_id',userController.updateUser);
+app.post('/api/user',userController.addUser);
+app.put('/api/user/:user_id',userController.updateUser);
 
 
-app.post('/complaint',complaintController.addComplaint);
-app.get('/complaint',complaintController.getallComplaints);
-app.put('/complaint/:complaint_id',complaintController.updateComplaint);
-app.get('/complaint/:complaint_id',complaintController.searchComplaintId);
 
+app.get('/api/complaints',complaintController.getallComplaints);
+
+/** Ser***/
+app.get('/api/complaint/:complaint_id',complaintController.searchComplaintId);
+app.post('/api/complaint',complaintController.addComplaint);
+app.put('/api/complaint/:complaint_id',complaintController.updateComplaint);
 
 //staff
-app.delete('/complaint/staff/:complaint_id',complaintController.deleteComplaint);
-app.put('/complaint/staff/:complaint_id',complaintController.staffUpdateComplaint);
+app.delete('/api/complaint/staff/:complaint_id',complaintController.deleteComplaint);
+app.put('/api/complaint/staff/:complaint_id',complaintController.staffUpdateComplaint);
 
 //admin
-app.get('/admin/user',userController.getAllUser);
-app.delete('/admin/user/:user_id',userController.deleteUser);
-app.get('/admin/user/:user_id',userController.searchUserId);
+app.get('/api/admin/user',userController.getAllUser);
+app.delete('/api/admin/user/:user_id',userController.deleteUser);
+app.get('/api/admin/user/:user_id',userController.searchUserId);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
