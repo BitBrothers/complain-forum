@@ -53,15 +53,17 @@ $scope.$watch('location',
 else{
 	try{
 	if(typeof($scope.location.formatted_address) !== undefined)
-	console.log($scope.location.formatted_address);
+	
+$scope.marker.coords.longitude=$scope.location.geometry.location.B;
+$scope.marker.coords.latitude=$scope.location.geometry.location.k;
+console.log($scope.location.geometry.location.B);
  	AddressGeocoder.getLocation($scope.location.formatted_address).then(function (result){
 
 			if(result.success){
 				$scope.map.center=result.location;
-				console.log(result.location);
 				
-				$scope.marker.coords=result.location;
-					
+
+		
 			}
 		})
 
