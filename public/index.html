@@ -4,11 +4,18 @@
   <base href="/">
   <meta charset="utf-8">
   <title>Complaint Forum</title>
-   
-  
+
+<!-- CSS -->
+   <link rel="stylesheet" href="vendor/angular-google-places-autocomplete-master/src/autocomplete.css">
+
 </head>
+
+
 <body>
 <div ng-view id="wrapper" class="{{pageClass}}">
+
+
+
 </div>
 <script src="vendor/jquery-2.1.1.min.js"></script>
 <script src="vendor/jquery-ui.js"></script>
@@ -20,17 +27,25 @@
 <script src="vendor/angular-route.js"></script>
 <script src="vendor/angular-animate.js"></script>
 
+<!-- google maps -->
+<script src="vendor/angular-google-places-autocomplete-master/src/autocomplete.js"></script>
+<script src="vendor/angular-google-maps.min.js"></script>
+<script src="vendor/lodash.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
+
+<!-- Main file -->
 <script src="app.js"></script>
 
-
+<!-- Controllers -->
 <script src="controllers/home.js"></script>
-<script src="services/home.js"></script>
-
 <script src="controllers/complaint.js"></script>
-<script src="services/complaint.js"></script>
 
- 
+<!-- Services -->
+<script src="services/complaint.js"></script>
+<script src="services/home.js"></script>
+<script src="services/mapAddressLocator.js"></script>
+
 <!--<script src="app.min.js"></script>-->
 <!--<script src="templates.js"></script>-->
 

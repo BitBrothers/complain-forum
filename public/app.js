@@ -1,4 +1,4 @@
-angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate'])
+angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate','uiGmapgoogle-maps','google.places'])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       
@@ -16,3 +16,5 @@ angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate'])
         redirectTo: '/'
       });
   });
+
+
