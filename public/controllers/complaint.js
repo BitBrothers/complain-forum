@@ -22,7 +22,13 @@ angular.module('complaintForum')
 
 	 	 	});
 
-	 	 
+	 	/*    $alert({
+            content: response.data.message,
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 3
+          });*/
+
 	 }
 
 
