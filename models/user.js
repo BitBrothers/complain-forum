@@ -27,8 +27,11 @@ var userSchema = new mongoose.Schema({
       pincode : Number
   },
   phoneNo : Number,
-  resetPasswordToken: String,
-  resetPasswordExpires: Date
+  
+  //following:[{complaintID:{type:mongoose.Schema.Types.ObjectId, ref: 'Complaint'}}]
+
+  // resetPasswordToken: String,
+  // resetPasswordExpires: Date
 
   
 });

@@ -12,6 +12,11 @@ angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate','uiGmapgo
         controller:'ComplaintCtrl'
       })
 
+      .when('/search',{
+        templateUrl:'views/searchfilters.html',
+        controller:'SearchCtrl'
+      })
+
       .otherwise({
         redirectTo: '/'
       });

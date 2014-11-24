@@ -6,12 +6,14 @@
   Description:<input type="text" ng-model="description"></input><br>
   Category:<input type="text" ng-model="category"></input><br>
   Subcategory:<input type="text" ng-model="subcategory"></input><br>
-  Location:<input type="text" g-places-autocomplete options="autocompleteOptions" force-selection="true" ng-model="location"></input><br> 
+  
 
   <button type="submit">ADD</button> 
 </form>
  
 <br>
+<div ng-controller="GmapCtrl">
+Location:<input type="text" g-places-autocomplete options="autocompleteOptions" force-selection="true" ng-model="location"></input><br> 
 <ui-gmap-google-map center='map.center' zoom='map.zoom' >
 
 <style>.angular-google-map-container { height: 400px; }</style>
@@ -24,5 +26,8 @@
 
 
 </ui-gmap-google-map>
+
+
+</div>
 
   

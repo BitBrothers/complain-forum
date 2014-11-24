@@ -9,9 +9,9 @@ var complaintSchema = new mongoose.Schema({
     startdate: {type:Date, default: Date.now },
     enddate: Date,
     location: String,
-    followers: String,
-    user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    comment: Array
+    followers: Number,
+   // userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    comment:String
 
 });
 
