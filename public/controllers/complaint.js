@@ -22,7 +22,13 @@ angular.module('complaintForum')
 
 	 	 	});
 
-	 	 
+	 	/*    $alert({
+            content: response.data.message,
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 3
+          });*/
+
 	 }
 
   var SW = new google.maps.LatLng(14.8945089, 73.6893279);
