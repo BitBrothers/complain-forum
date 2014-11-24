@@ -25,17 +25,17 @@ angular.module('complaintForum')
 	 	 
 	 }
 
-
-
-
-
-
+  var SW = new google.maps.LatLng(14.8945089, 73.6893279);
+        var NE = new google.maps.LatLng(15.799917, 74.3405329);
+       var bounds11 = new google.maps.LatLngBounds(SW, NE);
 
 
 
 
   $scope.autocompleteOptions = {
-       componentRestrictions: { country: 'in' }
+       componentRestrictions: { country: 'in' },
+        bounds:bounds11
+         
        }
 
 
@@ -44,7 +44,9 @@ angular.module('complaintForum')
 
 $scope.$watch('location',
  function(newVal, oldVal){
-   // console.log($scope.location);
+   console.log($scope.location);
+  
+
    if(angular.isString($scope.location)){
    return;
 
@@ -79,7 +81,7 @@ catch(e){}
 
 	$scope.map = { 
 		center: {
-		 latitude: 45, longitude: -73 
+		 latitude:  15.799917, longitude: 74.3405329 
 		}, 
 		zoom: 17
 		 };
@@ -87,8 +89,8 @@ catch(e){}
 $scope.marker = {
       id: 0,
       coords: {
-        latitude: 45,
-        longitude: -73
+        latitude: 15.799917,
+        longitude: 74.3405329
       }
   };
 
