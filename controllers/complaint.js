@@ -6,7 +6,7 @@ var Complaint = require('../models/Complaint');
 exports.addComplaint=function(req,res){
 
     var complaint = new Complaint();
-   
+
     complaint.title=req.body.title;
     complaint.description=req.body.description;
     complaint.category=req.body.category;

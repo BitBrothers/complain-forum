@@ -13,7 +13,7 @@ var userSchema = new mongoose.Schema({
   tokens: Array,
 */
   profile: {
-    name: { type: String, default: '' },
+    name: { firstName: String, lastName: String, default: '' },
     gender: { type: String, default: '' },
     location: { type: String, default: '' },
     website: { type: String, default: '' },
@@ -44,3 +44,10 @@ userSchema.pre('save', function(next) {
 
 
 module.exports = mongoose.model('User', userSchema);
+
+User.find().exec(function(err,collection){
+    if(collection.length===0)
+    {
+        User.create({name{firstName:'Stanly',lastName:'Samuel'}});
+    }
+})

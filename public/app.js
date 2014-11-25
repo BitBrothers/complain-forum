@@ -2,6 +2,10 @@ angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate','uiGmapgo
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       
+    .when('/', {
+        templateUrl:'views/landing.html',
+        controller:'LandingCtrl'
+      })
       .when('/home', {
         templateUrl:'views/home.html',
         controller:'HomeCtrl'
