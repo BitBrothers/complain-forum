@@ -5,13 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+var passport=require('passport');
+var session = require('express-session');
+//var LocalStrategy=require('passport-local').Strategy;
 
 var app = express();
 
 var port = process.env.PORT || 3000;
 
-
+//var User=require('models/User.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,6 +28,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({secret:"BLAHSECRETS"}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Controllers
 var complaintController = require('./controllers/complaint');
@@ -44,7 +49,20 @@ mongoose.connection.on('error', function() {
   console.error('MongoDB Connection Error. Make sure MongoDB is running.');
 });
 
-
+app.post('/login', function(req,res,next){
+    var auth=passport.authenticate('local',function(err,user){
+        if(err)
+            return next(err);
+        if(!user)
+            res.send({success:false});
+        req.logIn(user, function(err){
+            if(err)
+                return next(err);
+            res.send({success:true,user:user});
+        })
+    })
+    auth(req,res,next);
+})
 
 
 //user

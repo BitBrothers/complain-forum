@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 
+
+
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -66,9 +68,10 @@ userSchema.pre('save', function(next) {
 
 module.exports = mongoose.model('User', userSchema);
 
-User.find().exec(function(err,collection){
-    if(collection.length===0)
-    {
-        User.create({name{firstName:'Stanly',lastName:'Samuel'}});
-    }
-})
+var User=mongoose.model('User', userSchema);
+User.find({}).exec(function(err,collection){
+   {
+   //     User.create({profile:{name:{firstName:'Stanly',lastName:'Samuel'}}});
+   
+
+}})
