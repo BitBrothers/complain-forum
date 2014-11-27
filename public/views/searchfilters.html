@@ -11,5 +11,15 @@ Location:<input type="text"  g-places-autocomplete options="autocompleteOptions"
 <br>
 <br>
 <div ng-repeat="complaint in complaints">
-        {{complaint}}
+        <div>
+        Title: {{complaint.title}}<br>
+        Description: {{complaint.description}}<br>
+        Category: {{complaint.category}}<br>
+        Subcategory: {{complaint.subcategory}}<br>
+        Location: {{complaint.location}}<br>
+        Slug: {{complaint.slug}}<br>
+        Startdate: {{complaint.startdate}}<br>
+        Status: {{complaint.status}}<br>
+        <br><br>	
+        </div>
 </div>
