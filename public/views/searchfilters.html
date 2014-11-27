@@ -1,1 +1,15 @@
+Status:<input type="text" ng-model="status"></input>
+{{status}}
 <button ng-click=statusSearch()>Search by Status</button>
+<br>
+<br>
+Location:<input type="text"  g-places-autocomplete options="autocompleteOptions" force-selection="true" ng-model="location"></input>
+<button ng-click=locationSearch()>Search by Location</button>
+<br>
+<br>
+<button ng-click=allSearch()>Search All</button>
+<br>
+<br>
+<div ng-repeat="complaint in complaints">
+        {{complaint}}
+</div>
