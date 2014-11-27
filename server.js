@@ -36,7 +36,7 @@ app.use(passport.session());
 var complaintController = require('./controllers/complaint');
 var userController = require('./controllers/user');
 var homeController = require('./controllers/home');
-
+var apiController = require('./controllers/api');
 
 
 
@@ -64,15 +64,22 @@ app.post('/login', function(req,res,next){
     auth(req,res,next);
 })
 
+/**
+ * Login Apis
+ */
+app.post('/api/auth/signup', apiController.postSignUp);
+app.post('/api/auth/login', apiController.postLogin);
+//app.post('/api/auth/facebook', apiController.postFacebookLogin);
+//app.post('/api/auth/google', apiController.postGoogleLogin);
+//app.get('/api/users', apiController.getUsers);
+
 
 //user
 app.get('/', homeController.index);
 
+
 app.post('/api/user', userController.addUser);
 app.put('/api/user/:user_id', userController.updateUser);
-
-
-
 app.get('/api/complaints', complaintController.getallComplaints);
 
 /** Ser***/
@@ -93,36 +100,8 @@ app.get('/api/admin/user', userController.getAllUser);
 app.delete('/api/admin/user/:user_id', userController.deleteUser);
 app.get('/api/admin/user/:user_id', userController.searchUserId);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
 
-// error handlers
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
 
 app.listen(port);
 console.log('Listening at.......' + port);

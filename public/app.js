@@ -6,9 +6,10 @@ angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate','uiGmapgo
         templateUrl:'views/landing.html',
         controller:'LandingCtrl'
       })
-      .when('/home', {
-        templateUrl:'views/home.html',
-        controller:'HomeCtrl'
+    
+        .when('/signup', {
+        templateUrl:'views/signup.html',
+        controller:'SignupCtrl'
       })
 
       .when('/addcomplaint',{

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-
+var bcrypt = require('bcrypt-nodejs');
+var crypto = require('crypto'); 
 
 
 var userSchema = new mongoose.Schema({
@@ -8,7 +9,9 @@ var userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true
   },
+  username:String,
   password: String,
+  role:String,
   /*
     facebook: String,
     twitter: String,
@@ -20,7 +23,11 @@ var userSchema = new mongoose.Schema({
   */
   profile: {
 
-    name: {
+    firstname: {
+      type: String,
+      default: ''
+    },
+    lastname: {
       type: String,
       default: ''
     },
@@ -53,8 +60,8 @@ var userSchema = new mongoose.Schema({
 
   //following:[{complaintID:{type:mongoose.Schema.Types.ObjectId, ref: 'Complaint'}}]
 
-  // resetPasswordToken: String,
-  // resetPasswordExpires: Date
+  resetPasswordToken: String,
+resetPasswordExpires: Date
 
 
 });
@@ -62,17 +69,27 @@ var userSchema = new mongoose.Schema({
 
 
 userSchema.pre('save', function(next) {
-  next();
-});
+  var user = this;
 
+  if (!user.isModified('password')) return next();
+
+  bcrypt.genSalt(5, function(err, salt) {
+    if (err) return next(err);
+
+    bcrypt.hash(user.password, salt, null, function(err, hash) {
+      if (err) return next(err);
+      user.password = hash;
+      next();
+    });
+  });
+});
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
 
 module.exports = mongoose.model('User', userSchema);
 
 
-var User=mongoose.model('User', userSchema);
-User.find({}).exec(function(err,collection){
-   {
-   //     User.create({profile:{name:{firstName:'Stanly',lastName:'Samuel'}}});
-   
-
-}})

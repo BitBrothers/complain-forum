@@ -1,0 +1,13 @@
+<a href="#/">Home</a>
+
+
+<form>
+    <input type='text' placeholder='First Name' ng-model='firstname'/>
+    <input type='text' placeholder='Last Name' ng-model='lastname'/><br/>
+    Gender: <select ng-model="gender" ng-options="gender.type for gender in genders"> </select><br/>
+    <input type='email' placeholder='Email' ng-model='email'/><br/>
+    <input type='text' placeholder='Username' ng-model='username'/><br/>
+    <input type='password' placeholder='Password' ng-model='password'/><br/>
+    <input type='submit' value='Sign Up' ng-click='signup()'/>
+</form>
+
