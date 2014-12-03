@@ -40,12 +40,17 @@ exports.getallComplaints = function(req, res) {
 }
 
 exports.updateComplaint = function(req, res) {
+ var slug = req.params.slug;
+  Complaint.findOne(slugQuery(slug), function(err, complaint) {
 
-  Complaint.findById(req.params.complaint_id, function(err, complaint) {
-
-    if (err)
-      res.send(err);
-
+   if (err) {
+      // DB Error
+      res.status(400);
+      res.end();
+    } else if (!complaint) {
+      res.status(404);
+      res.end();
+    } else {
     complaint.title = req.body.title;
     complaint.description = req.body.description;
     complaint.category = req.body.category;
@@ -61,7 +66,7 @@ exports.updateComplaint = function(req, res) {
         message: 'Complaint updated!'
       });
     });
-
+}
   });
 
 }
@@ -81,10 +86,13 @@ exports.getComplaint = function(req, res) {
     } else {
       res.json(complaint);
     }
-  })
+  });
 
 
-  var slugQuery = function(slug) {
+ 
+}
+
+ var slugQuery = function(slug) {
     var query = {
       $or: [{
         slug: slug
@@ -96,8 +104,7 @@ exports.getComplaint = function(req, res) {
       });
     }
     return query;
-  };
-}
+  }
 
 
 exports.searchComplaintId = function(req, res) {

@@ -85,7 +85,7 @@ app.get('/api/complaints', complaintController.getallComplaints);
 /** Ser***/
 app.get('/api/complaint/:slug', complaintController.getComplaint);
 app.post('/api/complaint', complaintController.addComplaint);
-app.put('/api/complaint/:complaint_id', complaintController.updateComplaint);
+app.put('/api/complaint/:slug', complaintController.updateComplaint);
 app.get('/api/complaint/searchstat/:status', complaintController.searchStatus);
 app.get('/api/complaint/searchloc/:location', complaintController.searchLocation);
 

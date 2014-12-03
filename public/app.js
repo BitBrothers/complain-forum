@@ -27,6 +27,11 @@ angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate','uiGmapgo
         controller:'UpdateCtrl'
       })
 
+      .when('/complaint/:slug',{
+        templateUrl:'views/complaintDetail.html',
+        controller:'ViewCtrl'
+      })
+
       .otherwise({
         redirectTo: '/'
       });
