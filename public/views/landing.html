@@ -1,10 +1,19 @@
-<h1>GOA GOVERNMENT COMPLAINT FORUM</h1><br/>    
-
+<!-- <div class="nav-bar">
+<h3 class="col-md-8">GOA GOVERNMENT COMPLAINT FORUM</h3>
+<ul class="col-md-4">
+	<li>
+	<a class>Login</a>
+	</li>
+	<li>Sign up</li>
+</ul>
+</div>
+<div>
 <form>
     <input type='text' placeholder='Username' ng-model='username'/>
     <input type='password' placeholder='Password' ng-model='password'/>
     <input type='submit' value='Sign In' ng-click='signin()'/>
 </form>
+</div>
 <br/>
 This is the Home/Landing Page to get acquainted.
 <br/>
@@ -13,3 +22,49 @@ This is the Home/Landing Page to get acquainted.
 <a href="#/signup">Sign Up</a><br/>
 <a href="#/addcomplaint">Post Complaint</a><br/>
 <a href="#/search">Complaints</a><br/>
+
+ -->
+
+ <div class="jumbotron">
+  <h1 class="center" align="center" >GoaChange</h1>
+  <p class="center" align="center">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <div class="center">
+  <a class="btn btn-warning btn-lg col-md-offset-3 col-sm-offset-1 col-xs-offset" align="center">Submit a problem</a>
+  <a class="btn btn-info btn-lg col-md-offset-2 col-sm-offset-1" align="center">Explore problems</a>
+  <button class="btn btn-primary" ng-click="open()">Login</button>
+
+  </div>
+</div>
+
+<div class="stats">
+	<div class="col-md-3 col-sm-3 col-xs-6">
+		<h1>300</h1>
+		<h3>complaints</h3>
+	</div>
+		<div class="col-md-3 col-sm-3 col-xs-6">
+		<h1>400</h1>
+		<h3>resolved</h3>
+	</div>
+	<div class="col-md-3 col-sm-3 col-xs-6">
+		<h1>20</h1>
+		<h3>pending</h3>
+	</div>
+	<div class="col-md-3 col-sm-3 col-xs-6">
+		<h1>1000+</h1>
+		<h3>users</h3>
+	</div>
+</div>
+
+<script type="text/ng-template" id="login.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Login</h3>
+        </div>
+        <div class="modal-body">
+            <input type='text' placeholder='Username' ng-model='username'/>
+    		<input type='password' placeholder='Password' ng-model='password'/>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="signin()">Login</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+</script>

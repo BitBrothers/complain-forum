@@ -1,0 +1,21 @@
+.nav-bar ul li, .nav-bar {
+	display: inline;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+}
+
+.stats .col-md-3 h1, .stats .col-md-3 h3{
+	margin-left:20px;
+}
+
+.navbar {
+	margin-bottom: 0px;
+}
+
+.center a {
+	margin-bottom: 10px;
+}

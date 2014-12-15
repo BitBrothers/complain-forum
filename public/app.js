@@ -1,4 +1,4 @@
-angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate','uiGmapgoogle-maps','google.places'])
+angular.module('complaintForum', ['ngResource', 'ngRoute', 'ngAnimate','uiGmapgoogle-maps','google.places','ui.bootstrap'])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       
