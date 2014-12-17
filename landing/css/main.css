@@ -1,0 +1,66 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+body{
+	background: url('http://thecommonmanspeaks.com/wp-content/uploads/2012/12/Panaji.jpg') 100%;
+}
+
+header{
+	height: 150px;
+}
+
+header #logo{
+	background: url('http://direct.theindianrepublic.com/2013/12/Goa_Tourism.jpg') 100%;
+	background-repeat: no-repeat;
+	background-position: left;
+	background-size: 201px;
+	float: left;
+	width: 182px;
+}
+ header .navbar-nav{
+	margin-right: 50px;
+	height: 150px;
+	padding-top: 41px;
+	font-size: 20px;
+ 
+ }
+
+.jumbotron {
+	height:500px;
+	width:75%;
+	margin: auto;
+	border-radius:10px;
+	text-align:center;
+	background-color: rgba(238,238,238,0.44);
+}
+
+.jumbotron  h1{
+	font-size: 50px;
+	margin-top: 74px;
+}
+
+.jumbotron  p{
+	text-align: center;
+	/* margin-top: 50px; */
+}
+
+.jumbotron  a{
+	margin:50px;
+}
+
+.btn : hover{
+	background: #00B16A;
+	color: #fff;
+	text-decoration: none;
+	}
+
+
+
+
+
+
+
+
+
