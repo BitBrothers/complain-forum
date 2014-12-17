@@ -4,11 +4,17 @@
    Author's custom styles
    ========================================================================== */
 body{
-	background: url('http://thecommonmanspeaks.com/wp-content/uploads/2012/12/Panaji.jpg') 100%;
+/*	background: url('http://thecommonmanspeaks.com/wp-content/uploads/2012/12/Panaji.jpg') 100%;*/
+/*    background: url('http://www.nativeplanet.com/photos/state/1381232015.jpg');*/
+    background-size: cover;
+    background-position-y: -212px;
 }
 
 header{
 	height: 150px;
+    box-shadow: 0 0 5px 5px;
+    z-index: 1;
+    background: #fff;
 }
 
 header #logo{
@@ -19,26 +25,38 @@ header #logo{
 	float: left;
 	width: 182px;
 }
- header .navbar-nav{
+ 
+header .navbar-nav{
 	margin-right: 50px;
 	height: 150px;
-	padding-top: 41px;
+	padding-top: 52px;
 	font-size: 20px;
  
  }
 
 .jumbotron {
 	height:500px;
-	width:75%;
+/*	width:75%;*/
 	margin: auto;
-	border-radius:10px;
+    margin-top: 5px;
+/*	border-radius:10px;*/
 	text-align:center;
-	background-color: rgba(238,238,238,0.44);
+/*	background-color: rgba(238,238,238,0);*/
+/*	background-color: #fff;*/
+    background: url('http://gos3.ibcdn.com/s8b389sai51tt8ooem5p37fr002k.jpg');
+    background-size: cover;
+    background-position-y: -500px;
 }
 
 .jumbotron  h1{
 	font-size: 50px;
 	margin-top: 74px;
+    color: whitesmoke;
+}
+
+.jumbotron  h3{
+    font-weight: 300;
+    color: whitesmoke;
 }
 
 .jumbotron  p{
@@ -48,17 +66,64 @@ header #logo{
 
 .jumbotron  a{
 	margin:50px;
+    background: #3498DB;
 }
 
-.btn : hover{
-	background: #00B16A;
+.jumbotron a:hover{
+	background: #00B16A !important;
 	color: #fff;
 	text-decoration: none;
-	}
+}
+
+.btn-sm{
+	color: #fff;
+	padding: 0px;
+	height: 42px;
+	line-height: 42px;
+	display: block;
+	text-align: center;
+	font-size: 18px;
+	background: #3498DB;
+}
+.navbar-nav li a:hover{
+	background: #00B16A !important;
+	color: #fff;
+	text-decoration: none;
+}
+
+.navbar-nav li a {
+    padding-top: 10px; 
+    padding-bottom: 15px;
+    margin-right:35px;
+}
 
 
+.mainFooter{
+    background-color: #fff;
+}
+
+.count{ float: left; display: inline-block; width: 25%; text-align: center}
+.count .big-count{ font-size: 60px; margin-bottom: 0; line-height: 70px; color: #26a65b; font-weight: 300;}
+.count .big-count-desc{ text-align: center}
+.pad300{ padding: 30px 0}
+.centralize{ text-align:center; }
 
 
+.pad300 h1{
+    font-family: Open Sans;
+    font-size: 36px;
+    font-weight: lighter;
+}
+
+/*
+.footertext{
+    padding-left: 75px;
+}
+*/
+
+.footertext p{
+    font-family: Open Sans;
+}
 
 
 
