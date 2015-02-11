@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Goa Hack</title>
+    <title>Change for Goa</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -48,11 +48,11 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="index.html">Login</a>
+                    <li ng-hide="loggedIn">
+                        <a href="/login">Login</a>
                     </li>
-                    <li>
-                        <a href="about.html">Signup</a>
+                    <li ng-hide="loggedIn">
+                        <a href="/signup">Signup</a>
                     </li>
                 </ul>
             </div>
@@ -131,6 +131,12 @@
 
 
     <script src="controllers/home.js"></script>
+    <script src="controllers/login.js"></script>
+    <script src="controllers/signup.js"></script>
+  
+    <script src="directives/passwordStrength.js"></script>
+  
+    <script src="services/auth.js"></script>
 
 
 </body>

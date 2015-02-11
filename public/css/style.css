@@ -646,3 +646,82 @@ img::-moz-selection {
 body {
   -webkit-tap-highlight-color: #0085a1;
 }
+
+.center-form {
+  width: 330px;
+  margin: 10% auto;
+}
+
+.center-form  input {
+  border-radius: 0;
+}
+
+.panel {
+  border-color: #cfd9D7;
+  border-radius: 2px;
+  box-shadow: 0 8px 17px rgba(0,0,0,.2);
+}
+
+.signup-or-separator {
+  background: none;
+  height: 34px;
+  position: relative;
+  text-align: center;
+}
+
+.signup-or-separator hr {
+  border-top: 1px solid #dce0e0;
+  margin: -16px auto 10px auto;
+  width: 90%;
+}
+
+.signup-or-separator .text {
+  background-color: #fff;
+  display: inline-block;
+  margin: 0;
+  padding: 8px;
+}
+
+.text-muted{
+  color: #90939a;
+}
+
+.btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border: 1px solid darken(#3b5998, 3%);
+}
+
+.btn-facebook:hover {
+  color: #fff;
+  background-color: darken(#3b5998, 7%);
+}
+
+
+.btn-google-plus {
+  color: #fff;
+  background-color: #dd4b39;
+  border: 1px solid darken(#dd4b39, 3%);
+}
+
+.btn-google-plus:hover {
+  color: #fff;
+  background-color: darken(#dd4b39, 7%);
+}
+
+.has-feedback .form-control-feedback {
+  top: 0;
+  left: 0;
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+  color: #555;
+}
+
+.has-feedback .form-control {
+  padding-left: 42.5px;
+}
+
+[class^='ion-'] {
+  font-size: 1.2em;
+}
