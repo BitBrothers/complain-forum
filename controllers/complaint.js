@@ -1,4 +1,5 @@
 var Complaint = require('../models/Complaint');
+var User = require('../models/User');
 
 var slugQuery = function(slug) {
     var query = {
@@ -31,26 +32,42 @@ exports.getComplaint = function(request, response) {
     });
 }
 
-exports.postAddComplaint = function(request, response) {
-
-    var complaint = new Complaint();
-
-    complaint.title = request.body.title;
-    complaint.description = request.body.description;
-    complaint.category = request.body.category;
-    complaint.subcategory = request.body.subcategory;
-    complaint.location = request.body.location;
-
-    complaint.save(function(err) {
-        if (err)
-            return send(err);
-
-        response.json({
-            message: 'Complaint created!'
-        });
-
+exports.postAddComplaint = function(req, res) {
+    User.findById(req.user._id,function(err,user){
+        if(err)
+            res.send(err);
+        else{
+            var complaint = new Complaint();
+            complaint.title = req.body.title;
+            complaint.description = req.body.description;
+            complaint.category = req.body.category;
+            complaint.subcategory = req.body.subcategory;
+            complaint.location = req.body.location;
+            complaint.userId = user._id;
+            user.complaints.push({
+                _id: complaint._id
+            });
+            complaint.save(function(err) {
+                if (err)
+                    res.send(err);
+                else{
+                    user.save(function(err){
+                        if(err)
+                            res.send(err);
+                        else{
+                            res.json({
+                                message: 'Complaint created!'
+                            });
+                        }
+                    });
+                    
+                }
+       
+            });
+        }
     });
-}
+
+};
 
 
 exports.getEditComplaint = function(request, response) {

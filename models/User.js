@@ -8,7 +8,7 @@ var userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true
   },
-  username: String,
+  
   password: String,
   role: String,
   anonymous: Boolean,
@@ -24,7 +24,8 @@ var userSchema = new mongoose.Schema({
     tokens: Array,
   
   profile: {
-
+    slug: String,
+    username: String,
     firstname: {
       type: String,
       default: ''
@@ -60,11 +61,24 @@ resetPasswordExpires: Date
 
 });
 
+//Slug function
+function slugify(text) {
+console.log(text);
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+};
+
 
 
 userSchema.pre('save', function(next) {
   var user = this;
-
+  if(user.slug == null || undefined){
+  user.slug = slugify(user.name + Math.floor((Math.random() * 100) + 1));
+  }
   if (!user.isModified('password')) return next();
 
   bcrypt.genSalt(5, function(err, salt) {

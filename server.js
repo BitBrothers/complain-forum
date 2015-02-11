@@ -79,13 +79,16 @@ app.get('/', function(request, response){
 //Login APIs
 app.post('/api/auth/signup',userController.signup);
 app.post('/api/auth/login',userController.login);
+app.post('/api/auth/facebook', userController.facebookAuth);
+app.post('/api/auth/google', userController.googleAuth);
+app.get('/api/users', userController.hasEmail);
 
+app.get('/api/complaints', complaintController.getComplaints);
+app.get('/api/complaint/:cslug', complaintController.getComplaint);
 
-app.get('/api/complaints', complaintController.getComplaints);        
-app.get('/api/complaints/:id', complaintController.getComplaint);        
-app.post('/api/complaints/add', complaintController.postAddComplaint);     
-app.put('/api/complaints/:id', complaintController.putUpdateComplaint);       
-app.delete('/api/complaints/:id', complaintController.deleteComplaint);       
+app.post('/api/complaint', userController.isLogin, complaintController.postAddComplaint);     
+app.put('/api/complaint/:cslug', complaintController.putUpdateComplaint);       
+app.delete('/api/complaint/:cslug', complaintController.deleteComplaint);       
 /*
 // Handle 404
 app.use(function(req, res) {

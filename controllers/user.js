@@ -16,7 +16,8 @@ var tokenSecret = config.sessionSecret;
 
 function createJwtToken(user) {
     var temp = {
-        _id: user._id
+        _id: user._id,
+        slug: user.profile.slug
     };
     var payload = {
         user: temp,
@@ -52,7 +53,7 @@ exports.signup = function(req, res, next) {
         email: req.body.email,
         password: req.body.password,
         anonymous: req.body.anonymous,
-        username: req.body.username
+        username: req.body.profile.username
     });
     user.save(function(err, user, numberAffected) {
         if (err) res.send(err);
