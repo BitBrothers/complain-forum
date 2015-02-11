@@ -18,10 +18,7 @@ exports.getComplaints = function(request, response) {
     Complaint.find(function(error, complaints) {
         if (error)
             response.send(error);
-        response.render('addComplaint',{
-            title: "Complaints",
-            complaints: complaints
-        });
+        response.json(complaints);
     });
 }
 
@@ -30,16 +27,7 @@ exports.getComplaint = function(request, response) {
     Complaint.find(slugQuery(slug),function(error, complaint) {
         if (error)
             response.send(error);
-        response.render('addComplaint',{
-            title: complaint.title,
-            complaint: complaint
-        });
-    });
-}
-
-exports.getAddComplaint  = function(request, response) { 
-    response.render('addComplaint',{
-            title: 'Complaint'
+        response.json(complaint);
     });
 }
 
@@ -70,10 +58,7 @@ exports.getEditComplaint = function(request, response) {
     Complaint.find(slugQuery(slug),function(error, complaint) {
         if (error)
             response.send(error);
-        response.render('editComplaint',{
-            title: 'Complaint',
-            complaint: complaint
-        });
+        response.json(complaint);
     });
 }
 

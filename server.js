@@ -30,8 +30,8 @@ var complaintController = require('./controllers/complaint');
 /**
  * API keys and Passport configuration.
  */
-
-var secrets = require('./config/secrets');
+var config = require('./config/secrets');
+var secrets = config();
 
 /**
  * Create Express server.
@@ -72,13 +72,11 @@ app.locals.moment = require('moment');
 app.get('/', function(request, response){
     response.render('home');
 });
-app.get('/complaints', complaintController.getComplaints);        
-app.get('/complaints/:id', complaintController.getComplaint);        
-app.get('/complaints/add', complaintController.getAddComplaint);        
-app.post('/complaints/add', complaintController.postAddComplaint);     
-app.get('/complaints/edit/:id', complaintController.getEditComplaint);       
-app.put('/complaints/:id', complaintController.putUpdateComplaint);       
-app.delete('/complaints/:id', complaintController.deleteComplaint);       
+app.get('/api/complaints', complaintController.getComplaints);        
+app.get('/api/complaints/:id', complaintController.getComplaint);        
+app.post('/api/complaints/add', complaintController.postAddComplaint);     
+app.put('/api/complaints/:id', complaintController.putUpdateComplaint);       
+app.delete('/api/complaints/:id', complaintController.deleteComplaint);       
 /*
 // Handle 404
 app.use(function(req, res) {
