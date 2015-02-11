@@ -8,10 +8,13 @@ var userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true
   },
-  username:String,
+  username: String,
   password: String,
-  role:String,
-  
+  role: String,
+  anonymous: Boolean,
+  complaints:[{
+    _id:{type: mongoose.Schema.Types.ObjectId, ref: 'Complaint'}
+  }],
     facebook: String,
     twitter: String,
     google: String,

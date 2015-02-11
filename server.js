@@ -25,6 +25,8 @@ var Schema = mongoose.Schema;
 
 var homeController = require('./controllers/home');
 var complaintController = require('./controllers/complaint');
+var userController = require('./controllers/user');
+
 
 
 /**
@@ -57,7 +59,7 @@ var week = day * 7;
  * Express configuration.
  */
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || secrets.port);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(compress());
@@ -72,6 +74,13 @@ app.locals.moment = require('moment');
 app.get('/', function(request, response){
     response.render('home');
 });
+
+
+//Login APIs
+app.post('/api/auth/signup',userController.signup);
+app.post('/api/auth/login',userController.login);
+
+
 app.get('/api/complaints', complaintController.getComplaints);        
 app.get('/api/complaints/:id', complaintController.getComplaint);        
 app.post('/api/complaints/add', complaintController.postAddComplaint);     
