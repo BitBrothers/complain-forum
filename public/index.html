@@ -1,103 +1,376 @@
 <!DOCTYPE html>
-<html ng-app="complaintForum">
-<head>
-  <base href="/">
-  <meta charset="utf-8">
-  <title>Complaint Forum</title>
+<html lang="en">
 
-<!-- CSS -->
-   <link rel="stylesheet" href="vendor/angular-google-places-autocomplete-master/src/autocomplete.css">
-   <link rel="stylesheet" href="stylesheets/bootstrap.css">
-   <link href="stylesheets/style.css" rel="stylesheet">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Goa Hack</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
-
 <body>
-<div class="navbar navbar-default">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#">GOA GOVERNMENT COMPLAINT FORUM</a>
-  </div>
-  <div class="navbar-collapse collapse navbar-responsive-collapse">
-    <!-- <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Link</a></li>
-     </ul> -->
-    <!-- <form class="navbar-form navbar-left">
-      <input type="text" class="form-control col-lg-8" placeholder="Search">
-    </form> -->
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="/login">Log in</a></li>
-      <li><a href="/signup">Sign up</a></li>
-      <!-- <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </li> -->
-    </ul>
-  </div>
-</div>
-<div ng-view id="wrapper" class="{{pageClass}}">
 
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Goa.forchange.io</a>
+            </div>
 
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Login</a>
+                    </li>
+                    <li>
+                        <a href="about.html">Signup</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
-</div>
-<script src="vendor/jquery-2.1.1.min.js"></script>
-<script src="vendor/jquery-ui.js"></script>
-<script src="vendor/angular.js"></script>
-<script src="vendor/angular-strap.js"></script>
-<script src="vendor/angular-strap.tpl.js"></script>
-<script src="vendor/angular-touch.js"></script>
-<script src="vendor/angular-resource.js"></script>
-<script src="vendor/angular-route.js"></script>
-<script src="vendor/angular-animate.js"></script>
-<script src="vendor/ui-bootstrap-tpls-0.12.0.js"></script>
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('images/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Ready to change Goa?</h1>
+                        <hr class="small">
+                        <span class="subheading">Connect with you local governs via forchange.io and build a better city</span>
+                        <div class="landing-btn">
+                            <button type="button" class="btn btn-primary btn-md">Explore Complaint</button>
+                            <button type="button" class="btn btn-primary btn-md">Post Complaint</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section id="features" class="content-section container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">File Complaint for</h2>
+                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-building-o fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Form and Process</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Infrastruture</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-university fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Public Administration</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Local Security</h4>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-tachometer fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Public Relation</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-truck fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Commerce</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Tourist Department</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-send-o fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Road and Safetly</h4>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-stack-exchange fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Public Health</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-unsorted fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">RTO</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-slideshare fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Electricity Board</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-search-minus fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Water Department</h4>
+            </div>
+        </div>
+    </section>
+    <section id="complaints" class="content-section container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Complaints</h2>
+                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                 <div class="col-md-4 col-sm-6">
+                     <div class="complaint-container">
+                        <div class="complaint">
+                            <div class="front">
+                                <div class="cover">
+                                </div>
+                                <div class="user">
+                                    <img class="img-circle" src="images/agro-icon.jpg">
+                                </div>
+                                <div class="content">
+                                    <h3 class="title">I believe every human has a finite number of heartbeats. I don't intend..</h3>
+                                </div>
+                                <div class="footer">
+                                    <i class="fa fa-map-marker"> Panjim, Goa</i>
+                                </div>
+                            </div> <!-- end front panel -->
+                            <div class="back">
+                                <div class="header">
+                                    <h5 class="motto">Pending</h5>
+                                </div> 
+                                <div class="content">
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                                    <button class="btn btn-sm btn-sucess">Read more</button>
+                                </div>
+                                <div class="footer">
+                                    <div class="social-links text-center">
+                                        <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
+                                        <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
+                                        <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                    </div>
+                                </div>
+                            </div> <!-- end back panel -->
+                        </div> <!-- end complaint -->
+                    </div> <!-- end complaint-container -->
+                </div> <!-- end col sm 3 -->
+<!--         <div class="col-sm-1"></div> -->
+                <div class="col-md-4 col-sm-6">
+                     <div class="complaint-container">
+                        <div class="complaint">
+                            <div class="front">
+                                <div class="cover">
+                                </div>
+                                <div class="user">
+                                    <img class="img-circle" src="images/naturalresource-icon.jpg">
+                                </div>
+                                <div class="content">
+                                    <h3 class="title">Science has not yet mastered prophecy</h3>
+                                </div>
+                                <div class="footer">
+                                        <i class="fa fa-map-marker"> Panjim, Goa</i>
+                                </div>
+                            </div> <!-- end front panel -->
+                            <div class="back">
+                                <div class="header">
+                                    <h5 class="motto">Work in progress</h5>
+                                </div> 
+                                <div class="content">
+                                    <div class="main">
+                                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                                        <div class="read-more-btn">
+                                            <a href="#">Read more</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer">
+                                    <div class="social-links text-center">
+                                        <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
+                                        <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
+                                        <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                    </div>
+                                </div>
+                            </div> <!-- end back panel -->
+                        </div> <!-- end complaint -->
+                    </div> <!-- end complaint-container -->
+                </div> <!-- end col sm 3 -->
+<!--         <div class="col-sm-1"></div> -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="complaint-container">
+                        <div class="complaint">
+                            <div class="front">
+                                <div class="cover">
+                                </div>
+                                <div class="user">
+                                    <img class="img-circle" src="images/administration-icon.jpg">
+                                </div>
+                                <div class="content">
+                                    <h3 class="title">Man must explore, and this is exploration at its greatest</h3>
+                                    
+                                </div>
+                                <div class="footer">
+                                        <i class="fa fa-map-marker"> Panjim, Goa</i>
+                                </div>
+                            </div> <!-- end front panel -->
+                            <div class="back">
+                                <div class="header">
+                                    <h5 class="motto">Work in progress</h5>
+                                </div> 
+                                <div class="content">
+                                    <div class="main">
+                                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                                        <div class="read-more-btn">
+                                            <a href="#">Read more</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer">
+                                    <div class="social-links text-center">
+                                        <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
+                                        <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
+                                        <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                    </div>
+                                </div>
+                            </div> <!-- end back panel -->
+                        </div> <!-- end complaint -->
+                    </div> <!-- end complaint-container -->
+                </div> <!-- end col-sm-3 -->
+            </div>
+        </div><!-- End of Row -->
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="loading-btn">
+                    <a href="#">Load More Complaints </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-<!-- google maps -->
+            </div>
+        </div>
+    </div>
+    <hr>
 
-<script src="vendor/angular-google-places-autocomplete-master/src/autocomplete.js"></script>
-<script src="vendor/angular-google-maps.min.js"></script>
-<script src="vendor/lodash.min.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Codeniti 2015</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
 
-<!-- Main file -->
-<script src="app.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 
-<!-- Controllers -->
-<script src="controllers/home.js"></script>
-<script src="controllers/complaint.js"></script>
-<script src="controllers/gmaps.js"></script>
-<script src="controllers/search.js"></script>
-<script src="controllers/landing.js"></script>
-<script src="controllers/signup.js"></script>
-<script src="controllers/view.js"></script>
-
-
-
-<!-- Services -->
-<script src="services/complaint.js"></script>
-<script src="services/mapAddressLocator.js"></script>
-<script src="services/searchLocation.js"></script>
-<script src="services/searchStatus.js"></script>
-<script src="services/searchAll.js"></script>
-<script src="services/signup.js"></script>
-<script src="services/signin.js"></script>
-
-
-
-<!--<script src="app.min.js"></script>-->
-<!--<script src="templates.js"></script>-->
+    <!-- Custom Theme JavaScript -->
+    <script src="js/main.js"></script>
 
 </body>
+
 </html>

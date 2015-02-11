@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto'); 
 
+
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -11,7 +12,7 @@ var userSchema = new mongoose.Schema({
   username:String,
   password: String,
   role:String,
-  
+  /*
     facebook: String,
     twitter: String,
     google: String,
@@ -19,7 +20,7 @@ var userSchema = new mongoose.Schema({
     instagram: String,
     linkedin: String,
     tokens: Array,
-  
+  */
   profile: {
 
     firstname: {
@@ -48,9 +49,17 @@ var userSchema = new mongoose.Schema({
     }
 
   },
-    location: String,
-    pincode: Number,
-    phoneNo: Number,
+
+  address: {
+    addressLine1: String,
+    addressLine2: String,
+    city: String,
+    pincode: Number
+  },
+  phoneNo: Number,
+
+  //following:[{complaintID:{type:mongoose.Schema.Types.ObjectId, ref: 'Complaint'}}]
+
   resetPasswordToken: String,
 resetPasswordExpires: Date
 

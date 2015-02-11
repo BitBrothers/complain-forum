@@ -1,202 +1,146 @@
 var Complaint = require('../models/Complaint');
 
-
-//user
-
-
-exports.addComplaint = function(req, res) {
-
-  var complaint = new Complaint();
-
-  complaint.title = req.body.title;
-  complaint.description = req.body.description;
-  complaint.category = req.body.category;
-  complaint.subcategory = req.body.subcategory;
-  complaint.location = req.body.location;
-
-
-
-  complaint.save(function(err) {
-    if (err)
-      return send(err);
-
-    res.json({
-      message: 'Complaint created!'
-    });
-
-  });
-}
-
-
-exports.getallComplaints = function(req, res) {
-  Complaint.find(function(err, complaint) {
-    if (err)
-      res.send(err);
-
-    res.json(complaint);
-  });
-
-
-}
-
-exports.updateComplaint = function(req, res) {
- var slug = req.params.slug;
-  Complaint.findOne(slugQuery(slug), function(err, complaint) {
-
-   if (err) {
-      // DB Error
-      res.status(400);
-      res.end();
-    } else if (!complaint) {
-      res.status(404);
-      res.end();
-    } else {
-    complaint.title = req.body.title;
-    complaint.description = req.body.description;
-    complaint.category = req.body.category;
-    complaint.subcategory = req.body.subcategory;
-    complaint.location = req.body.location;
-
-
-    complaint.save(function(err) {
-      if (err)
-        res.send(err);
-
-      res.json({
-        message: 'Complaint updated!'
-      });
-    });
-}
-  });
-
-}
-
-exports.getComplaint = function(req, res) {
-
-  var slug = req.params.slug; // Can be a slug or _id
-
-  Complaint.findOne(slugQuery(slug), function(err, complaint) {
-    if (err) {
-      // DB Error
-      res.status(400);
-      res.end();
-    } else if (!complaint) {
-      res.status(404);
-      res.end();
-    } else {
-      res.json(complaint);
-    }
-  });
-
-
- 
-}
-
- var slugQuery = function(slug) {
+var slugQuery = function(slug) {
     var query = {
-      $or: [{
-        slug: slug
-      }]
+        $or: [{
+            slug: slug
+        }]
     };
     if (slug.match(/^[0-9a-fA-F]{24}$/)) {
-      query.$or.push({
-        _id: slug
-      });
+        query.$or.push({
+                _id: slug
+        });
     }
     return query;
-  }
-
-
-exports.searchComplaintId = function(req, res) {
-  Complaint.findById(req.params.complaint_id, function(err, complaint) {
-    if (err)
-      res.send(err);
-    res.json(complaint);
-  });
-
-
 }
 
-
-
-
-//staff
-
-exports.deleteComplaint = function(req, res) {
-  Complaint.remove({
-    _id: req.params.complaint_id
-  }, function(err, complaint) {
-    if (err)
-      res.send(err);
-
-    res.json({
-      message: 'Successfully deleted'
+exports.getComplaints = function(request, response) {
+    Complaint.find(function(error, complaints) {
+        if (error)
+            response.send(error);
+        response.render('addComplaint',{
+            title: "Complaints",
+            complaints: complaints
+        });
     });
-  });
 }
 
+exports.getComplaint = function(request, response) {
+    var slug = request.params.slug;
+    Complaint.find(slugQuery(slug),function(error, complaint) {
+        if (error)
+            response.send(error);
+        response.render('addComplaint',{
+            title: complaint.title,
+            complaint: complaint
+        });
+    });
+}
 
+exports.getAddComplaint  = function(request, response) { 
+    response.render('addComplaint',{
+            title: 'Complaint'
+    });
+}
 
-exports.staffUpdateComplaint = function(req, res) {
+exports.postAddComplaint = function(request, response) {
 
-  Complaint.findById(req.params.complaint_id, function(err, complaint) {
+    var complaint = new Complaint();
 
-    if (err)
-      res.send(err);
-
-    complaint.title = req.body.title;
-    complaint.description = req.body.description;
-    complaint.category = req.body.category;
-    complaint.subcategory = req.body.subcategory;
-    complaint.status = req.body.status;
-    complaint.location = req.body.location;
-
+    complaint.title = request.body.title;
+    complaint.description = request.body.description;
+    complaint.category = request.body.category;
+    complaint.subcategory = request.body.subcategory;
+    complaint.location = request.body.location;
 
     complaint.save(function(err) {
-      if (err)
-        res.send(err);
+        if (err)
+            return send(err);
 
-      res.json({
-        message: 'Complaint updated!'
-      });
+        response.json({
+            message: 'Complaint created!'
+        });
+
     });
+}
 
+
+exports.getEditComplaint = function(request, response) {
+    var slug = request.params.slug;
+    Complaint.find(slugQuery(slug),function(error, complaint) {
+        if (error)
+            response.send(error);
+        response.render('editComplaint',{
+            title: 'Complaint',
+            complaint: complaint
+        });
+    });
+}
+
+exports.putUpdateComplaint = function(request, response) {
+    var slug = request.params.slug;
+    Complaint.findOne(slugQuery(slug), function(err, complaint) {
+
+        if (error) {
+            response.status(400);
+            response.end();
+        } else if (!complaint) {
+            response.status(404);
+            response.end();
+        } else {
+            complaint.title = request.body.title;
+            complaint.description = request.body.description;
+            complaint.category = request.body.category;
+            complaint.subcategory = request.body.subcategory;
+            complaint.location = request.body.location;
+
+
+            complaint.save(function(err) {
+                if (err)
+                    response.send(err);
+
+                response.json({
+                    message: 'Complaint updated!'
+                });
+            });
+        }
+    });
+}
+
+//app.delete('/complaints/:slug', complaintController.deleteComplaint);   
+
+exports.deleteComplaint = function(request, response) {
+    Complaint.remove({
+            _id: request.params.complaint_id
+        }, function(err, complaint) {
+    if (err)
+    response.send(err);
+
+    response.json({
+    message: 'Successfully deleted'
+    });
+    });
+}
+
+
+exports.searchComplaintId = function(request, response) {
+  Complaint.findById(request.params.complaint_id, function(err, complaint) {
+    if (err)
+      response.send(err);
+    response.json(complaint);
   });
 
 
 }
 
-exports.searchStatus = function(req, res) {
+exports.deleteComplaint = function(request, response) {
+    var slug = request.params.slug;
+    Complaint.find(slugQuery(slug), function(err, complaint) {
+        if (err)
+            response.send(err);
 
-console.log("sdfgds");
-  Complaint.find({
-    status: req.params.status
-  }, function(err, complaint) {
-    if (err)
-      res.send(err);
-
-
-    res.json(complaint);
-  }); 
-
+        response.json({
+          message: 'Successfully deleted'
+        });
+  });
 }
-
-exports.searchLocation = function(req, res) {
-
-console.log("sdfgds");
-  Complaint.find({
-    location: req.params.location
-  }, function(err, complaint) {
-    if (err)
-      res.send(err);
-
-
-    res.json(complaint);
-  }); 
-
-}
-
-
-
-
-//admin

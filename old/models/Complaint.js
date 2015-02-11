@@ -19,7 +19,7 @@ var complaintSchema = new mongoose.Schema({
   location: String,
   followers: Number,
   // userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  comments: String
+  comment: String
 
 });
 

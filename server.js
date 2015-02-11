@@ -1,110 +1,111 @@
+/**
+ * Module dependencies.
+ */
+
 var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var passport=require('passport');
+var compress = require('compression');
 var session = require('express-session');
-//var LocalStrategy=require('passport-local').Strategy;
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var errorHandler = require('errorhandler');
+var methodOverride = require('method-override');
+
+
+var _ = require('lodash');
+var path = require('path');
+var mongoose = require('mongoose');
+
+var Schema = mongoose.Schema;
+
+
+/**
+ * Controllers (route handlers).
+ */
+
+var homeController = require('./controllers/home');
+var complaintController = require('./controllers/complaint');
+
+
+/**
+ * API keys and Passport configuration.
+ */
+
+var config = require('./config/secrets');
+var secrets = new config();
+
+/**
+ * Create Express server.
+ */
 
 var app = express();
 
-var port = process.env.PORT || 3000;
+/**
+ * Connect to MongoDB.
+ */
 
-//var User=require('models/User.js');
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret:"BLAHSECRETS"}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-//Controllers
-var complaintController = require('./controllers/complaint');
-var userController = require('./controllers/user');
-var homeController = require('./controllers/home');
-var apiController = require('./controllers/api');
-
-
-
-//Mongo db
-
-
-//TODO Create a secrets.js file
-mongoose.connect('mongodb://localhost:27017/');
+mongoose.connect(secrets.db);
 mongoose.connection.on('error', function() {
   console.error('MongoDB Connection Error. Make sure MongoDB is running.');
 });
 
-app.post('/login', function(req,res,next){
-    var auth=passport.authenticate('local',function(err,user){
-        if(err)
-            return next(err);
-        if(!user)
-            res.send({success:false});
-        req.logIn(user, function(err){
-            if(err)
-                return next(err);
-            res.send({success:true,user:user});
-        })
-    })
-    auth(req,res,next);
-})
+var hour = 3600000;
+var day = hour * 24;
+var week = day * 7;
+
 
 /**
- * Login Apis
+ * Express configuration.
  */
-app.post('/api/auth/signup', apiController.postSignUp);
-app.post('/api/auth/login', apiController.postLogin);
-//app.post('/api/auth/facebook', apiController.postFacebookLogin);
-//app.post('/api/auth/google', apiController.postGoogleLogin);
-//app.get('/api/users', apiController.getUsers);
 
+app.set('port', process.env.PORT || secrets.port);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+app.use(compress());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: week }));
+app.locals.moment = require('moment');
 
-//user
-app.get('/', homeController.index);
+app.get('/', function(request, response){
+    response.render('home');
+});
+app.get('/complaints', complaintController.getComplaints);        
+app.get('/complaints/:id', complaintController.getComplaint);        
+app.get('/complaints/add', complaintController.getAddComplaint);        
+app.post('/complaints/add', complaintController.postAddComplaint);     
+app.get('/complaints/edit/:id', complaintController.getEditComplaint);       
+app.put('/complaints/:id', complaintController.putUpdateComplaint);       
+app.delete('/complaints/:id', complaintController.deleteComplaint);       
+/*
+// Handle 404
+app.use(function(req, res) {
+  res.status(400);
+ res.render('404.jade', {title: '404: File Not Found'});
+});
 
+// Handle 500
+app.use(function(error, req, res, next) {
+  res.status(500);
+ res.render('500.jade', {title:'500: Internal Server Error', error: error});
+});
+*/
 
-app.post('/api/user', userController.addUser);
-app.put('/api/user/:user_id', userController.updateUser);
-app.get('/api/complaints', complaintController.getallComplaints);
+/**
+ * 500 Error Handler.
+ */
 
-/** Ser***/
-app.get('/api/complaint/:slug', complaintController.getComplaint);
-app.post('/api/complaint', complaintController.addComplaint);
-app.put('/api/complaint/:slug', complaintController.updateComplaint);
-app.get('/api/complaint/searchstat/:status', complaintController.searchStatus);
-app.get('/api/complaint/searchloc/:location', complaintController.searchLocation);
+app.use(errorHandler());
 
+/**
+ * Start Express server.
+ */
 
-
-//staff
-app.delete('/api/complaint/staff/:complaint_id', complaintController.deleteComplaint);
-app.put('/api/complaint/staff/:complaint_id', complaintController.staffUpdateComplaint);
-
-//admin
-app.get('/api/admin/user', userController.getAllUser);
-app.delete('/api/admin/user/:user_id', userController.deleteUser);
-app.get('/api/admin/user/:user_id', userController.searchUserId);
-
-
-
-
-app.listen(port);
-console.log('Listening at.......' + port);
-
+app.listen(app.get('port'), function() {
+  console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
+});
 
 module.exports = app;

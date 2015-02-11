@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="complaintForum">
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <title>Complaint Forum</title>
+
+<!-- CSS -->
+   <link rel="stylesheet" href="vendor/angular-google-places-autocomplete-master/src/autocomplete.css">
+   <link rel="stylesheet" href="stylesheets/bootstrap.css">
+   <link href="stylesheets/style.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+<div class="navbar navbar-default">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">GOA GOVERNMENT COMPLAINT FORUM</a>
+  </div>
+  <div class="navbar-collapse collapse navbar-responsive-collapse">
+    <!-- <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Link</a></li>
+     </ul> -->
+    <!-- <form class="navbar-form navbar-left">
+      <input type="text" class="form-control col-lg-8" placeholder="Search">
+    </form> -->
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login">Log in</a></li>
+      <li><a href="/signup">Sign up</a></li>
+      <!-- <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </li> -->
+    </ul>
+  </div>
+</div>
+<div ng-view id="wrapper" class="{{pageClass}}">
+
+
+
+</div>
+<script src="vendor/jquery-2.1.1.min.js"></script>
+<script src="vendor/jquery-ui.js"></script>
+<script src="vendor/angular.js"></script>
+<script src="vendor/angular-strap.js"></script>
+<script src="vendor/angular-strap.tpl.js"></script>
+<script src="vendor/angular-touch.js"></script>
+<script src="vendor/angular-resource.js"></script>
+<script src="vendor/angular-route.js"></script>
+<script src="vendor/angular-animate.js"></script>
+<script src="vendor/ui-bootstrap-tpls-0.12.0.js"></script>
+
+<!-- google maps -->
+
+<script src="vendor/angular-google-places-autocomplete-master/src/autocomplete.js"></script>
+<script src="vendor/angular-google-maps.min.js"></script>
+<script src="vendor/lodash.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+
+<!-- Main file -->
+<script src="app.js"></script>
+
+<!-- Controllers -->
+<script src="controllers/home.js"></script>
+<script src="controllers/complaint.js"></script>
+<script src="controllers/gmaps.js"></script>
+<script src="controllers/search.js"></script>
+<script src="controllers/landing.js"></script>
+<script src="controllers/signup.js"></script>
+<script src="controllers/view.js"></script>
+
+
+
+<!-- Services -->
+<script src="services/complaint.js"></script>
+<script src="services/mapAddressLocator.js"></script>
+<script src="services/searchLocation.js"></script>
+<script src="services/searchStatus.js"></script>
+<script src="services/searchAll.js"></script>
+<script src="services/signup.js"></script>
+<script src="services/signin.js"></script>
+
+
+
+<!--<script src="app.min.js"></script>-->
+<!--<script src="templates.js"></script>-->
+
+</body>
+</html>
