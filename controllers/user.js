@@ -53,7 +53,7 @@ exports.signup = function(req, res, next) {
         email: req.body.email,
         password: req.body.password,
         anonymous: req.body.anonymous,
-        username: req.body.profile.username
+        'profile.username': req.body.username
     });
     user.save(function(err, user, numberAffected) {
         if (err) res.send(err);

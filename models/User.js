@@ -76,8 +76,8 @@ console.log(text);
 
 userSchema.pre('save', function(next) {
   var user = this;
-  if(user.slug == null || undefined){
-  user.slug = slugify(user.name + Math.floor((Math.random() * 100) + 1));
+  if(user.profile.slug == null || undefined){
+  user.profile.slug = slugify(user.profile.username + Math.floor((Math.random() * 100) + 1));
   }
   if (!user.isModified('password')) return next();
 
