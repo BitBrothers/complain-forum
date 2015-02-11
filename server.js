@@ -31,8 +31,7 @@ var complaintController = require('./controllers/complaint');
  * API keys and Passport configuration.
  */
 
-var config = require('./config/secrets');
-var secrets = new config();
+var secrets = require('./config/secrets');
 
 /**
  * Create Express server.
@@ -58,7 +57,7 @@ var week = day * 7;
  * Express configuration.
  */
 
-app.set('port', process.env.PORT || secrets.port);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(compress());

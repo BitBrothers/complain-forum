@@ -1,21 +1,55 @@
 {
-  "name": "goaforchange",
-  "version": "1.0.0",
-  "description": "Goa For Change",
+  "name": "forchange.io",
+  "version": "0.1.0",
+  "description": "Forchange.io",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "goa",
-    "complaint",
-    "forum"
+    "forchange"
   ],
-  "author": "Sobin George Thomas <sobingt@gmail.com>",
-  "license": "ISC",
+  "license": "BSD-2-Clause",
   "dependencies": {
-    "express": "^4.11.0",
-    "jade": "^1.9.1",
-    "mongoose": "^3.8.21"
+    "bcrypt-nodejs": "^0.0.3",
+    "bcryptjs": "^2.1.0",
+    "body-parser": "^1.10.0",
+    "bower": "^1.3.12",
+    "compression": "^1.2.2",
+    "connect-assets": "^4.3.3",
+    "connect-mongo": "^0.4.2",
+    "cookie-parser": "^1.3.3",
+    "errorhandler": "^1.3.3",
+    "express": "^4.10.6",
+    "express-session": "^1.9.3",
+    "express-validator": "^2.7.0",
+    "fbgraph": "^0.3.0",
+    "jade": "^1.8.2",
+    "jwt-simple": "^0.2.0",
+    "lodash": "^2.4.1",
+    "lusca": "^1.0.2",
+    "method-override": "^1.0.0",
+    "moment": "^2.7.0",
+    "mongodb": "~1.4.26",
+    "mongoose": "^3.8.21",
+    "morgan": "^1.5.0",
+    "serve-favicon": "^2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-angular-templatecache": "^1.1.3",
+    "gulp-concat": "^2.2.0",
+    "gulp-csso": "^0.2.8",
+    "gulp-ng-annotate": "^0.2.0",
+    "gulp-plumber": "^0.6.6",
+    "gulp-sass": "^1.2.4",
+    "gulp-uglify": "^0.3.0",
+    "gulp-jade": "~0.10.0",
+    "karma": "^0.12.19",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "gulp-nodemon": "^1.0.4",
+    "katex": "^0.1.1"
   }
 }
