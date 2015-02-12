@@ -4,5 +4,5 @@ angular.module('ForChange')
 	  
   	$scope.gotoPostComplaint = function () {
   		$location.path('/new-complaint');
-  	}
+  	};
 });
