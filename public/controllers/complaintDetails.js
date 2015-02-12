@@ -1,8 +1,8 @@
 angular.module('ForChange')
-  .controller('ComplaintDetailsCtrl', function($scope,$rootScope, Complaint) {
+  .controller('ComplaintDetailsCtrl', function($scope,$rootScope, Complaint, $routeParams) {
     
       Complaint.get({
-          cslug: 'kachra'
+          cslug : $routeParams.cslug
         },
         function(complaint) {
           $scope.complaint = complaint;

@@ -15,7 +15,7 @@ p {
 }
 p a {
   text-decoration: underline;
-    color: #ffffff;
+/*    color: #ffffff;*/
 }
 .searchbar{
     margin-top: 90px;
@@ -51,7 +51,7 @@ h6 {
   font-weight: 800;
 }
 a {
-  color: #ffffff;
+  color: #404040;
 }
 a:hover,
 a:focus {

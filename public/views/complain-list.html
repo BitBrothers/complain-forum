@@ -34,13 +34,13 @@
                 <div class="complaintslist" ng-repeat="complaint in complaints">
                     
                         <h2 class="title">
-                            {{complaint.title}},in {{complaint.location}}
+                            {{complaint.title}}, in {{complaint.location}}
                         </h2>
                         <h5 class="category">
                             {{complaint.category}}
                         </h5>
                    
-                    <p class="postedBy"><i>Posted by </i>{{complaint.userId}}</p>
+                    <p class="postedBy"><i>Posted by </i>{{complaint.userId.profile.slug}}</p>
                 </div>
                 
                 <hr>
