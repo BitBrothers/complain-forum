@@ -5,11 +5,11 @@
         <form>
           <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" placeholder="Enter title">
+            <input type="text" ng-model="complaint.title" class="form-control" placeholder="Enter title">
           </div>
           <div class="form-group">
             <label for="desc">Description</label>
-            <textarea class="form-control" rows="3" placeholder="Explain your problem in detail."></textarea>
+            <textarea class="form-control" ng-model="complaint.desc" rows="3" placeholder="Explain your problem in detail."></textarea>
           </div>
           <!-- <div class="form-group">
             <label for="exampleInputFile">Image Upload</label>
@@ -19,21 +19,21 @@
             <div class="btn-group">
               <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">Category <span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>                
+                <li ng-repeat="cat in cats"><a href="#">{{cat.value}}</a></li>                
               </ul>
             </div>
             <div class="btn-group">
               <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">Sub-Category <span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>                
+                <li ng-repeat="subCat in subCats"><a href="#">{{subCat.value}}</a></li>                
               </ul>
             </div>
           </div>  
           <div class="form-group">
             <label for="desc">Location</label>
-            <input type="text" class="form-control" placeholder="Where did you experince the problem?">
+            <input type="text" class="form-control" ng-model="complaint.location" placeholder="Where did you experince the problem?">
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button ng-click="post()" class="btn btn-default">Submit</button>
         </form>               
       </div>
     </div>
