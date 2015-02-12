@@ -217,3 +217,31 @@ exports.hasEmail = function(req, res, next) {
         });
     });
 }; 
+
+exports.getUser = function(req, res){
+    User.findOne({'profile.slug':req.params.uslug})
+    .select('-_id profile role complaints')
+    .populate({
+        path:'complaints._id',
+        select: 'slug title description category subcategory location status startdate enddate'
+    })
+    .exec(function(err, user){
+        if(err)
+            res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
+        else{
+            res.json(user);
+        }
+    });
+};
+
+
+
+
+
+
+
+
+

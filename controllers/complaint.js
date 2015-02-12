@@ -88,7 +88,13 @@ exports.deleteComplaint = function(req, res) {
 };
 
 exports.getComplaints = function(request, response) {
-    Complaint.find(function(error, complaints) {
+    Complaint.find()
+    .select('-_id title location category subcategory slug status startdate userId')
+    .populate({
+        path:'userId',
+        select: 'profile.slug profile.username'
+    })
+    .exec(function(error, complaints) {
         if (error)
             response.send(error);
         response.json(complaints);
@@ -265,7 +271,7 @@ exports.getComplaint = function(request, response) {
 
 
 exports.putUpdateComplaint = function(request, response) {
-        User.findById(request.user._id, function(err,user){
+    User.findById(request.user._id, function(err,user){
         if(err)
             response.send(err);
         else{

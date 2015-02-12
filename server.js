@@ -94,6 +94,9 @@ app.post('/api/complaint', userController.isLogin, complaintController.postAddCo
 app.put('/api/complaint/:cslug', userController.isLogin, complaintController.putUpdateComplaint);       
 app.delete('/api/complaint/:cslug', userController.isLogin, complaintController.deleteComplaint);
 
+//User APIs
+app.get('/api/user/:uslug', userController.getUser);
+
 
 app.use(errorHandler());
 
