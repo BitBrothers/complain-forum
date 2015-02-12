@@ -83,29 +83,20 @@ app.post('/api/auth/facebook', userController.facebookAuth);
 app.post('/api/auth/google', userController.googleAuth);
 app.get('/api/users', userController.hasEmail);
 
+//Complaint APIs
+app.put('/api/complaint/:cslug/follow', userController.isLogin, complaintController.followComplaint);  
+app.put('/api/complaint/:cslug/unfollow', userController.isLogin, complaintController.unfollowComplaint);  
+app.put('/api/complaint/:cslug/comment', userController.isLogin, complaintController.commentComplaint);  
+app.put('/api/complaint/:cslug/upvote', userController.isLogin, complaintController.upvoteComplaint);  
 app.get('/api/complaints', complaintController.getComplaints);
-app.get('/api/complaint/:cslug', complaintController.getComplaint);
-
+app.get('/api/complaint/:cslug', userController.isLogin2,complaintController.getComplaint);
 app.post('/api/complaint', userController.isLogin, complaintController.postAddComplaint);     
-app.put('/api/complaint/:cslug', complaintController.putUpdateComplaint);       
-app.delete('/api/complaint/:cslug', complaintController.deleteComplaint);       
-/*
-// Handle 404
-app.use(function(req, res) {
-  res.status(400);
- res.render('404.jade', {title: '404: File Not Found'});
-});
+app.put('/api/complaint/:cslug', userController.isLogin, complaintController.putUpdateComplaint);       
+app.delete('/api/complaint/:cslug', userController.isLogin, complaintController.deleteComplaint);
 
-// Handle 500
-app.use(function(error, req, res, next) {
-  res.status(500);
- res.render('500.jade', {title:'500: Internal Server Error', error: error});
-});
-*/
+//User APIs
+app.get('/api/user/:uslug', userController.getUser);
 
-/**
- * 500 Error Handler.
- */
 
 app.use(errorHandler());
 

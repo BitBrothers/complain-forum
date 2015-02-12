@@ -10,10 +10,15 @@ var userSchema = new mongoose.Schema({
   },
   
   password: String,
-  role: String,
+  role: {type: String,default:'Citizen'},
   anonymous: Boolean,
   complaints:[{
     _id:{type: mongoose.Schema.Types.ObjectId, ref: 'Complaint'}
+  }],
+  log:[{
+    _id: false,
+    entry: String,
+    date:{type: Date, default: Date.now}
   }],
     facebook: String,
     twitter: String,
@@ -24,6 +29,7 @@ var userSchema = new mongoose.Schema({
     tokens: Array,
   
   profile: {
+    joinDate:{type: Date,default: Date.now()},
     slug: String,
     username: String,
     firstname: {

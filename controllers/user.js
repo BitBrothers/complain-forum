@@ -25,7 +25,28 @@ function createJwtToken(user) {
         exp: moment().add(7, 'days').valueOf()
     };
     return jwt.encode(payload, tokenSecret);
-}
+};
+
+exports.isLogin2 = function(req, res, next) {
+
+    if (req.headers.authorization) {
+        var token = req.headers.authorization;
+        //.split(' ')[1];
+        try {
+            var decoded = jwt.decode(token, tokenSecret);
+            if (decoded.exp <= Date.now()) {
+                res.status(400).send('Access token has expired');
+            } else {
+                req.user = decoded.user;
+                return next();
+            }
+        } catch (err) {
+            return res.status(500).send('Error parsing token');
+        }
+    } else {
+        return next();
+    }
+};
 
 exports.isLogin = function(req, res, next) {
 
@@ -196,3 +217,31 @@ exports.hasEmail = function(req, res, next) {
         });
     });
 }; 
+
+exports.getUser = function(req, res){
+    User.findOne({'profile.slug':req.params.uslug})
+    .select('-_id profile role complaints')
+    .populate({
+        path:'complaints._id',
+        select: 'slug title description category subcategory location status startdate enddate'
+    })
+    .exec(function(err, user){
+        if(err)
+            res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
+        else{
+            res.json(user);
+        }
+    });
+};
+
+
+
+
+
+
+
+
+

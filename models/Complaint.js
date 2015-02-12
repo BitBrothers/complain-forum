@@ -8,18 +8,33 @@ var complaintSchema = new mongoose.Schema({
   slug: String,
   status: {
     type: String,
-    default: 'Open',
+    default: 'Un-published',
     index: true
   },
   startdate: {
     type: Date,
     default: Date.now
   },
+  followers: [{
+    _id:{type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  }],
+  //to keep track of upvotes
+  upvotes: [{
+    _id:{type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  }],
+  comments: [{
+    _id:{type: mongoose.Schema.Types.ObjectId,ref: 'User'},
+    description: String,
+    date: {type: Date, default: Date.now}
+  }],
+  log:[{
+    _id: false,
+    entry: String,
+    date:{type: Date, default: Date.now}
+  }],
   enddate: Date,
   location: String,
-  followers: Number,
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  comments: String
 
 });
 
