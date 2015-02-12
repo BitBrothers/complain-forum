@@ -89,7 +89,7 @@ app.put('/api/complaint/:cslug/unfollow', userController.isLogin, complaintContr
 app.put('/api/complaint/:cslug/comment', userController.isLogin, complaintController.commentComplaint);  
 app.put('/api/complaint/:cslug/upvote', userController.isLogin, complaintController.upvoteComplaint);  
 app.get('/api/complaints', complaintController.getComplaints);
-app.get('/api/complaint/:cslug', complaintController.getComplaint);
+app.get('/api/complaint/:cslug', userController.isLogin2,complaintController.getComplaint);
 app.post('/api/complaint', userController.isLogin, complaintController.postAddComplaint);     
 app.put('/api/complaint/:cslug', userController.isLogin, complaintController.putUpdateComplaint);       
 app.delete('/api/complaint/:cslug', userController.isLogin, complaintController.deleteComplaint);
