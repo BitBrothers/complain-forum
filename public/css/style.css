@@ -725,3 +725,11 @@ body {
 [class^='ion-'] {
   font-size: 1.2em;
 }
+
+
+/* Complaint form start */
+.complaint-form {
+  padding: 150px 0;
+}
+
+/* Complaint form end */
