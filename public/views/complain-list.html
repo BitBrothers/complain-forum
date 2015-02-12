@@ -1,0 +1,55 @@
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('images/home-bg.jpg')">
+        <div class="container">
+            <div class="row searchbar">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                   <div class="input-group">
+                        <div class="input-group-btn search-panel">
+                            <button type="button" class="btn btn-default dropdown-toggle" id="filterbutton" data-toggle="dropdown">
+                                <span id="search_concept">Filter by</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a href="#location">Location</a></li>
+                              <li><a href="#category">Category</a></li>
+                            </ul>
+                        </div>
+                        <input type="hidden" name="search_param" value="all" id="search_param">         
+                        <input type="text" class="form-control search" name="x" placeholder="Search term...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="searchbutton" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="complaintslist" ng-repeat="complaint in complaints">
+                    
+                        <h2 class="title">
+                            {{complaint.title}},in {{complaint.location}}
+                        </h2>
+                        <h5 class="category">
+                            {{complaint.category}}
+                        </h5>
+                   
+                    <p class="postedBy"><i>Posted by </i>{{complaint.userId}}</p>
+                </div>
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="next">
+                        <a href="#">Older Posts →</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
