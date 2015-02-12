@@ -34,7 +34,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <nav ng-controller="NavbarCtrl" class="navbar navbar-default navbar-custom navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -47,12 +47,20 @@
                 <a class="navbar-brand" href="index.html">Goa.forchange.io</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="loggedIn">
+                <ul class="nav navbar-nav navbar-right" ng-if="!currentUser">
+                    <li>
                         <a href="/login">Login</a>
                     </li>
-                    <li ng-hide="loggedIn">
+                    <li>
                         <a href="/signup">Signup</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" ng-if="currentUser">
+                    <li>
+                        <a href="/">{{currentUser.profile.slug}}</a>
+                    </li>
+                    <li>
+                        <a href="/login" ng-click="logout()">Log Out</a>
                     </li>
                 </ul>
             </div>
@@ -133,6 +141,7 @@
     <script src="controllers/home.js"></script>
     <script src="controllers/login.js"></script>
     <script src="controllers/signup.js"></script>
+    <script src="controllers/navbar.js"></script>
     <script src="controllers/postComplaint.js"></script>
 
     <script src="directives/passwordStrength.js"></script>

@@ -2,7 +2,6 @@ angular.module('ForChange')
   .factory('Auth', function($http, $location, $rootScope, $alert, $window) {
     var token = $window.localStorage.token;
     var user = $window.localStorage.user;
-  console.log(user);
     if (user) {
       $rootScope.currentUser = JSON.parse(user);
     }
@@ -98,7 +97,6 @@ angular.module('ForChange')
             $window.localStorage.token = data.token;
             $window.localStorage.user = JSON.stringify(data.user);
             $rootScope.currentUser = data.user;
-                  console.log($rootScope.currentUser);
             $location.path('/teams');
             $alert({
               title: 'Cheers!',

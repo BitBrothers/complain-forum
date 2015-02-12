@@ -230,6 +230,16 @@ font-size: 16px;
 font-style: italic;
 font-weight: 400;
 }
+
+body > .right {
+  display: block;
+  width: 30vw;
+  position: fixed;
+  z-index: 10000;
+  bottom: 0px;
+  right: 0px;
+}
+
 /* entire container, keeps perspective */
 .complaint-container {
 	  -webkit-perspective: 800px;
@@ -726,10 +736,18 @@ body {
   font-size: 1.2em;
 }
 
+.blackText{
+  color: #2b2b2b !important;
+}
 
 /* Complaint form start */
 .complaint-form {
   padding: 150px 0;
+}
+
+.complaint-form span{
+  font-size: 14px;
+  color: red;
 }
 
 /* Complaint form end */
