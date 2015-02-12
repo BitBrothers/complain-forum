@@ -89,11 +89,11 @@ exports.deleteComplaint = function(req, res) {
 
 exports.getComplaints = function(request, response) {
     Complaint.find()
-    .select('-_id title location category subcategory slug status startdate userId')
     .populate({
         path:'userId',
         select: 'profile.slug profile.username'
     })
+    .select('-_id title location category subcategory slug status startdate userId')
     .exec(function(error, complaints) {
         if (error)
             response.send(error);
