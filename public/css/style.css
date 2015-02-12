@@ -736,3 +736,32 @@ body {
 }
 
 /* Complaint form end */
+
+/*Complaint Page CSS Start*/
+.complaint-description{
+  font-size: 20px;
+}
+
+.upvotes, .followers{
+  padding: 10px;
+}
+
+.upvotes.badge, .followers.badge{
+  font-size: 15px;
+  padding: 10px;
+}
+
+.upvote-div{
+  font-size: 10px;
+  border-radius: 4px;
+  color: white;
+}
+
+.upvote-div button{
+  font-size: 30px;
+  border-radius:4px 0px 0px 4px;
+}
+
+.complaint-details-header{
+  margin-bottom: 0px;
+}
