@@ -6,6 +6,7 @@ angular.module('ForChange')
     });
   });
 
+
 angular.module('ForChange')
   .factory('Comment', function($resource, $window) {
     return $resource('/api/complaint/:cslug/comment', null,
