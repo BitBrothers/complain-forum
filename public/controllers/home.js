@@ -6,6 +6,10 @@ angular.module('ForChange')
   		console.log('ds');
   		$location.path('/new-complaint');
 
-  	};  	
+  	};
+    
+    $scope.exploreComplaint = function () {
+  		$location.path('/list');
+ 	};
 
 });

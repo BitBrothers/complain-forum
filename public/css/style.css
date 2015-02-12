@@ -15,7 +15,32 @@ p {
 }
 p a {
   text-decoration: underline;
+    color: #ffffff;
 }
+.searchbar{
+    margin-top: 90px;
+}
+
+.search{
+    padding: 25px;
+}
+
+#filterbutton{
+    border-radius: 5px 0px 0px 5px;
+}
+
+#searchbutton{
+    border-radius: 0px 5px 5px 0px;
+}
+
+#explore{
+    text-decoration: none;
+}
+.category{
+    font-weight: 10;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 h1,
 h2,
 h3,
@@ -26,7 +51,7 @@ h6 {
   font-weight: 800;
 }
 a {
-  color: #404040;
+  color: #ffffff;
 }
 a:hover,
 a:focus {
