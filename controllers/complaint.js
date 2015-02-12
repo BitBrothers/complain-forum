@@ -1,6 +1,7 @@
 var Complaint = require('../models/Complaint');
 var User = require('../models/User');
 
+
 exports.postAddComplaint = function(req, res) {
     User.findById(req.user._id,function(err,user){
         if(err)
@@ -94,6 +95,8 @@ exports.getComplaints = function(request, response) {
     });
 };
 
+
+
 exports.getComplaint = function(request, response) {
     Complaint.findOne({slug:request.params.cslug})
     .populate({
@@ -107,7 +110,155 @@ exports.getComplaint = function(request, response) {
     .exec(function(error, complaint) {
         if (error)
             response.send(error);
-        response.json(complaint);
+        else if(!complaint){
+            res.status(404).send('Complaint Not Found');
+        }
+        else {
+            var follow,upvote;
+            var followersCount = complaint.followers.length;
+            var upvotesCount = complaint.upvotes.length;
+            if(request.user){
+                User.findById(request.user._id,function(err, user){
+                    if(err)
+                        res.send(err);
+                    else if(!user){
+                        var temp ={
+                            followersCount: followersCount,
+                            upvotesCount: upvotesCount,
+                            follow: false,
+                            upvote: false,
+                            title: complaint.title,
+                            description: complaint.description,
+                            category: complaint.category,
+                            subcategory: complaint.subcategory,
+                            comments: complaint.comments,
+                            log: complaint.log,
+                            enddate: complaint.enddate,
+                            location: complaint.location,
+                            userId: complaint.userId,
+                            slug: complaint.slug,
+                            startdate: complaint.startdate,
+                            status: complaint.status
+                        };
+                        response.json(temp);
+                    }
+                    else{
+                        if(complaint.followers.id(user._id)){
+                            follow = true;
+                            if(complaint.upvotes.id(user._id)){
+                            var temp ={
+                            followersCount: followersCount,
+                            upvotesCount: upvotesCount,
+                            follow: follow,
+                            upvote: true,
+                            title: complaint.title,
+                            description: complaint.description,
+                            category: complaint.category,
+                            subcategory: complaint.subcategory,
+                            comments: complaint.comments,
+                            log: complaint.log,
+                            enddate: complaint.enddate,
+                            location: complaint.location,
+                            userId: complaint.userId,
+                            slug: complaint.slug,
+                            startdate: complaint.startdate,
+                            status: complaint.status
+                        };
+                        response.json(temp);
+                            }
+                            else{
+                            var temp ={
+                            followersCount: followersCount,
+                            upvotesCount: upvotesCount,
+                            follow: follow,
+                            upvote: false,
+                            title: complaint.title,
+                            description: complaint.description,
+                            category: complaint.category,
+                            subcategory: complaint.subcategory,
+                            comments: complaint.comments,
+                            log: complaint.log,
+                            enddate: complaint.enddate,
+                            location: complaint.location,
+                            userId: complaint.userId,
+                            slug: complaint.slug,
+                            startdate: complaint.startdate,
+                            status: complaint.status
+                        };
+                        response.json(temp);
+                            }
+                        }
+                        else{
+                            follow = false;
+                            if(complaint.upvotes.id(user._id)){
+                            var temp ={
+                            followersCount: followersCount,
+                            upvotesCount: upvotesCount,
+                            follow: follow,
+                            upvote: true,
+                            title: complaint.title,
+                            description: complaint.description,
+                            category: complaint.category,
+                            subcategory: complaint.subcategory,
+                            comments: complaint.comments,
+                            log: complaint.log,
+                            enddate: complaint.enddate,
+                            location: complaint.location,
+                            userId: complaint.userId,
+                            slug: complaint.slug,
+                            startdate: complaint.startdate,
+                            status: complaint.status
+                        };
+                        response.json(temp);
+                            }
+                            else{
+                            var temp ={
+                            followersCount: followersCount,
+                            upvotesCount: upvotesCount,
+                            follow: follow,
+                            upvote: false,
+                            title: complaint.title,
+                            description: complaint.description,
+                            category: complaint.category,
+                            subcategory: complaint.subcategory,
+                            comments: complaint.comments,
+                            log: complaint.log,
+                            enddate: complaint.enddate,
+                            location: complaint.location,
+                            userId: complaint.userId,
+                            slug: complaint.slug,
+                            startdate: complaint.startdate,
+                            status: complaint.status
+                        };
+                        response.json(temp);
+                            }
+                        }
+                    }
+                });
+            }
+            else{
+                        var temp ={
+                            followersCount: followersCount,
+                            upvotesCount: upvotesCount,
+                            follow: false,
+                            upvote: false,
+                            title: complaint.title,
+                            description: complaint.description,
+                            category: complaint.category,
+                            subcategory: complaint.subcategory,
+                            comments: complaint.comments,
+                            log: complaint.log,
+                            enddate: complaint.enddate,
+                            location: complaint.location,
+                            userId: complaint.userId,
+                            slug: complaint.slug,
+                            startdate: complaint.startdate,
+                            status: complaint.status
+                        };
+                        response.json(temp);
+            }
+
+        }
     });
 };
 
@@ -133,7 +284,12 @@ exports.putUpdateComplaint = function(request, response) {
                          complaint.category = request.body.category;
                          complaint.subcategory = request.body.subcategory;
                          complaint.location = request.body.location;
-
+                         user.log.push({
+                            entry:"Complaint Updated -" + complaint.title
+                        });
+                         complaint.log.push({
+                            entry:"Complaint Updated -"+ user.profile.username
+                        });
 
                          complaint.save(function(err) {
                              if (err)
@@ -218,6 +374,9 @@ exports.upvoteComplaint = function(req, res){
                         complaint.upvotes.push({
                             _id:user._id
                         });
+                        complaint.log.push({
+                            entry:"Complaint Upvoted -"+ user.profile.username
+                        });
                         complaint.save(function(err){
                             if(err)
                                 res.send(err);
@@ -289,6 +448,12 @@ exports.commentComplaint = function(req, res){
                         complaint.comments.push({
                             _id:user._id,
                             description:req.body.description
+                        });
+                        user.log.push({
+                            entry:"Comment Added -" + complaint.title
+                        });
+                        complaint.log.push({
+                            entry:"Complaint Created by -"+ user.profile.username
                         });
                         complaint.save(function(err){
                             if(err)
