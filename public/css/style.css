@@ -15,7 +15,17 @@ p {
 }
 p a {
   text-decoration: underline;
+    color: #ffffff;
 }
+
+#explore{
+    text-decoration: none;
+}
+.category{
+    font-weight: 50;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 h1,
 h2,
 h3,
@@ -26,7 +36,7 @@ h6 {
   font-weight: 800;
 }
 a {
-  color: #404040;
+  color: #ffffff;
 }
 a:hover,
 a:focus {
