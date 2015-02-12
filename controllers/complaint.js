@@ -16,6 +16,15 @@ exports.postAddComplaint = function(req, res) {
             user.complaints.push({
                 _id: complaint._id
             });
+            complaint.followers.push({
+                _id: user._id
+            });
+            user.log.push({
+                entry:"Complaint Added -" + complaint.title
+            });
+            complaint.log.push({
+                entry:"Complaint Created by -"+ user.profile.username
+            });
             complaint.save(function(err) {
                 if (err)
                     res.send(err);
@@ -86,7 +95,16 @@ exports.getComplaints = function(request, response) {
 };
 
 exports.getComplaint = function(request, response) {
-    Complaint.findOne({slug:request.params.cslug},function(error, complaint) {
+    Complaint.findOne({slug:request.params.cslug})
+    .populate({
+        path:'userId',
+        select: 'profile.username profile.slug profile.firstname profile.lastname'
+    })
+    .populate({
+        path:'comments._id',
+        select: 'profile.username profile.slug'
+    })
+    .exec(function(error, complaint) {
         if (error)
             response.send(error);
         response.json(complaint);

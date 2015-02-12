@@ -15,6 +15,11 @@ var userSchema = new mongoose.Schema({
   complaints:[{
     _id:{type: mongoose.Schema.Types.ObjectId, ref: 'Complaint'}
   }],
+  log:[{
+    _id: false,
+    entry: String,
+    date:{type: Date, default: Date.now}
+  }],
     facebook: String,
     twitter: String,
     google: String,

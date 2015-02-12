@@ -27,6 +27,11 @@ var complaintSchema = new mongoose.Schema({
     description: String,
     date: {type: Date, default: Date.now}
   }],
+  log:[{
+    _id: false,
+    entry: String,
+    date:{type: Date, default: Date.now}
+  }],
   enddate: Date,
   location: String,
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
