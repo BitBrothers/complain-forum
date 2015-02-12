@@ -20,6 +20,10 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute',
         templateUrl: 'views/postComplaint.html',
         controller: 'PostComplaintCtrl'
       })
+      .when('/user/:uslug', {
+        templateUrl: 'views/userProfile.html',
+        controller: 'UserCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

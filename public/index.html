@@ -57,7 +57,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right" ng-if="currentUser">
                     <li>
-                        <a href="/">{{currentUser.profile.slug}}</a>
+                        <a href="/user/{{currentUser.profile.slug}}">{{currentUser.profile.slug}}</a>
                     </li>
                     <li>
                         <a href="/login" ng-click="logout()">Log Out</a>
@@ -143,11 +143,13 @@
     <script src="controllers/signup.js"></script>
     <script src="controllers/navbar.js"></script>
     <script src="controllers/postComplaint.js"></script>
+    <script src="controllers/user.js"></script>
 
     <script src="directives/passwordStrength.js"></script>
   
     <script src="services/auth.js"></script>
     <script src="services/complaint.js"></script>
+    <script src="services/user.js"></script>
 
 
 </body>

@@ -1,0 +1,44 @@
+<header class="intro-header" style="background-image: url('images/contact-bg.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h3>{{user.profile.username}}</h3>
+          <hr class="small">
+          <span class="subheading">{{user.profile.location}}</span>
+          <p class="text-muted">Joined on: {{user.profile.joinDate  | date: 'medium'}}</p>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="user.anon"> Go anonymous
+            </label>
+          </div>
+          <div class="checkbox" ng-hide="user.role !== 'admin'">
+            <label>
+              <input type="checkbox" ng-model="staff" ng-click="makeStaff()"> This user is staff.
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-preview" ng-repeat="complaint in user.complaints">
+          
+        <h2 class="post-title">
+            {{complaint._id.title}}
+        </h2>
+        <h4 class="category">
+            {{complaint._id.category}} {{complaint.subcategory}}
+        </h4>
+        <h5 class="post-subtitle">
+            {{complaint.description}}
+        </h5>
+         
+        <p class="location">{{complaint.location}}</p>
+      </div>
+    </div>
+  </div>
+</div>
