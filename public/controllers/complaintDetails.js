@@ -1,7 +1,10 @@
 angular.module('ForChange')
   .controller('ComplaintDetailsCtrl', function($scope,$rootScope, Complaint, Upvote, Follow, $routeParams, $http, $alert, $location) {
+    
     $scope.followBoolean = '';
     $scope.upvoted = '';
+    $scope.followed = '';
+  
       Complaint.get({
           cslug : $routeParams.cslug
         },
@@ -20,6 +23,7 @@ angular.module('ForChange')
           if ($scope.complaint.follow == true)
           {
             $scope.followBoolean = 'false';
+            $scope.followed = 'followed'
           }
           else if ($scope.complaint.follow == false)
           {
@@ -144,13 +148,15 @@ angular.module('ForChange')
           function(complaint) {
             $scope.complaint = complaint;
              if ($scope.complaint.follow == true)
-          {
-            $scope.followBoolean = 'false';
-          }
-          else if ($scope.complaint.follow == false)
-          {
-            $scope.followBoolean = 'true';
-          }
+            {
+              $scope.followBoolean = 'false';
+              $scope.followed = 'followed'
+            }
+            else if ($scope.complaint.follow == false)
+            {
+              $scope.followBoolean = 'true';
+              $scope.followed = ''
+            }
           });
         }, function(object) {
           $alert({

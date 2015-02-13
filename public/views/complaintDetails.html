@@ -8,7 +8,7 @@
                     <span class="meta">{{complaint.category}} <i class="fa fa-angle-double-right"></i> {{complaint.subcategory}} </span>
                     <span class="meta"><i class="fa fa-map-marker"></i> {{complaint.location}} </span>
                     <span ng-click="upvote()"><i class="fa fa-thumbs-up upvotes {{upvoted}}"></i></span><span class="upvotes badge">{{complaint.upvotesCount}} upvotes</span>
-                    <span ng-click="follow()"><i class="fa fa-users followers"></i></span><span class="followers badge">{{complaint.followersCount}} followers</span><span class="deleteComplaintIcon" data-toggle="modal" data-target="#deleteComplaintModal" ng-show="currentUser.profile.slug == complaint.userId.profile.slug"><i class="fa fa-trash-o"></i></span>
+                    <span ng-click="follow()"><i class="fa fa-users followers {{followed}}"></i></span><span class="followers badge">{{complaint.followersCount}} followers</span><span class="deleteComplaintIcon" data-toggle="modal" data-target="#deleteComplaintModal" ng-show="currentUser.profile.slug == complaint.userId.profile.slug"><i class="fa fa-trash-o"></i></span>
                     <p class="complaint-description">{{complaint.description}}</p>
 <!--
                   <div class="upvote-div">
@@ -37,7 +37,7 @@
                     <hr>
                   </div>
                   
-                  <p ng-show="!currentUser"> Want to post a comment? </p>
+                  <p ng-show="!currentUser"> Want to post a comment? <a href="/signup">Signup</a> or <a href="/login">Login</a> now! </p>
                  
                   <form ng-hide="!currentUser">
                     <textarea class="postCommentBox"ng-model="txtcomment" placeholder="Post a comment..." style="width:100%"></textarea>

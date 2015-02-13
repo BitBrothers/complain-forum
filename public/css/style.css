@@ -791,7 +791,7 @@ body {
   cursor: pointer;
 }
 
-.upvoted{
+.upvoted, .followed{
   color: greenyellow;
 }
 

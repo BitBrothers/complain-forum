@@ -13,6 +13,9 @@ angular.module('ForChange')
   
     $scope.navbarTextColor = 'blackText';
     $scope.changeTextColorWhite = function(){
-      $scope.navbarTextColor = 'whiteText';
+      if($scope.navbarTextColor == 'blackText')
+      {
+        $scope.navbarTextColor = 'whiteText';
+      }
     }  
   });
