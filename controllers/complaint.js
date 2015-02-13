@@ -378,23 +378,48 @@ exports.followComplaint = function(req, res){
                     res.status(404).send('Complaint Not Found');
                 }
                 else{
-                    if(complaint.followers.id(user._id)){
-                        res.status(500).send('Already Followed Complaint');
+                    if(req.body.result == true){
+                        if(complaint.followers.id(user._id)){
+                            res.status(500).send('Already Followed Complaint');
+                        }
+                        else{
+                            complaint.followers.push({
+                                _id:user._id
+                            });
+                            complaint.save(function(err){
+                                if(err)
+                                    res.send(err);
+                                else{
+                                    res.json({
+                                        message:'Successfully Followed Complaint'
+                                    });
+                                }
+                            });
+                        }
+                    }
+                    else if(req.body.result == false){
+                        if(complaint.followers.id(user._id)){
+                            complaint.followers.pull({
+                                _id:user._id
+                            });
+                            complaint.save(function(err){
+                                if(err)
+                                    res.send(err);
+                                else{
+                                    res.json({
+                                        message:'Successfully Unfollowed'
+                                    });
+                                }
+                            });
+                        }
+                        else{
+                            res.status(412).send('Not Follwed Complaint');
+                        }
                     }
                     else{
-                        complaint.followers.push({
-                            _id:user._id
-                        });
-                        complaint.save(function(err){
-                            if(err)
-                                res.send(err);
-                            else{
-                                res.json({
-                                    message:'Successfully Followed Complaint'
-                                });
-                            }
-                        });
+                        res.status(412).send('Result Not Sent');
                     }
+
 
 
                 }

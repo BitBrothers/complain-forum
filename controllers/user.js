@@ -28,24 +28,8 @@ function createJwtToken(user) {
 };
 
 exports.isLogin2 = function(req, res, next) {
-
-    if (req.headers.authorization) {
-        var token = req.headers.authorization;
-        //.split(' ')[1];
-        try {
-            var decoded = jwt.decode(token, tokenSecret);
-            if (decoded.exp <= Date.now()) {
-                res.status(400).send('Access token has expired');
-            } else {
-                req.user = decoded.user;
-                return next();
-            }
-        } catch (err) {
-            return res.status(500).send('Error parsing token');
-        }
-    } else {
-        return next();
-    }
+ req.flag = true;
+ next();
 };
 
 exports.isLogin = function(req, res, next) {
@@ -65,7 +49,13 @@ exports.isLogin = function(req, res, next) {
             return res.status(500).send('Error parsing token');
         }
     } else {
-        return res.status(401);
+        if(req.flag){
+            next();
+        }
+        else{
+         return res.status(401);   
+        }
+        
     }
 };
 
