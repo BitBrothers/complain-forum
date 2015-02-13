@@ -37,10 +37,10 @@
                             {{complaint.title}}, in {{complaint.location}}
                         </h2>
                         <h5 class="category">
-                            {{complaint.category}}
+                            {{complaint.category}} {{complaint.subcategory}}
                         </h5>
                    
-                    <p class="postedBy"><i>Posted by </i>{{complaint.userId.profile.slug}}</p>
+                  <p class="postedBy"><i>Posted by {{complaint.userId.profile.slug}}</i></p>
                 </div>
                 
                 <hr>

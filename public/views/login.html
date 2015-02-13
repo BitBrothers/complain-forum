@@ -11,7 +11,7 @@
           <div class="form-group has-feedback">
             <input type="password" name="password" ng-model="password" placeholder="Password" required="" class="form-control input-lg"/><span class="ion-key form-control-feedback"></span>
           </div>
-          <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-md btn-block btn-success">Log in</button><br/>
+          <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-md btn-block btn-success" ng-click="changeTextColorWhite()">Log in</button><br/>
           <p class="text-center"><a href="#">Forgot your password?</a></p>
           <p class="text-center text-muted"><small>Don't have an account yet? <br><a href="/signup">Sign up</a></small></p>
           <div class="signup-or-separator">

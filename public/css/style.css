@@ -13,10 +13,6 @@ p {
   line-height: 1.5;
   margin: 30px 0;
 }
-p a {
-  text-decoration: underline;
-/*    color: #ffffff;*/
-}
 .searchbar{
     margin-top: 90px;
 }
@@ -234,6 +230,7 @@ header, .content-section{
   font-style: italic;
   font-weight: 300;
   font-size: 20px;
+  line-height: 1.5em;
 }
 .intro-header .post-heading .meta a {
   color: white;
@@ -762,7 +759,11 @@ body {
 }
 
 .blackText{
-  color: #2b2b2b !important;
+  color: #777 !important;
+}
+
+.whiteText{
+  color: white !important;
 }
 
 /* Complaint form start */
@@ -782,7 +783,19 @@ body {
   font-size: 20px;
 }
 
-.upvotes, .followers{
+.upvotes{
+  padding: 10px 10px 10px 0px;
+}
+
+.upvotes:hover, .followers:hover{
+  cursor: pointer;
+}
+
+.upvoted{
+  color: greenyellow;
+}
+
+.followers{
   padding: 10px;
 }
 
@@ -802,6 +815,33 @@ body {
   border-radius:4px 0px 0px 4px;
 }
 
+.deleteComplaintIcon{
+  float: right;
+  font-size: 25px;
+}
+
+
+.deleteComplaintIcon:hover{
+  cursor: pointer;
+}
+
 .complaint-details-header{
   margin-bottom: 0px;
+}
+
+.commentSection small
+{
+  font-size: 13px;
+  float: right;
+  position: relative;
+  top: 30px;
+  color: #777;
+}
+
+.postCommentBox{
+  padding: 10px;
+}
+
+.modal-dialog{
+  margin-top: 25%;
 }

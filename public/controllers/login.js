@@ -10,4 +10,9 @@ angular.module('ForChange')
       Auth.googleLogin();
     };
     $scope.pageClass = 'fadeZoom';
+  
+    $scope.navbarTextColor = 'blackText';
+    $scope.changeTextColorWhite = function(){
+      $scope.navbarTextColor = 'whiteText';
+    }  
   });

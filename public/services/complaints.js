@@ -1,4 +1,4 @@
 angular.module('ForChange')
-  .factory('ComplaintList', function($resource) {
+  .factory('Complaints', function($resource) {
     return $resource('/api/complaints');
   });

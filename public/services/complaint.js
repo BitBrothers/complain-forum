@@ -6,11 +6,20 @@ angular.module('ForChange')
     });
   });
 
-
 angular.module('ForChange')
-  .factory('Comment', function($resource, $window) {
-    return $resource('/api/complaint/:cslug/comment', null,
+  .factory('Upvote', function($resource, $window) {
+    return $resource('/api/complaint/:cslug/upvote', null,
     {
         'update': { method:'PUT' }
     });
   });
+
+angular.module('ForChange')
+  .factory('Follow', function($resource, $window) {
+    return $resource('/api/complaint/:cslug/follow', null,
+    {
+        'update': { method:'PUT' }
+    });
+  });
+
+
