@@ -155,9 +155,6 @@ exports.getComplaint = function(request, response) {
         else if(!complaint){
             response.status(404).send('Complaint Not Found');
         }
-        else if(complaint.status == 'New'){
-            response.status(404).send('Complaint Not Found');
-        }
         else {
             var follow,upvote;
             var followersCount = complaint.followers.length;
@@ -355,7 +352,6 @@ exports.putUpdateComplaint = function(request, response) {
                 });
         }
     });
-
 };
 
 exports.followComplaint = function(req, res){
@@ -482,8 +478,6 @@ exports.upvoteComplaint = function(req, res){
         }
     });
 };
-
-
 
 exports.commentComplaint = function(req, res){
     User.findById(req.user._id,function(err, user){
