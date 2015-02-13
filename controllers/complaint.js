@@ -378,9 +378,9 @@ exports.followComplaint = function(req, res){
                     res.status(404).send('Complaint Not Found');
                 }
                 else{
-                    if(req.body.result == true){
+                    if(req.body.result == "true"){
                         if(complaint.followers.id(user._id)){
-                            res.status(500).send('Already Followed Complaint');
+                            res.status(412).send('Already Followed Complaint');
                         }
                         else{
                             complaint.followers.push({
@@ -397,7 +397,7 @@ exports.followComplaint = function(req, res){
                             });
                         }
                     }
-                    else if(req.body.result == false){
+                    else if(req.body.result == "false"){
                         if(complaint.followers.id(user._id)){
                             complaint.followers.pull({
                                 _id:user._id
@@ -483,45 +483,7 @@ exports.upvoteComplaint = function(req, res){
     });
 };
 
-exports.unfollowComplaint = function(req, res){
-    User.findById(req.user._id, function(err, user){
-        if(err)
-            res.send(err);
-        else if(!user){
-            res.status(404).send('User Not Found');
-        }
-        else{
-            Complaint.findOne({
-                slug:req.params.cslug
-            },function(err, complaint){
-                if(err)
-                    res.send(err);
-                else if(!complaint){
-                    res.status(404).send('Complaint Not Found');
-                }
-                else{
-                    if(complaint.followers.id(user._id)){
-                        complaint.followers.pull({
-                            _id:user._id
-                        });
-                        complaint.save(function(err){
-                            if(err)
-                                res.send(err);
-                            else{
-                                res.json({
-                                    message:'Successfully Unfollowed'
-                                });
-                            }
-                        });
-                    }
-                    else{
-                        res.status(412).send('Not Follwed Complaint');
-                    }
-                }
-            });
-        }
-    });
-};
+
 
 exports.commentComplaint = function(req, res){
     User.findById(req.user._id,function(err, user){
@@ -598,3 +560,42 @@ exports.getComplaintLog = function(req, res){
 };
 
 
+// exports.unfollowComplaint = function(req, res){
+//     User.findById(req.user._id, function(err, user){
+//         if(err)
+//             res.send(err);
+//         else if(!user){
+//             res.status(404).send('User Not Found');
+//         }
+//         else{
+//             Complaint.findOne({
+//                 slug:req.params.cslug
+//             },function(err, complaint){
+//                 if(err)
+//                     res.send(err);
+//                 else if(!complaint){
+//                     res.status(404).send('Complaint Not Found');
+//                 }
+//                 else{
+//                     if(complaint.followers.id(user._id)){
+//                         complaint.followers.pull({
+//                             _id:user._id
+//                         });
+//                         complaint.save(function(err){
+//                             if(err)
+//                                 res.send(err);
+//                             else{
+//                                 res.json({
+//                                     message:'Successfully Unfollowed'
+//                                 });
+//                             }
+//                         });
+//                     }
+//                     else{
+//                         res.status(412).send('Not Follwed Complaint');
+//                     }
+//                 }
+//             });
+//         }
+//     });
+// };

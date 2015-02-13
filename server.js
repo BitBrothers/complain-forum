@@ -85,7 +85,7 @@ app.get('/api/users', userController.hasEmail);
 
 //Complaint APIs
 app.put('/api/complaint/:cslug/follow', userController.isLogin, complaintController.followComplaint);  
-app.put('/api/complaint/:cslug/unfollow', userController.isLogin, complaintController.unfollowComplaint);  
+// app.put('/api/complaint/:cslug/unfollow', userController.isLogin, complaintController.unfollowComplaint);  
 app.put('/api/complaint/:cslug/comment', userController.isLogin, complaintController.commentComplaint);  
 app.put('/api/complaint/:cslug/upvote', userController.isLogin, complaintController.upvoteComplaint);  
 app.get('/api/complaint/:cslug/log', userController.isLogin, complaintController.getComplaintLog);  
