@@ -8,7 +8,7 @@ var complaintSchema = new mongoose.Schema({
   slug: String,
   status: {
     type: String,
-    default: 'Un-published',
+    default: 'New',
     index: true
   },
   startdate: {

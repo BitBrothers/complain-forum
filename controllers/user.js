@@ -237,6 +237,18 @@ exports.getUser = function(req, res){
     });
 };
 
+exports.getUserLog = function(req, res){
+    User.findOne({
+        'profile.slug':req.params.uslug
+    },function(err, user){
+        if(err)
+            res,send(err);
+        else {
+            res.json(complaint.log);
+        }
+    });
+};
+
 
 
 

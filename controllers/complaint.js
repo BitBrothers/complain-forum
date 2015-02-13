@@ -6,6 +6,9 @@ exports.postAddComplaint = function(req, res) {
     User.findById(req.user._id,function(err,user){
         if(err)
             res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
         else{
             var complaint = new Complaint();
             complaint.title = req.body.title;
@@ -45,13 +48,15 @@ exports.postAddComplaint = function(req, res) {
             });
         }
     });
-
 };
 
 exports.deleteComplaint = function(req, res) {
     User.findById(req.user._id, function(err,user){
         if(err)
             res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
         else{
             Complaint.findOne({
                 slug:req.params.cslug},
@@ -84,24 +89,55 @@ exports.deleteComplaint = function(req, res) {
                 });
         }
     });
-
 };
 
 exports.getComplaints = function(request, response) {
-    Complaint.find()
+    Complaint.find({status:'Pending'})
     .populate({
         path:'userId',
         select: 'profile.slug profile.username'
     })
     .select('-_id title location category subcategory slug status startdate userId')
-    .exec(function(error, complaints) {
+    .exec(function(error, complaints1) {
         if (error)
             response.send(error);
-        response.json(complaints);
+        else{
+            Complaint.find({status:'Resolved'})
+            .populate({
+                path:'userId',
+                select: 'profile.slug profile.username'
+            })
+            .select('-_id title location category subcategory slug status startdate userId')
+            .exec(function(error, complaints2) {
+                if (error)
+                    response.send(error);
+                else{
+                    Complaint.find({status:'Un-Resolved'})
+                    .populate({
+                        path:'userId',
+                        select: 'profile.slug profile.username'
+                    })
+                    .select('-_id title location category subcategory slug status startdate userId')
+                    .exec(function(error, complaints3) {
+                        if (error)
+                            response.send(error);
+                        else{
+                            response.json({
+                                Pending:complaints1,
+                                Resolved:complaints2,
+                                Unresolved:complaints3
+                            });
+                        }
+                        
+                    });
+                }
+                
+            });
+    
+        }
+        
     });
 };
-
-
 
 exports.getComplaint = function(request, response) {
     Complaint.findOne({slug:request.params.cslug})
@@ -117,7 +153,10 @@ exports.getComplaint = function(request, response) {
         if (error)
             response.send(error);
         else if(!complaint){
-            res.status(404).send('Complaint Not Found');
+            response.status(404).send('Complaint Not Found');
+        }
+        else if(complaint.status == 'New'){
+            response.status(404).send('Complaint Not Found');
         }
         else {
             var follow,upvote;
@@ -262,8 +301,6 @@ exports.getComplaint = function(request, response) {
     });
 };
 
-
-
 exports.putUpdateComplaint = function(request, response) {
     User.findById(request.user._id, function(err,user){
         if(err)
@@ -284,12 +321,23 @@ exports.putUpdateComplaint = function(request, response) {
                          complaint.category = request.body.category;
                          complaint.subcategory = request.body.subcategory;
                          complaint.location = request.body.location;
-                         user.log.push({
-                            entry:"Complaint Updated -" + complaint.title
-                        });
                          complaint.log.push({
                             entry:"Complaint Updated -"+ user.profile.username
                         });
+                         for(var i = 0;i <= complaint.followers.length-1;i++){
+                            User.findById(complaint.followers[i]._id,function(err, user1){
+                                if(err)
+                                    res.send(err);
+                                else if(!user){
+                                    console.log('User Not Found');
+                                }
+                                else{
+                                    user1.log.push({
+                                        entry:"Complaint Updated -"+ complaint.title
+                                    });
+                                }
+                            });
+                         };
 
                          complaint.save(function(err) {
                              if (err)
@@ -316,6 +364,9 @@ exports.followComplaint = function(req, res){
         function(err, user){
         if(err)
             res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
         else{
             Complaint.findOne({
                 slug:req.params.cslug
@@ -356,6 +407,9 @@ exports.upvoteComplaint = function(req, res){
     User.findById(req.user._id, function(err, user){
         if(err)
             res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
         else{
             Complaint.findOne({
                 slug:req.params.cslug
@@ -368,7 +422,7 @@ exports.upvoteComplaint = function(req, res){
                 }
                 else{
                     if(complaint.upvotes.id(user._id)){
-                        res.status(500).send('Already Upvoted');
+                        res.status(412).send('Already Upvoted');
                     }
                     else{
                         complaint.upvotes.push({
@@ -377,6 +431,17 @@ exports.upvoteComplaint = function(req, res){
                         complaint.log.push({
                             entry:"Complaint Upvoted -"+ user.profile.username
                         });
+                        for(var i = 0;i <= complaint.followers.length-1;i++){
+                            User.findById(complaint.followers[i]._id,function(err, user1){
+                                if(err)
+                                    res.send(err);
+                                else{
+                                    user1.log.push({
+                                        entry:"Complaint Upvoted -"+ complaint.title
+                                    });
+                                }
+                            });
+                         };
                         complaint.save(function(err){
                             if(err)
                                 res.send(err);
@@ -397,6 +462,9 @@ exports.unfollowComplaint = function(req, res){
     User.findById(req.user._id, function(err, user){
         if(err)
             res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
         else{
             Complaint.findOne({
                 slug:req.params.cslug
@@ -422,7 +490,7 @@ exports.unfollowComplaint = function(req, res){
                         });
                     }
                     else{
-                        res.status(500).send('Not Follwed Complaint');
+                        res.status(412).send('Not Follwed Complaint');
                     }
                 }
             });
@@ -434,6 +502,9 @@ exports.commentComplaint = function(req, res){
     User.findById(req.user._id,function(err, user){
         if(err)
             res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
         else{
             Complaint.findOne({
                 slug:req.params.cslug
@@ -453,8 +524,19 @@ exports.commentComplaint = function(req, res){
                             entry:"Comment Added -" + complaint.title
                         });
                         complaint.log.push({
-                            entry:"Complaint Created by -"+ user.profile.username
+                            entry:"Comment Added by -"+ user.profile.username
                         });
+                        for(var i = 0;i <= complaint.followers.length-1;i++){
+                            User.findById(complaint.followers[i]._id,function(err, user1){
+                                if(err)
+                                    res.send(err);
+                                else{
+                                    user1.log.push({
+                                        entry:"Comment Added on -"+ complaint.title
+                                    });
+                                }
+                            });
+                         };
                         complaint.save(function(err){
                             if(err)
                                 res.send(err);
@@ -466,13 +548,28 @@ exports.commentComplaint = function(req, res){
                         });
                     }
                     else{
-                        res.status(500).send('Send comment description');
+                        res.status(412).send('Send comment description');
                     }
 
                 }
             });
         }
     });
+};
+
+exports.getComplaintLog = function(req, res){
+    Complaint.findOne({
+        slug:req.params.cslug},
+        function(err, complaint){
+            if(err)
+                res.send(err);
+            else if(!complaint){
+                res.status(404).send('Complaint Not Found');
+            }
+            else{
+                res.json(complaint.log);
+            }
+        });
 };
 
 

@@ -88,6 +88,7 @@ app.put('/api/complaint/:cslug/follow', userController.isLogin, complaintControl
 app.put('/api/complaint/:cslug/unfollow', userController.isLogin, complaintController.unfollowComplaint);  
 app.put('/api/complaint/:cslug/comment', userController.isLogin, complaintController.commentComplaint);  
 app.put('/api/complaint/:cslug/upvote', userController.isLogin, complaintController.upvoteComplaint);  
+app.get('/api/complaint/:cslug/log', userController.isLogin, complaintController.getComplaintLog);  
 app.get('/api/complaints', complaintController.getComplaints);
 app.get('/api/complaint/:cslug', userController.isLogin2,complaintController.getComplaint);
 app.post('/api/complaint', userController.isLogin, complaintController.postAddComplaint);     
@@ -95,6 +96,7 @@ app.put('/api/complaint/:cslug', userController.isLogin, complaintController.put
 app.delete('/api/complaint/:cslug', userController.isLogin, complaintController.deleteComplaint);
 
 //User APIs
+app.get('/api/user/:uslug', userController.isLogin, userController.getUserLog);
 app.get('/api/user/:uslug', userController.getUser);
 
 
