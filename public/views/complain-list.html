@@ -2,12 +2,34 @@
     <!-- Set your background image for this header on the line below. -->
     <header class="intro-header" style="background-image: url('images/home-bg.jpg')">
         <div class="container">
+
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
                         <h1>Ready to change Goa?</h1>
                         <hr class="small">
                         <span class="subheading">Connect with you local governs via forchange.io and build a better city</span>
+
+            <div class="row searchbar">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                   <div class="input-group">
+                        <div class="input-group-btn search-panel">
+                            <button type="button" class="btn btn-default dropdown-toggle" id="filterbutton" data-toggle="dropdown">
+                                <span id="search_concept">Filter by</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a href="#location">Location</a></li>
+                              <li><a href="#category">Category</a></li>
+                            </ul>
+                        </div>
+                        <input type="hidden" name="search_param" value="all" id="search_param">         
+                        <input type="text" class="form-control search" name="x" placeholder="Search term...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="searchbutton" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+
                     </div>
                 </div>
             </div>
@@ -18,6 +40,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
                 <div class="post-preview" ng-repeat="complaint in complaints">
                     
                         <h2 class="post-title">
@@ -64,6 +87,20 @@
                    
                     <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on July 8, 2014</p>
                 </div>
+
+                <div class="complaintslist" ng-repeat="complaint in complaints">
+                    
+                        <h2 class="title">
+                            {{complaint.title}}, in {{complaint.location}}
+                        </h2>
+                        <h5 class="category">
+                            {{complaint.category}} {{complaint.subcategory}}
+                        </h5>
+                   
+                  <p class="postedBy"><i>Posted by {{complaint.userId.profile.slug}}</i></p>
+                </div>
+                
+
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">

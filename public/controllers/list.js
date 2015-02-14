@@ -1,6 +1,6 @@
 angular.module('ForChange')
-  .controller('ListCtrl', function($scope, $alert, $location, $http, $rootScope,ComplaintList) {
+  .controller('ListCtrl', function($scope, $alert, $location, $http, $rootScope,Complaints) {
     
-    $scope.complaints= ComplaintList.query();
+    $scope.complaints= Complaints.query();
     console.log($scope.complaints);
 });

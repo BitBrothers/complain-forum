@@ -1,5 +1,5 @@
 angular.module('ForChange')
-  .controller('SignupCtrl', function($scope, Auth) {
+  .controller('SignupCtrl', function($scope, Auth, $location) {
     $scope.signup = function() {
       Auth.signup({
         username: $scope.displayName,
@@ -8,5 +8,6 @@ angular.module('ForChange')
         anonymous: $scope.anonymous
       });
     };
-    $scope.pageClass = 'fadeZoom'
+    $scope.pageClass = 'fadeZoom';
+  
   });

@@ -25,7 +25,12 @@ function createJwtToken(user) {
         exp: moment().add(7, 'days').valueOf()
     };
     return jwt.encode(payload, tokenSecret);
-}
+};
+
+exports.isLogin2 = function(req, res, next) {
+ req.flag = true;
+ next();
+};
 
 exports.isLogin = function(req, res, next) {
 
@@ -44,7 +49,13 @@ exports.isLogin = function(req, res, next) {
             return res.status(500).send('Error parsing token');
         }
     } else {
-        return res.status(401);
+        if(req.flag){
+            next();
+        }
+        else{
+         return res.status(401);   
+        }
+        
     }
 };
 
@@ -196,3 +207,43 @@ exports.hasEmail = function(req, res, next) {
         });
     });
 }; 
+
+exports.getUser = function(req, res){
+    User.findOne({'profile.slug':req.params.uslug})
+    .select('-_id profile role complaints')
+    .populate({
+        path:'complaints._id',
+        select: 'slug title description category subcategory location status startdate enddate'
+    })
+    .exec(function(err, user){
+        if(err)
+            res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
+        else{
+            res.json(user);
+        }
+    });
+};
+
+exports.getUserLog = function(req, res){
+    User.findOne({
+        'profile.slug':req.params.uslug
+    },function(err, user){
+        if(err)
+            res,send(err);
+        else {
+            res.json(complaint.log);
+        }
+    });
+};
+
+
+
+
+
+
+
+
+

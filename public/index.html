@@ -19,7 +19,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/components-font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -35,7 +35,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <nav ng-controller="NavbarCtrl" class="navbar navbar-default navbar-custom navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -45,15 +45,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Goa.forchange.io</a>
+                <a class="navbar-brand {{navbarTextColor}}" href="index.html" ng-click="changeTextColorWhite()">Goa.forchange.io</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="loggedIn">
-                        <a href="/login">Login</a>
+                <ul class="nav navbar-nav navbar-right" ng-if="!currentUser">
+                    <li>
+                        <a href="/login" ng-click="changeTextColorGrey()" class="{{navbarTextColor}}">Login</a>
                     </li>
-                    <li ng-hide="loggedIn">
-                        <a href="/signup">Signup</a>
+                    <li>
+                        <a href="/signup" ng-click="changeTextColorGrey()" class="{{navbarTextColor}}">Signup</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" ng-if="currentUser">
+                    <li>
+                        <a href="/">{{currentUser.profile.slug}}</a>
+                    </li>
+                    <li>
+                        <a href="/login" ng-click="logout(); changeTextColorGrey()" class="{{navbarTextColor}}">Log Out</a>
                     </li>
                 </ul>
             </div>
@@ -134,15 +142,16 @@
 
     <script src="controllers/login.js"></script>
     <script src="controllers/signup.js"></script>
+    <script src="controllers/navbar.js"></script>
     <script src="controllers/postComplaint.js"></script>
+    <script src="controllers/complaintDetails.js"></script>
 
     <script src="directives/passwordStrength.js"></script>
-  
+    <script src="directives/uniqueEmail.js"></script>
     <script src="services/auth.js"></script>
     <script src="services/complaints.js"></script>
-
+    <script src="services/complaint.js"></script>
     <script src="controllers/list.js"></script>
-    
 
 
 </body>

@@ -8,7 +8,7 @@ var complaintSchema = new mongoose.Schema({
   slug: String,
   status: {
     type: String,
-    default: 'Open',
+    default: 'New',
     index: true
   },
   startdate: {
@@ -26,6 +26,11 @@ var complaintSchema = new mongoose.Schema({
     _id:{type: mongoose.Schema.Types.ObjectId,ref: 'User'},
     description: String,
     date: {type: Date, default: Date.now}
+  }],
+  log:[{
+    _id: false,
+    entry: String,
+    date:{type: Date, default: Date.now}
   }],
   enddate: Date,
   location: String,
