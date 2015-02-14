@@ -9,7 +9,7 @@ angular.module('ForChange')
   	};
     
     $scope.exploreComplaint = function () {
-  		$location.path('/list');
+  		$location.path('/complaint-list');
  	};
 
 });

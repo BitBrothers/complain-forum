@@ -20,8 +20,8 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute',
         templateUrl: 'views/postComplaint.html',
         controller: 'PostComplaintCtrl'
         })  
-      .when('/list',{
-        templateUrl: 'views/complain-list.html',
+      .when('/complaint-list',{
+        templateUrl: 'views/complaintList.html',
         controller: 'ListCtrl'        
 
       })
@@ -29,10 +29,6 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute',
         templateUrl: 'views/complaintDetails.html',
         controller: 'ComplaintDetailsCtrl'
 
-      })
-      .when('/list',{
-        templateUrl: 'views/complain-list.html',
-        controller: 'ListCtrl'        
       })
       .otherwise({
         redirectTo: '/'
