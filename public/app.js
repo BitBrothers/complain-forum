@@ -25,6 +25,11 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute',
         controller: 'ListCtrl'        
 
       })
+      .when('/complaint-details/:cslug/editComplaint', {
+        templateUrl: 'views/editComplaint.html',
+        controller: 'EditComplaintCtrl'
+      
+      })
       .when('/complaint-details/:cslug', {
         templateUrl: 'views/complaintDetails.html',
         controller: 'ComplaintDetailsCtrl'

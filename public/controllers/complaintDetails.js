@@ -1,6 +1,6 @@
 angular.module('ForChange')
   .controller('ComplaintDetailsCtrl', function($scope,$rootScope, Complaint, Upvote, Follow, $routeParams, $http, $alert, $location) {
-    
+    $scope.path = $location.path();
     $scope.followBoolean = '';
     $scope.upvoted = '';
     $scope.followed = '';

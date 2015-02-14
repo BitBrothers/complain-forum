@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="complaint-form">
+        <form name="postComplaint">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" ng-model="complaint.title" class="form-control" placeholder="Enter title" required>
+          </div>
+          <div class="form-group">
+            <label for="desc">Description</label>
+            <textarea class="form-control" ng-model="complaint.description" rows="3" placeholder="Explain your problem in detail." required></textarea>
+          </div>
+          <!-- <div class="form-group">
+            <label for="exampleInputFile">Image Upload</label>
+            <input type="file">
+          </div> -->
+          <div class="form-group">
+            <select required
+              ng-model="complaint.category"
+              class="selectpicker"
+              ng-options="val.value for val in cats">
+              <option value="">Please select a Category</option>
+            </select>
+            <select required
+              ng-model="complaint.subcategory"
+              class="selectpicker"
+              ng-options="val.value for val in subCats">
+              <option value="">Please select a Sub-Category</option>
+            </select>
+          </div>  
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" ng-model="complaint.location" placeholder="Where did you experince the problem?" required>
+          </div>
+          <button ng-click="update()" ng-disabled="postComplaint.$invalid" class="btn btn-default">Submit</button>
+          <span ng-show="postComplaint.$invalid">Please fill in all fields to submit.</span>
+        </form>               
+      </div>
+    </div>
+  </div>
+</div>
