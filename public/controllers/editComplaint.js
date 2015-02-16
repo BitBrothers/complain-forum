@@ -1,10 +1,10 @@
 angular.module('ForChange')
-  .controller('EditComplaintCtrl', function($scope, $alert, $location, $http, $rootScope,Complaint, $routeParams) {
+  .controller('EditComplaintCtrl', function($scope, $alert, $location, $http, $rootScope,Complaints, $routeParams) {
     
   $scope.cats = [{'value':'Cat1'}, {'value':'Cat2'}, {'value':'Cat3'}];
 	  $scope.subCats = [{'value':'subCat1'}, {'value':'subCat2'}, {'value':'subCat3'}];
 
-  Complaint.get({
+  Complaints.default.get({
         cslug : $routeParams.cslug
       },
       function(complaint) {
@@ -16,11 +16,13 @@ angular.module('ForChange')
     
   
     $scope.update = function() {
-      Complaint.save({
+      Complaints.default.update({
+        cslug : $routeParams.cslug
+      },{
         title: $scope.complaint.title,
         description: $scope.complaint.description,
-        category: $scope.complaint.category.value,
-        subcategory: $scope.complaint.subcategory.value ,
+        category: $scope.complaint.category,
+        subcategory: $scope.complaint.subcategory ,
         location: $scope.complaint.location,
       },
       function(data){
@@ -30,7 +32,7 @@ angular.module('ForChange')
           type: 'success',
           duration: 5
         });
-        $location.path('/complaint-details/'+$routeParams.slug);
+        $location.path('/complaint-details/'+$routeParams.cslug);
       },
       function(data){
         $alert({

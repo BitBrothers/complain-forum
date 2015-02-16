@@ -50,18 +50,18 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right" ng-if="!currentUser">
                     <li>
-                        <a href="/login" ng-click="changeTextColorGrey()" class="{{navbarTextColor}}">Login</a>
+                        <a href="/login">Login</a>
                     </li>
                     <li>
-                        <a href="/signup" ng-click="changeTextColorGrey()" class="{{navbarTextColor}}">Signup</a>
+                        <a href="/signup">Signup</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" ng-if="currentUser">
                     <li>
-                        <a href="/">{{currentUser.profile.slug}}</a>
+                        <a href="/">{{currentUser.profile.username}}</a>
                     </li>
                     <li>
-                        <a href="/login" ng-click="logout(); changeTextColorGrey()" class="{{navbarTextColor}}">Log Out</a>
+                        <a href="/login" ng-click="logout()">Log Out</a>
                     </li>
                 </ul>
             </div>
@@ -153,10 +153,6 @@
     <script src="services/complaints.js"></script>
 
     <script src="controllers/list.js"></script>
-    
-
-    <script src="services/complaint.js"></script>
-    <script src="services/complaints.js"></script>
 
 
 </body>

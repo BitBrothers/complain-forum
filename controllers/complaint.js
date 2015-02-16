@@ -403,7 +403,7 @@ exports.followComplaint = function(req, res){
                                     res.send(err);
                                 else{
                                     res.json({
-                                        message:'Successfully Unfollowed'
+                                        message:'Successfully Unfollowed Complaint'
                                     });
                                 }
                             });

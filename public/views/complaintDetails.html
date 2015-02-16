@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>{{complaint.title}}</h1> <span class="editComplaintIcon" ng-show="currentUser.profile.slug == complaint.userId.profile.slug"><a href="{{path}}/editComplaint"><i class="fa fa-pencil"></i></a></span>
+                    <h1>{{complaint.title}}</h1> <span  ng-show="currentUser.profile.slug == complaint.userId.profile.slug"><a class="editComplaintIcon" href="{{path}}/editComplaint"><i class="fa fa-pencil"></i></a></span>
                     <span class="meta">Posted by <a href="#">{{complaint.userId.profile.slug}}</a> on {{complaint.startdate | date: 'medium'}} </span>
                     <span class="meta">{{complaint.category}} <i class="fa fa-angle-double-right"></i> {{complaint.subcategory}} </span>
                     <span class="meta"><i class="fa fa-map-marker"></i> {{complaint.location}} </span>
@@ -32,7 +32,7 @@
                   <p ng-hide="complaint.comments[0]"> No comments posted yet.</p>
                   <br>
                   <div class="commentSection" ng-repeat="comment in complaint.comments">
-                    <h4> {{comment._id.profile.slug}} </h4> <small>{{comment.date | date : format : 'medium'}}</small>
+                    <h4> {{comment._id.profile.username}} </h4> <small>{{comment.date | date : format : 'medium'}}</small>
                     <p> {{comment.description}} </p>
                     <hr>
                   </div>
@@ -53,7 +53,7 @@
     <hr>
 
 
-<!-- Modal -->
+<!-- Delete Complaint Modal Begins -->
 <div class="modal fade" id="deleteComplaintModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -71,3 +71,4 @@
     </div>
   </div>
 </div>
+<!-- Delete Complaint Modal Ends -->

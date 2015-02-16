@@ -4,11 +4,11 @@ angular.module('ForChange')
       Auth.logout();
     };
   
-    $scope.navbarTextColor = '';
-    $scope.changeTextColorGrey = function(){
-      $scope.navbarTextColor = 'blackText';
-    }
-    $scope.changeTextColorWhite = function(){
-      $scope.navbarTextColor = '';
-    }
+//    $scope.navbarTextColor = '';
+//    $scope.changeTextColorGrey = function(){
+//      $scope.navbarTextColor = 'blackText';
+//    }
+//    $scope.changeTextColorWhite = function(){
+//      $scope.navbarTextColor = '';
+//    }
   });

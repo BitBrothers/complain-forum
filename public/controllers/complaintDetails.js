@@ -1,11 +1,11 @@
 angular.module('ForChange')
-  .controller('ComplaintDetailsCtrl', function($scope,$rootScope, Complaint, Upvote, Follow, $routeParams, $http, $alert, $location) {
+  .controller('ComplaintDetailsCtrl', function($scope,$rootScope, Complaints, $routeParams, $http, $alert, $location) {
     $scope.path = $location.path();
     $scope.followBoolean = '';
     $scope.upvoted = '';
     $scope.followed = '';
   
-      Complaint.get({
+      Complaints.default.get({
           cslug : $routeParams.cslug
         },
         function(complaint) {
@@ -42,29 +42,43 @@ angular.module('ForChange')
           //        $scope.comment.push($scope.txtcomment);
           pushChat($scope.txtcomment);
           $scope.txtcomment = "";
-          Complaint.get({
-          cslug : $routeParams.cslug
-          },
-          function(complaint) {
-            $scope.complaint = complaint;
-          });
+//          Complaint.get({
+//          cslug : $routeParams.cslug
+//          },
+//          function(complaint) {
+//            $scope.complaint = complaint;
+//          });
         };
       };
       var pushChat = function(abc) {
-        $http({
-          url: '/api/complaint/' + $routeParams.cslug + '/comment',
-          method: 'PUT',
-          data: {
+        Complaints.comment.save({
+          cslug : $routeParams.cslug
+        },{
             description: abc
-          }
-        }).success(function(data, status, headers, config) {
-
-
-        }).
-        error(function(data, status, headers, config) {
-
-
-        });
+        },function(object) {
+            $alert({
+              content: object.message,
+              placement: 'right',
+              type: 'success',
+              duration: 5
+            });
+          $scope.complaint.comments.push({
+            _id:{
+              profile:{
+                username : $rootScope.currentUser.profile.username
+              }
+            },
+            description : abc,
+            date : Date.now()
+          });
+        }, function(object) {
+            $alert({
+              content: object.data,
+              placement: 'right',
+              type: 'danger',
+              duration: 5
+            });
+          });
       };
   
 //    Comment Section JS Ends
@@ -72,7 +86,7 @@ angular.module('ForChange')
 //    Delete Complaint JS Begins  
       
       $scope.deleteComplaint = function() {
-        Complaint.delete({
+        Complaints.default.delete({
           cslug : $routeParams.cslug
         },function(object) {
           $alert({
@@ -94,80 +108,117 @@ angular.module('ForChange')
   
 //    Delete Complaint JS Ends  
     
+      $scope.isLoggedIn = '';
+      
+      if($rootScope.currentUser){
+        $scope.isLoggedIn = 'true'
+      }
+      else{
+        $scope.isLoggedIn = 'false'
+      }
+    
+      console.log($scope.isLoggedIn);
+      
+//    Upvote Complaint JS Begins
   
       $scope.upvote = function(){
-        Upvote.update({
-          cslug : $routeParams.cslug
-        },{
-          _id: null
-        },function(object) {
-          $alert({
-            content: object.message,
-            placement: 'right',
-            type: 'success',
-            duration: 5
+        if($rootScope.currentUser){
+          Complaints.upvote.update({
+            cslug : $routeParams.cslug
+          },{
+            _id: null
+          },function(object) {
+            $alert({
+              content: object.message,
+              placement: 'right',
+              type: 'success',
+              duration: 5
+            });
+            Complaints.default.get({
+            cslug : $routeParams.cslug
+            },
+            function(complaint) {
+              $scope.complaint = complaint;
+
+              $scope.upvoted = '';
+            if ($scope.complaint.upvote == true) 
+            {
+              $scope.upvoted = 'upvoted';
+            }
+            });
+          }, function(object) {
+            $alert({
+              content: object.data,
+              placement: 'right',
+              type: 'danger',
+              duration: 5
+            });
           });
-          Complaint.get({
-          cslug : $routeParams.cslug
-          },
-          function(complaint) {
-            $scope.complaint = complaint;
-            
-            $scope.upvoted = '';
-          if ($scope.complaint.upvote == true) 
-          {
-            $scope.upvoted = 'upvoted';
-          }
-          });
-        }, function(object) {
-          $alert({
-            content: object.data,
-            placement: 'right',
-            type: 'danger',
-            duration: 5
-          });
-        });
+        }
+      else{
+        $alert({
+              content: "You need to be logged in to upvote this complaint.",
+              placement: 'right',
+              type: 'danger',
+              duration: 5
+            });
+        }
       };
-    
+//    Upvote Complaint JS Ends
   
+  
+//    Follow Complaint JS Begins
+
       $scope.follow = function(){
-        Follow.update({
-          cslug : $routeParams.cslug
-        },{
-          result : $scope.followBoolean
-        },function(object) {
+        if($rootScope.currentUser){
+          Complaints.follow.update({
+            cslug : $routeParams.cslug
+          },{
+            result : $scope.followBoolean
+          },function(object) {
+            $alert({
+              content: object.message,
+              placement: 'right',
+              type: 'success',
+              duration: 5
+            });
+            Complaints.default.get({
+            cslug : $routeParams.cslug
+            },
+            function(complaint) {
+              $scope.complaint = complaint;
+               if ($scope.complaint.follow == true)
+              {
+                $scope.followBoolean = 'false';
+                $scope.followed = 'followed'
+              }
+              else if ($scope.complaint.follow == false)
+              {
+                $scope.followBoolean = 'true';
+                $scope.followed = ''
+              }
+            });
+          }, function(object) {
+            $alert({
+              content: object.data,
+              placement: 'right',
+              type: 'danger',
+              duration: 5
+            });
+            console.log('error function entered');
+          });
+        }
+        else{
           $alert({
-            content: object.message,
-            placement: 'right',
-            type: 'success',
-            duration: 5
-          });
-          Complaint.get({
-          cslug : $routeParams.cslug
-          },
-          function(complaint) {
-            $scope.complaint = complaint;
-             if ($scope.complaint.follow == true)
-            {
-              $scope.followBoolean = 'false';
-              $scope.followed = 'followed'
-            }
-            else if ($scope.complaint.follow == false)
-            {
-              $scope.followBoolean = 'true';
-              $scope.followed = ''
-            }
-          });
-        }, function(object) {
-          $alert({
-            content: object.data,
-            placement: 'right',
-            type: 'danger',
-            duration: 5
-          });
-        });
+              content: "You need to be logged in to follow this complaint.",
+              placement: 'right',
+              type: 'danger',
+              duration: 5
+            });
+        }
+
       };
-    
+//    Follow Complaint JS Ends
       
   
   
