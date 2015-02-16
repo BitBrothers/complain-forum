@@ -84,7 +84,8 @@ exports.login = function(req, res) {
             if (!isMatch) return res.status(401).send('Invalid email and/or password');
             var token = createJwtToken(user);
             var tempy = {
-                profile: user.profile
+                profile: user.profile,
+                role: user.role
             };
             res.send({
                 token: token,
@@ -114,7 +115,8 @@ exports.facebookAuth = function(req, res) {
         if (existingUser) {
             var token = createJwtToken(existingUser);
             var tempy = {
-                profile: user.profile
+                profile: user.profile,
+                role: user.role
             };
             return res.send({
                 token: token,
@@ -130,7 +132,8 @@ exports.facebookAuth = function(req, res) {
             else{
                 var token = createJwtToken(user);
                 var tempy = {
-                    profile: user.profile
+                    profile: user.profile,
+                    role: user.role
                 };
                 res.send({
                     token: token,
@@ -153,7 +156,8 @@ exports.googleAuth = function(req, res) {
             console.log('heere');
             var token = createJwtToken(existingUser);
             var tempy = {
-                profile: user.profile
+                profile: user.profile,
+                role: user.role
             };
             return res.send({
                 token: token,
@@ -168,7 +172,8 @@ exports.googleAuth = function(req, res) {
             else{
                 var token = createJwtToken(user);
             var tempy = {
-                profile: user.profile
+                profile: user.profile,
+                role: user.role
             };
             res.send({
                 token: token,

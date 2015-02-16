@@ -10,7 +10,7 @@ var userSchema = new mongoose.Schema({
   },
   
   password: String,
-  role: {type: String,default:'Citizen'},
+  role: {type: String,default:'citizen'},
   anonymous: Boolean,
   complaints:[{
     _id:{type: mongoose.Schema.Types.ObjectId, ref: 'Complaint'}
