@@ -121,88 +121,88 @@ exports.deleteComplaint = function(req, res) {
 
 
 
-exports.postGetComplaints = function(req, res, next){
-    if(req.user){
-        User.findById(req.user._id,function(err, user){
-            if(err)
-                res.send(err);
-            else if(!user){
-                res.status(404).send('User Not Found');
-            }
-            else{
-                if(user.role == "admin"){
-                    Complaint.find()
-                    .populate({
-                        path:'userId',
-                        select: 'profile.slug profile.username'
-                    })
-                    .exec(function(err ,complaints){
-                        if(err)
-                            res,send(err);
-                        else{
-                            res.json(complaints);
-                        }
-                    });
-                }
-                else{
-                    next();
-                }
-                    }
-        });
+// exports.postGetComplaints = function(req, res, next){
+//     if(req.user){
+//         User.findById(req.user._id,function(err, user){
+//             if(err)
+//                 res.send(err);
+//             else if(!user){
+//                 res.status(404).send('User Not Found');
+//             }
+//             else{
+//                 if(user.role == "admin"){
+//                     Complaint.find()
+//                     .populate({
+//                         path:'userId',
+//                         select: 'profile.slug profile.username'
+//                     })
+//                     .exec(function(err ,complaints){
+//                         if(err)
+//                             res,send(err);
+//                         else{
+//                             res.json(complaints);
+//                         }
+//                     });
+//                 }
+//                 else{
+//                     next();
+//                 }
+//                     }
+//         });
 
-    }
-    else{
-        next();
-    }
-};
+//     }
+//     else{
+//         next();
+//     }
+// };
 
-exports.getComplaints = function(request, response) {
-    Complaint.find({status:'Pending'})
-    .populate({
-        path:'userId',
-        select: 'profile.slug profile.username'
-    })
-    .select('-_id title location category subcategory slug status startdate userId')
-    .exec(function(error, complaints1) {
-        if (error)
-            response.send(error);
-        else{
-            Complaint.find({status:'Resolved'})
-            .populate({
-                path:'userId',
-                select: 'profile.slug profile.username'
-            })
-            .select('-_id title location category subcategory slug status startdate userId')
-            .exec(function(error, complaints2) {
-                if (error)
-                    response.send(error);
-                else{
-                    Complaint.find({status:'Un-Resolved'})
-                    .populate({
-                        path:'userId',
-                        select: 'profile.slug profile.username'
-                    })
-                    .select('-_id title location category subcategory slug status startdate userId')
-                    .exec(function(error, complaints3) {
-                        if (error)
-                            response.send(error);
-                        else{
-                            response.json({
-                                Pending:complaints1,
-                                Resolved:complaints2,
-                                Unresolved:complaints3
-                            });
-                        }
+// exports.getComplaints = function(request, response) {
+//     Complaint.find({status:'Pending'})
+//     .populate({
+//         path:'userId',
+//         select: 'profile.slug profile.username'
+//     })
+//     .select('-_id title location category subcategory slug status startdate userId')
+//     .exec(function(error, complaints1) {
+//         if (error)
+//             response.send(error);
+//         else{
+//             Complaint.find({status:'Resolved'})
+//             .populate({
+//                 path:'userId',
+//                 select: 'profile.slug profile.username'
+//             })
+//             .select('-_id title location category subcategory slug status startdate userId')
+//             .exec(function(error, complaints2) {
+//                 if (error)
+//                     response.send(error);
+//                 else{
+//                     Complaint.find({status:'Un-Resolved'})
+//                     .populate({
+//                         path:'userId',
+//                         select: 'profile.slug profile.username'
+//                     })
+//                     .select('-_id title location category subcategory slug status startdate userId')
+//                     .exec(function(error, complaints3) {
+//                         if (error)
+//                             response.send(error);
+//                         else{
+//                             response.json({
+//                                 Pending:complaints1,
+//                                 Resolved:complaints2,
+//                                 Unresolved:complaints3
+//                             });
+//                         }
                         
-                    });
-                }
+//                     });
+//                 }
                 
-            });
+//             });
     
-        }
+//         }
         
-    });
-};
+//     });
+// };
 
 exports.postGetComplaint = function(req, res, next){
     if(req.user){
@@ -677,4 +677,128 @@ exports.getComplaintLog = function(req, res){
         });
 };
 
+exports.postFilterComplaints = function(req, res, next){
+    if(req.user._id){
+        User.findById(req.user._id,function(err, user){
+            if(err)
+                res.send(err);
+            else if(!user){
+                res.status(404).send('User Not Found');
+            }
+            else{
+                if(user.role == "admin" || user.role == "staff"){
+                    req.admin = true;
+                    next();
+                }
+                else{
+                    next();
+                }  
+            }
+        });
+    }
+    else{
+        next();
+    }
+};
 
+exports.filterComplaints = function(req, res){
+    var query = Complaint.find();
+    var key = "";
+
+    if (req.headers.keyword instanceof Array) {
+    for (var i = 0; i < req.headers.keyword.length; i++) {
+      key = key + req.headers.keyword[i] + " ";
+    };
+    } else {
+    key = req.headers.keyword;
+    }
+
+    if (req.headers.keyword) {
+    query = query.find({
+      $text: {
+        $search: key
+      }
+    })
+    .skip(req.query.s)
+    .limit(req.query.l);
+    };
+
+    if(req.headers.status){
+        if(req.headers.status == "new"){
+            if(req.admin){
+                query = query.find({status:req.headers.status});
+            }
+            else{
+                return res.status(401).send('Unauthorized');
+            }
+        }
+        else{
+            query = query.find({status:req.headers.status});
+        }
+        
+    }
+    else{
+        if(req.admin){
+
+        }
+        else{
+            query = query.find({status:{$ne:"new"}});
+        }
+    }
+
+    if(req.headers.location){
+        query = query.find({location:req.headers.location});
+    }
+    if(req.headers.category){
+        query = query.find({category:req.headers.category});
+    }
+    if(req.headers.subcategory){
+        query = query.find({subcategory:req.headers.subcategory});
+    }
+
+    query.exec(function(err, complaints) {
+    if (err) res.send(err);
+    res.json(complaints);
+    });
+};
+
+exports.reOpenComplaints = function(req, res){
+    User.findById(req.user._id,function(err,user){
+        if(err)
+            res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
+        else{
+            Complaint.findOne({slug:req.params.cslug},function(err, complaint){
+                if(err)
+                    res.send(err);
+                else if(!complaint){
+                    res.status(404).send('Complaint Not Found');
+                }
+                else{
+                    if(user.complaints.id(complaint._id)){
+                        if(complaint.status == "resolved"){
+                            complaint.status == "unresolved";
+                            complaint.save(function(err){
+                                if(err)
+                                    res.send(err);
+                                else{
+                                    res.json({
+                                        message:'Complaint Re-Opened'
+                                    });
+                                }
+                            });
+                        }
+                        else{
+                            res.status(412).send('Cannot Re-open Complaint');
+                        }
+                    }
+                    else{
+                        res.status(401).send('Unauthorized');
+                    }
+                }
+            });
+        }
+    });
+};

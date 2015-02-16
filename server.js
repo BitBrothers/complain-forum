@@ -85,12 +85,13 @@ app.post('/api/auth/google', userController.googleAuth);
 app.get('/api/users', userController.hasEmail);
 
 //Complaint APIs
+app.put('/api/complaints/:cslug/reopen',userController.isLogin, complaintController.reOpenComplaints);
 app.put('/api/complaints/:cslug/status', userController.isLogin, adminController.changeComplaintStatus);
 app.put('/api/complaints/:cslug/follow', userController.isLogin, complaintController.followComplaint);  
 app.post('/api/complaints/:cslug/comment', userController.isLogin, complaintController.commentComplaint);  
 app.put('/api/complaints/:cslug/upvote', userController.isLogin, complaintController.upvoteComplaint);  
 app.get('/api/complaints/:cslug/log', userController.isLogin, complaintController.getComplaintLog);  
-app.get('/api/complaints', userController.isLogin2,userController.isLogin,complaintController.postGetComplaints,complaintController.getComplaints);
+app.get('/api/complaints', userController.isLogin2,userController.isLogin, complaintController.postFilterComplaints,complaintController.filterComplaints);
 app.get('/api/complaints/:cslug', userController.isLogin2, userController.isLogin, complaintController.postGetComplaint,complaintController.getComplaint);
 app.post('/api/complaints', userController.isLogin, complaintController.postAddComplaint);     
 app.put('/api/complaints/:cslug', userController.isLogin, complaintController.putUpdateComplaint);       
