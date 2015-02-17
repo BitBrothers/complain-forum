@@ -410,9 +410,9 @@ exports.putUpdateComplaint = function(request, response, next) {
                              if (err)
                                  response.send(err);
                             else{
-                                req.update = true;
-                                req.followers = newcomplaint.followers;
-                                req.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
+                                request.update = true;
+                                request.followers = newcomplaint.followers;
+                                request.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
                                 next();
                             }
                         });
@@ -703,7 +703,11 @@ exports.filterComplaints = function(req, res){
         query = query.find({subcategory:req.query.subcategory});
     }
 
-    query.exec(function(err, complaints) {
+    query.populate({
+        path:'userId',
+        select: '-_id profile.username profile.slug'
+    })
+    .exec(function(err, complaints) {
     if (err) res.send(err);
     res.json(complaints);
     });
