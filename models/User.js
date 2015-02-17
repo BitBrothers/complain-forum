@@ -10,7 +10,7 @@ var userSchema = new mongoose.Schema({
   },
   
   password: String,
-  role: {type: String,default:'Citizen'},
+  role: {type: String,default:'citizen',lowercase: true},
   anonymous: Boolean,
   complaints:[{
     _id:{type: mongoose.Schema.Types.ObjectId, ref: 'Complaint'}
@@ -82,7 +82,7 @@ console.log(text);
 
 userSchema.pre('save', function(next) {
   var user = this;
-  if(user.profile.slug == null || undefined){
+  if(user.profile.slug == null || user.profile.slug == undefined){
   user.profile.slug = slugify(user.profile.username + Math.floor((Math.random() * 100) + 1));
   }
   if (!user.isModified('password')) return next();

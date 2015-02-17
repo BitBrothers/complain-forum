@@ -26,6 +26,8 @@ var Schema = mongoose.Schema;
 var homeController = require('./controllers/home');
 var complaintController = require('./controllers/complaint');
 var userController = require('./controllers/user');
+var adminController = require('./controllers/admin');
+var emailController = require('./controllers/email');
 
 
 
@@ -84,18 +86,24 @@ app.post('/api/auth/google', userController.googleAuth);
 app.get('/api/users', userController.hasEmail);
 
 //Complaint APIs
-app.put('/api/complaint/:cslug/follow', userController.isLogin, complaintController.followComplaint);  
-app.put('/api/complaint/:cslug/unfollow', userController.isLogin, complaintController.unfollowComplaint);  
-app.put('/api/complaint/:cslug/comment', userController.isLogin, complaintController.commentComplaint);  
-app.put('/api/complaint/:cslug/upvote', userController.isLogin, complaintController.upvoteComplaint);  
-app.get('/api/complaints', complaintController.getComplaints);
-app.get('/api/complaint/:cslug', userController.isLogin2,complaintController.getComplaint);
-app.post('/api/complaint', userController.isLogin, complaintController.postAddComplaint);     
-app.put('/api/complaint/:cslug', userController.isLogin, complaintController.putUpdateComplaint);       
-app.delete('/api/complaint/:cslug', userController.isLogin, complaintController.deleteComplaint);
+
+app.put('/api/complaints/:cslug/status', userController.isLogin, adminController.changeComplaintStatus, emailController.sendEmailToFollowers);
+app.put('/api/complaints/:cslug/follow', userController.isLogin, complaintController.followComplaint);  
+app.post('/api/complaints/:cslug/comment', userController.isLogin, complaintController.commentComplaint);  
+app.put('/api/complaints/:cslug/upvote', userController.isLogin, complaintController.upvoteComplaint);  
+app.get('/api/complaints/:cslug/log', userController.isLogin, complaintController.getComplaintLog);  
+app.get('/api/complaints', userController.isLogin2,userController.isLogin, complaintController.postFilterComplaints,complaintController.filterComplaints);
+app.get('/api/complaints/:cslug', userController.isLogin2, userController.isLogin, complaintController.postGetComplaint,complaintController.getComplaint);
+app.post('/api/complaints', userController.isLogin, complaintController.postAddComplaint);     
+app.put('/api/complaints/:cslug', userController.isLogin, complaintController.putUpdateComplaint, emailController.sendEmailToFollowers);       
+app.delete('/api/complaints/:cslug', userController.isLogin, complaintController.deleteComplaint, emailController.sendEmailToFollowers);
 
 //User APIs
+app.post('/api/user/password', userController.isLogin, userController.changeUserPassword, emailController.sendEmail);
+app.put('/api/user/:uslug/promote', userController.isLogin, adminController.changeToStaff, emailController.sendEmail);
+app.get('/api/user/:uslug/log', userController.isLogin, userController.getUserLog);
 app.get('/api/user/:uslug', userController.getUser);
+
 
 
 app.use(errorHandler());

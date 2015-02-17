@@ -13,9 +13,30 @@ p {
   line-height: 1.5;
   margin: 30px 0;
 }
-p a {
-  text-decoration: underline;
+.searchbar{
+    margin-top: 90px;
 }
+
+.search{
+    padding: 25px;
+}
+
+#filterbutton{
+    border-radius: 5px 0px 0px 5px;
+}
+
+#searchbutton{
+    border-radius: 0px 5px 5px 0px;
+}
+
+#explore{
+    text-decoration: none;
+}
+.category{
+    font-weight: 10;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 h1,
 h2,
 h3,
@@ -209,6 +230,7 @@ header, .content-section{
   font-style: italic;
   font-weight: 300;
   font-size: 20px;
+  line-height: 1.5em;
 }
 .intro-header .post-heading .meta a {
   color: white;
@@ -657,6 +679,8 @@ body {
   -webkit-tap-highlight-color: #0085a1;
 }
 
+/*Login and Signup Pages CSS Begins*/
+
 .center-form {
   width: 330px;
   margin: 10% auto;
@@ -737,10 +761,20 @@ body {
 }
 
 .blackText{
-  color: #2b2b2b !important;
+  color: #777 !important;
 }
 
-/* Complaint form start */
+.whiteText{
+  color: white !important;
+}
+
+.signupFormIcons, .loginFormIcons{
+  font-size: 20px !important;
+}
+/*Login and Signup Pages CSS Ends*/
+
+
+/* Post Complaint form start */
 .complaint-form {
   padding: 150px 0;
 }
@@ -750,4 +784,104 @@ body {
   color: red;
 }
 
-/* Complaint form end */
+/* Post Complaint form end */
+
+/*Complaint Details Page CSS Start*/
+.complaint-description{
+  font-size: 20px;
+}
+
+.upvotes{
+  padding: 10px 10px 10px 0px;
+}
+
+.upvotes:hover, .followers:hover{
+  cursor: pointer;
+}
+
+.upvoted, .followed{
+  color: greenyellow;
+}
+
+.followers{
+  padding: 10px;
+}
+
+.upvotes.badge, .followers.badge{
+  font-size: 15px;
+  padding: 10px;
+}
+
+.upvote-div{
+  font-size: 10px;
+  border-radius: 4px;
+  color: white;
+}
+
+.upvote-div button{
+  font-size: 30px;
+  border-radius:4px 0px 0px 4px;
+}
+
+.deleteComplaintIcon, .editComplaintIcon{
+  float: right;
+  font-size: 25px;
+  color: white;
+}
+
+
+.deleteComplaintIcon:hover, .editComplaintIcon:hover{
+  cursor: pointer;
+  color: white;
+}
+
+.complaint-details-header{
+  margin-bottom: 0px;
+}
+
+.commentSection small
+{
+  font-size: 13px;
+  float: right;
+  position: relative;
+  top: 30px;
+  color: #777;
+}
+
+.postCommentBox{
+  padding: 10px;
+}
+
+.modal-dialog{
+  margin-top: 25%;
+}
+
+.CategorySpan, .currentStatusSpan{
+  text-transform: capitalize;
+}
+
+.currentStatusDropdown{
+  margin-top: 30px;
+}
+
+.currentStatusDropdown button{
+  min-width: 120px !important;
+  margin-top: 5px;
+  font-size: 18px !important;
+}
+
+/*Complaint Details Page CSS End*/
+
+/*Edit Complaint Page CSS Start*/
+.edit-complaint-form{
+  margin-top: 150px;
+  background: white;
+  padding: 50px;
+  border-radius: 5px;
+}
+
+
+.edit-complaint-form span{
+  font-size: 14px;
+  color: red;
+}

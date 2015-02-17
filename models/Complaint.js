@@ -8,8 +8,9 @@ var complaintSchema = new mongoose.Schema({
   slug: String,
   status: {
     type: String,
-    default: 'Un-published',
-    index: true
+    default: 'new',
+    index: true,
+    lowercase: true
   },
   startdate: {
     type: Date,
@@ -39,13 +40,24 @@ var complaintSchema = new mongoose.Schema({
 });
 
 complaintSchema.pre('save', function(next) {
-    this.slug = slugify(this.title);
+    var complaint = this;
+    if(complaint.slug == null || complaint.slug == undefined){
+      complaint.slug = slugify(complaint.title + Math.floor((Math.random() * 100) + 1));
+    }
     next();
 });
 
 complaintSchema.index({
   status: 1
 });
+
+complaintSchema.index({ 
+  title : 'text',
+  status : 'text',
+  category: 'text',
+  subcategory: 'text',
+  location: 'text'
+}, {weights:{title:1, status:1}});
 
 //Slug function
 function slugify(text) {

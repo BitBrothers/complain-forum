@@ -1,0 +1,83 @@
+<header class="intro-header complaint-details-header" style="background-image: url('images/post-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>{{complaint.title}}</h1> <span  ng-show="currentUser.profile.slug == complaint.userId.profile.slug"><a class="editComplaintIcon" href="{{path}}/editComplaint"><i class="fa fa-pencil"></i></a></span>
+                    <span class="meta">Posted by <a href="#">{{complaint.userId.profile.slug}}</a> on {{complaint.startdate | date: 'medium'}} </span>
+                    <span class="meta CategorySpan">{{complaint.category}} <i class="fa fa-angle-double-right"></i> {{complaint.subcategory}} </span>
+                    <span class="meta"><i class="fa fa-map-marker"></i> {{complaint.location}} </span>
+                    <span class="meta currentStatusSpan">Current Status : <span ng-model="complaint.status">{{complaint.status}}</span> </span>
+                    <span ng-click="upvote()"><i class="fa fa-thumbs-up upvotes {{upvoted}}"></i></span><span class="upvotes badge">{{complaint.upvotesCount}} upvotes</span>
+                    <span ng-click="follow()"><i class="fa fa-users followers {{followed}}"></i></span><span class="followers badge">{{complaint.followersCount}} followers</span>
+                    <span class="deleteComplaintIcon" data-toggle="modal" data-target="#deleteComplaintModal" ng-show="currentUser.profile.slug == complaint.userId.profile.slug || currentUser.role == 'staff' || currentUser.role == 'admin'"><i class="fa fa-trash-o"></i></span>
+                    <div class="currentStatusDropdown meta" ng-show="currentUser.role == 'staff' || currentUser.role == 'admin'">  Change current status to:
+                      <multi-select
+                        input-model="currentStatusDropdown"
+                        button-label="name"         
+                        item-label="name" 
+                        tick-property="ticked" 
+                        selection-mode="single"
+                        helper-elements=""
+                        on-item-click="updateCurrentStatus( data )" 
+                      >
+                      </multi-select>
+                    </div>
+                    <p class="complaint-description">{{complaint.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                  
+                  <h2 class="section-heading">Comments:</h2>
+                  
+                  <p ng-hide="complaint.comments[0]"> No comments posted yet.</p>
+                  <br>
+                  <div class="commentSection" ng-repeat="comment in complaint.comments">
+                    <h4> {{comment._id.profile.username}} </h4> <small>{{comment.date | date : format : 'medium'}}</small>
+                    <p> {{comment.description}} </p>
+                    <hr>
+                  </div>
+                  
+                  <p ng-show="!currentUser"> Want to post a comment? <a href="/signup">Signup</a> or <a href="/login">Login</a> now! </p>
+                 
+                  <form ng-hide="!currentUser">
+                    <textarea class="postCommentBox"ng-model="txtcomment" placeholder="Post a comment..." style="width:100%"></textarea>
+                    <button ng-click="btn_add();" style="margin-top:10px; margin-bottom:10px; float:right;" class="btn btn-md btn-default">Post Comment</button>
+                  </form>
+
+                   
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+
+<!-- Delete Complaint Modal Begins -->
+<div class="modal fade" id="deleteComplaintModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Delete Complaint</h4>
+      </div>
+      <div class="modal-body">
+        You are about to delete this complaint. This cannot be undone. Are you sure you wish to proceed?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">No, don't delete the complaint</button>
+        <button class="btn btn-default" ng-click="deleteComplaint()">Yes, Delete it!</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Complaint Modal Ends -->

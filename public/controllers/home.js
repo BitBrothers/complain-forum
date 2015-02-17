@@ -5,5 +5,11 @@ angular.module('ForChange')
   	$scope.gotoPostComplaint = function () {
   		console.log('ds');
   		$location.path('/new-complaint');
-  	}  	
+
+  	};
+    
+    $scope.exploreComplaint = function () {
+  		$location.path('/list');
+ 	};
+
 });

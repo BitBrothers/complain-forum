@@ -28,28 +28,11 @@ function createJwtToken(user) {
 };
 
 exports.isLogin2 = function(req, res, next) {
-
-    if (req.headers.authorization) {
-        var token = req.headers.authorization;
-        //.split(' ')[1];
-        try {
-            var decoded = jwt.decode(token, tokenSecret);
-            if (decoded.exp <= Date.now()) {
-                res.status(400).send('Access token has expired');
-            } else {
-                req.user = decoded.user;
-                return next();
-            }
-        } catch (err) {
-            return res.status(500).send('Error parsing token');
-        }
-    } else {
-        return next();
-    }
+ req.flag = true;
+ next();
 };
 
 exports.isLogin = function(req, res, next) {
-
     if (req.headers.authorization) {
         var token = req.headers.authorization;
         //.split(' ')[1];
@@ -65,7 +48,13 @@ exports.isLogin = function(req, res, next) {
             return res.status(500).send('Error parsing token');
         }
     } else {
-        return res.status(401);
+        if(req.flag){
+            next();
+        }
+        else{
+        res.status(401).send('Unauthorized');   
+        }
+        
     }
 };
 
@@ -94,7 +83,8 @@ exports.login = function(req, res) {
             if (!isMatch) return res.status(401).send('Invalid email and/or password');
             var token = createJwtToken(user);
             var tempy = {
-                profile: user.profile
+                profile: user.profile,
+                role: user.role
             };
             res.send({
                 token: token,
@@ -124,7 +114,8 @@ exports.facebookAuth = function(req, res) {
         if (existingUser) {
             var token = createJwtToken(existingUser);
             var tempy = {
-                profile: user.profile
+                profile: user.profile,
+                role: user.role
             };
             return res.send({
                 token: token,
@@ -134,13 +125,14 @@ exports.facebookAuth = function(req, res) {
         var user = new User();
 
         user.email = profile.email;
-        user.name = profile.name;
+        user.profile.username = profile.name;
         user.save(function(err) {
             if (err) return next(err);
             else{
                 var token = createJwtToken(user);
                 var tempy = {
-                    profile: user.profile
+                    profile: user.profile,
+                    role: user.role
                 };
                 res.send({
                     token: token,
@@ -163,7 +155,8 @@ exports.googleAuth = function(req, res) {
             console.log('heere');
             var token = createJwtToken(existingUser);
             var tempy = {
-                profile: user.profile
+                profile: user.profile,
+                role: user.role
             };
             return res.send({
                 token: token,
@@ -171,14 +164,15 @@ exports.googleAuth = function(req, res) {
             });
         }
         var user = new User();
-        user.name = profile.displayName;
+        user.profile.name = profile.displayName;
         user.email = profile.emails[0].value;
         user.save(function(err) {
             if (err) return next(err);
             else{
                 var token = createJwtToken(user);
             var tempy = {
-                profile: user.profile
+                profile: user.profile,
+                role: user.role
             };
             res.send({
                 token: token,
@@ -237,6 +231,52 @@ exports.getUser = function(req, res){
     });
 };
 
+exports.getUserLog = function(req, res){
+    User.findOne({
+        'profile.slug':req.params.uslug
+    },function(err, user){
+        if(err)
+            res,send(err);
+        else {
+            res.json(complaint.log);
+        }
+    });
+};
+
+exports.changeUserPassword = function(req, res, next){
+    console.log(req.body);
+    User.findById(req.user._id,function(err, user){
+        if(err)
+            res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
+        else{
+            user.comparePassword(req.body.oldPassword,function(err, isMatch){
+                if(err)
+                    res.send(err);
+                else if(!isMatch){
+                    res.status(401).send('Invalid Old Password');
+                }
+                else{
+                    user.password = req.body.newPassword;
+                    user.save(function(err, user){
+                        if(err)
+                            res.send(err);
+                        else{
+                            req.pass = true;
+                            req.to = user.email;
+                            req.subject = "ForChange Password Change";
+                            req.email = "Your Current Password for ForChange has been changed";
+                            next();
+                        }
+                    });
+                }
+            });
+
+        }
+    });
+};
 
 
 

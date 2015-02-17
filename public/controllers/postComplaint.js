@@ -1,10 +1,10 @@
 angular.module('ForChange')
-  .controller('PostComplaintCtrl', function($scope, $alert, $location, $http, $rootScope, Complaint) {
+  .controller('PostComplaintCtrl', function($scope, $alert, $location, $http, $rootScope, Complaints) {
   	$scope.cats = [{'value':'Cat1'}, {'value':'Cat2'}, {'value':'Cat3'}];
 	  $scope.subCats = [{'value':'subCat1'}, {'value':'subCat2'}, {'value':'subCat3'}];
   	$scope.post = function() {
   		console.log($scope.complaint.cat);
-      Complaint.save({
+      Complaints.default.save({
         title: $scope.complaint.title,
         description: $scope.complaint.desc,
         category: $scope.complaint.cat.value,

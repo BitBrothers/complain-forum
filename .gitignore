@@ -30,3 +30,4 @@ node_modules
 config/secrets.js
 public/vendor
 public/app.min.js
+public/images/Thumbs.db

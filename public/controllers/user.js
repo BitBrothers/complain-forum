@@ -1,5 +1,5 @@
 angular.module('ForChange')
-  .controller('UserCtrl', function($scope, $alert, $location, $http, $rootScope, User, $routeParams) {
+  .controller('UserCtrl', function($scope, $alert, $location, $http, $rootScope, User, $routeParams, Auth) {
   	User.get({
   		uslug : $routeParams.uslug
   	},
@@ -38,6 +38,6 @@ angular.module('ForChange')
       else $scope.same = false;
     }
     $scope.changePass = function () {
-      //call change pass
+      Auth.changePassword({ oldPassword: $scope.password.old, newPassword: $scope.password.new });
     }
   });
