@@ -657,10 +657,10 @@ exports.filterComplaints = function(req, res){
     var query = Complaint.find();
     var key = "";
 
-    key = req.headers.keyword;
+    key = req.query.keyword;
     
 
-    if (req.headers.keyword) {
+    if (req.query.keyword) {
     query = query.find({
       $text: {
         $search: key
@@ -670,17 +670,17 @@ exports.filterComplaints = function(req, res){
     .limit(req.query.l);
     };
 
-    if(req.headers.status){
-        if(req.headers.status == "new"){
+    if(req.query.status){
+        if(req.query.status == "new"){
             if(req.admin){
-                query = query.find({status:req.headers.status});
+                query = query.find({status:req.query.status});
             }
             else{
                 return res.status(401).send('Unauthorized');
             }
         }
         else{
-            query = query.find({status:req.headers.status});
+            query = query.find({status:req.query.status});
         }
         
     }
@@ -693,14 +693,14 @@ exports.filterComplaints = function(req, res){
         }
     }
 
-    if(req.headers.location){
-        query = query.find({location:req.headers.location});
+    if(req.query.location){
+        query = query.find({location:req.query.location});
     }
-    if(req.headers.category){
-        query = query.find({category:req.headers.category});
+    if(req.query.category){
+        query = query.find({category:req.query.category});
     }
-    if(req.headers.subcategory){
-        query = query.find({subcategory:req.headers.subcategory});
+    if(req.query.subcategory){
+        query = query.find({subcategory:req.query.subcategory});
     }
 
     query.exec(function(err, complaints) {
