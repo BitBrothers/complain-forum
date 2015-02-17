@@ -8,7 +8,7 @@ var complaintSchema = new mongoose.Schema({
   slug: String,
   status: {
     type: String,
-    default: 'New',
+    default: 'new',
     index: true
   },
   startdate: {
@@ -39,13 +39,21 @@ var complaintSchema = new mongoose.Schema({
 });
 
 complaintSchema.pre('save', function(next) {
-    this.slug = slugify(this.title);
+    this.slug = slugify(this.title + Math.floor((Math.random() * 100) + 1));
     next();
 });
 
 complaintSchema.index({
   status: 1
 });
+
+complaintSchema.index({ 
+  title : 'text',
+  status : 'text',
+  category: 'text',
+  subcategory: 'text',
+  location: 'text'
+}, {weights:{name:1, status:1}});
 
 //Slug function
 function slugify(text) {
