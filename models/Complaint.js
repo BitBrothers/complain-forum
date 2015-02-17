@@ -9,7 +9,8 @@ var complaintSchema = new mongoose.Schema({
   status: {
     type: String,
     default: 'new',
-    index: true
+    index: true,
+    lowercase: true
   },
   startdate: {
     type: Date,
