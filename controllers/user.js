@@ -115,8 +115,8 @@ exports.facebookAuth = function(req, res) {
         if (existingUser) {
             var token = createJwtToken(existingUser);
             var tempy = {
-                profile: user.profile,
-                role: user.role
+                profile: existingUser.profile,
+                role: existingUser.role
             };
             return res.send({
                 token: token,
@@ -156,8 +156,8 @@ exports.googleAuth = function(req, res) {
             console.log('heere');
             var token = createJwtToken(existingUser);
             var tempy = {
-                profile: user.profile,
-                role: user.role
+                profile: existingUser.profile,
+                role: existingUser.role
             };
             return res.send({
                 token: token,

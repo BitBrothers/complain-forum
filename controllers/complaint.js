@@ -410,9 +410,9 @@ exports.putUpdateComplaint = function(request, response, next) {
                              if (err)
                                  response.send(err);
                             else{
-                                req.update = true;
-                                req.followers = newcomplaint.followers;
-                                req.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
+                                request.update = true;
+                                request.followers = newcomplaint.followers;
+                                request.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
                                 next();
                             }
                         });
