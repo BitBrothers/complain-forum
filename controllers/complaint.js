@@ -167,7 +167,7 @@ exports.postGetComplaint = function(req, res, next){
                         if(user.complaints.id(complaint._id)){
                             next();
                         }
-                        else if(user.role == "admin"){
+                        else if(user.role == "admin" || user.role == "staff"){
                             next();
                         }
                         else{
@@ -412,9 +412,9 @@ exports.putUpdateComplaint = function(request, response, next) {
                              if (err)
                                  response.send(err);
                             else{
-                                req.update = true;
-                                req.followers = newcomplaint.followers;
-                                req.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
+                                request.update = true;
+                                request.followers = newcomplaint.followers;
+                                request.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
                                 next();
                             }
                         });
@@ -477,7 +477,7 @@ exports.followComplaint = function(req, res){
                                     res.send(err);
                                 else{
                                     res.json({
-                                        message:'Successfully Unfollowed'
+                                        message:'Successfully Unfollowed Complaint'
                                     });
                                 }
                             });

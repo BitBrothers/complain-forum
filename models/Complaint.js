@@ -40,7 +40,10 @@ var complaintSchema = new mongoose.Schema({
 });
 
 complaintSchema.pre('save', function(next) {
-    this.slug = slugify(this.title + Math.floor((Math.random() * 100) + 1));
+    var complaint = this;
+    if(complaint.slug == null || complaint.slug == undefined){
+      complaint.slug = slugify(complaint.title + Math.floor((Math.random() * 100) + 1));
+    }
     next();
 });
 

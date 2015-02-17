@@ -115,8 +115,8 @@ exports.facebookAuth = function(req, res) {
         if (existingUser) {
             var token = createJwtToken(existingUser);
             var tempy = {
-                profile: user.profile,
-                role: user.role
+                profile: existingUser.profile,
+                role: existingUser.role
             };
             return res.send({
                 token: token,
@@ -126,7 +126,7 @@ exports.facebookAuth = function(req, res) {
         var user = new User();
 
         user.email = profile.email;
-        user.name = profile.name;
+        user.profile.username = profile.name;
         user.save(function(err) {
             if (err) return next(err);
             else{
@@ -156,8 +156,8 @@ exports.googleAuth = function(req, res) {
             console.log('heere');
             var token = createJwtToken(existingUser);
             var tempy = {
-                profile: user.profile,
-                role: user.role
+                profile: existingUser.profile,
+                role: existingUser.role
             };
             return res.send({
                 token: token,
@@ -165,7 +165,7 @@ exports.googleAuth = function(req, res) {
             });
         }
         var user = new User();
-        user.name = profile.displayName;
+        user.profile.name = profile.displayName;
         user.email = profile.emails[0].value;
         user.save(function(err) {
             if (err) return next(err);
