@@ -50,7 +50,7 @@ exports.postAddComplaint = function(req, res) {
     });
 };
 
-exports.deleteComplaint = function(req, res) {
+exports.deleteComplaint = function(req, res, next) {
     User.findById(req.user._id, function(err,user){
         if(err)
             res.send(err);
@@ -71,16 +71,30 @@ exports.deleteComplaint = function(req, res) {
                             user.complaints.pull({
                                 _id:complaint._id
                             });
+                            req.followers = complaint.followers; 
                             complaint.remove();
-                            user.save(function(err){
-                                if(err)
-                                    res.send(err);
-                                else{
-                                    res.json({
-                                        message:'Successfully Deleted complaint'
-                                    });
-                                }
-                            });
+                            for(var i = 0;i <= req.followers.length-1;i++){
+                                User.findById(req.followers[i]._id,function(err, user1){
+                                    if(err)
+                                        res.send(err);
+                                    else if(!user){
+                                        console.log('User Not Found');
+                                    }
+                                    else{
+                                        user1.log.push({
+                                            entry:"Complaint "+ complaint.title + " was deleted." 
+                                        });
+                                        user1.save(function(err){
+                                            if(err)
+                                                res.send(err);
+                                        });
+                                    }
+                                });
+                            };
+                            req.del = true;
+                            req.email = "Complaint -"+ complaint.title +" was deleted"
+                            next();
+                           
                         }
                         else if(user.role == "admin" || user.role == "staff"){
                             User.findById(complaint.userId,function(err, user){
@@ -93,19 +107,30 @@ exports.deleteComplaint = function(req, res) {
                                     user.complaints.pull({
                                         _id:complaint._id
                                     });
-                                    user.log.push({
-                                        entry:"Complaint Deleted By Admin -" + complaint.title
-                                    });
+                                    req.followers = complaint.followers; 
                                     complaint.remove();
-                                    user.save(function(err){
-                                        if(err)
-                                            res.send(err);
-                                        else{
-                                            res.json({
-                                                message:'Successfully Deleted Complaint'
-                                            });
-                                        }
-                                    });
+                                    for(var i = 0;i <= req.followers.length-1;i++){
+                                        User.findById(req.followers[i]._id,function(err, user1){
+                                            if(err)
+                                                res.send(err);
+                                            else if(!user){
+                                                console.log('User Not Found');
+                                            }
+                                            else{
+                                                user1.log.push({
+                                                    entry:"Complaint Deleted By Admin -" + complaint.title
+                                                });
+                                                user1.save(function(err){
+                                                    if(err)
+                                                        res.send(err);
+                                                });
+                                                req.del = true;
+                                                req.email = "Complaint -"+ complaint.title +" was deleted by Admin"
+                                                next();
+                                            }
+                                        });
+                                    };
+                                    
                                 }
                             });
                         }
@@ -181,11 +206,11 @@ exports.getComplaint = function(request, response) {
     Complaint.findOne({slug:request.params.cslug})
     .populate({
         path:'userId',
-        select: 'profile.username profile.slug profile.firstname profile.lastname'
+        select: '-_id profile.username profile.slug profile.firstname profile.lastname'
     })
     .populate({
         path:'comments._id',
-        select: 'profile.username profile.slug'
+        select: '-_id profile.username profile.slug'
     })
     .exec(function(error, complaint) {
         if (error)
@@ -339,7 +364,7 @@ exports.getComplaint = function(request, response) {
 
 
 
-exports.putUpdateComplaint = function(request, response) {
+exports.putUpdateComplaint = function(request, response, next) {
     User.findById(request.user._id, function(err,user){
         if(err)
             response.send(err);
@@ -373,17 +398,23 @@ exports.putUpdateComplaint = function(request, response) {
                                     user1.log.push({
                                         entry:"Complaint Updated -"+ complaint.title
                                     });
+                                    user1.save(function(err){
+                                        if(err)
+                                            res.send(err);
+                                    });
                                 }
                             });
                          };
 
-                         complaint.save(function(err) {
+                         complaint.save(function(err, newcomplaint) {
                              if (err)
                                  response.send(err);
- 
-                             response.json({
-                                 message: 'Complaint updated!'
-                             });
+                            else{
+                                req.update = true;
+                                req.followers = newcomplaint.followers;
+                                req.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
+                                next();
+                            }
                         });
                         }
                         else{
@@ -500,6 +531,10 @@ exports.upvoteComplaint = function(req, res){
                                 else{
                                     user1.log.push({
                                         entry:"Complaint Upvoted -"+ complaint.title
+                                    });
+                                    user1.save(function(err){
+                                        if(err)
+                                            res.send(err);
                                     });
                                 }
                             });
@@ -679,43 +714,3 @@ exports.filterComplaints = function(req, res){
     });
 };
 
-exports.reOpenComplaints = function(req, res){
-    User.findById(req.user._id,function(err,user){
-        if(err)
-            res.send(err);
-        else if(!user){
-            res.status(404).send('User Not Found');
-        }
-        else{
-            Complaint.findOne({slug:req.params.cslug},function(err, complaint){
-                if(err)
-                    res.send(err);
-                else if(!complaint){
-                    res.status(404).send('Complaint Not Found');
-                }
-                else{
-                    if(user.complaints.id(complaint._id)){
-                        if(complaint.status == "resolved"){
-                            complaint.status == "unresolved";
-                            complaint.save(function(err){
-                                if(err)
-                                    res.send(err);
-                                else{
-                                    res.json({
-                                        message:'Complaint Re-Opened'
-                                    });
-                                }
-                            });
-                        }
-                        else{
-                            res.status(412).send('Cannot Re-open Complaint');
-                        }
-                    }
-                    else{
-                        res.status(401).send('Unauthorized');
-                    }
-                }
-            });
-        }
-    });
-};

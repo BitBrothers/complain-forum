@@ -244,6 +244,39 @@ exports.getUserLog = function(req, res){
     });
 };
 
+exports.changeUserPassword = function(req, res, next){
+    User.findById(req.user._id,function(err, user){
+        if(err)
+            res.send(err);
+        else if(!user){
+            res.status(404).send('User Not Found');
+        }
+        else{
+            user.comparePassword(req.body.oldPassword,function(err, isMatch){
+                if(err)
+                    res.send(err);
+                else if(!isMatch){
+                    res.status(401).send('Invalid Old Password');
+                }
+                else{
+                    user.password = req.body.newPassword;
+                    user.save(function(err, user){
+                        if(err)
+                            res.send(err);
+                        else{
+                            req.pass = true;
+                            req.to = user.email;
+                            req.subject = "ForChange Password Change";
+                            req.email = "Your Current Password for ForChange has been changed";
+                            next();
+                        }
+                    });
+                }
+            });
+
+        }
+    });
+};
 
 
 
