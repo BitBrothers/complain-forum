@@ -165,7 +165,7 @@ exports.postGetComplaint = function(req, res, next){
                         if(user.complaints.id(complaint._id)){
                             next();
                         }
-                        else if(user.role == "admin"){
+                        else if(user.role == "admin" || user.role == "staff"){
                             next();
                         }
                         else{
@@ -475,7 +475,7 @@ exports.followComplaint = function(req, res){
                                     res.send(err);
                                 else{
                                     res.json({
-                                        message:'Successfully Unfollowed'
+                                        message:'Successfully Unfollowed Complaint'
                                     });
                                 }
                             });

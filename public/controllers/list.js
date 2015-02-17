@@ -3,4 +3,5 @@ angular.module('ForChange')
     
     $scope.complaints= Complaints.query();
     console.log($scope.complaints);
+  
 });

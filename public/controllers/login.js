@@ -11,8 +11,11 @@ angular.module('ForChange')
     };
     $scope.pageClass = 'fadeZoom';
   
-    $scope.navbarTextColor = 'blackText';
-    $scope.changeTextColorWhite = function(){
-      $scope.navbarTextColor = 'whiteText';
-    }  
+//    $scope.navbarTextColor = 'blackText';
+//    $scope.changeTextColorWhite = function(){
+//      if($scope.navbarTextColor == 'blackText')
+//      {
+//        $scope.navbarTextColor = 'whiteText';
+//      }
+//    }  
   });

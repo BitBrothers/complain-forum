@@ -679,6 +679,8 @@ body {
   -webkit-tap-highlight-color: #0085a1;
 }
 
+/*Login and Signup Pages CSS Begins*/
+
 .center-form {
   width: 330px;
   margin: 10% auto;
@@ -766,7 +768,13 @@ body {
   color: white !important;
 }
 
-/* Complaint form start */
+.signupFormIcons, .loginFormIcons{
+  font-size: 20px !important;
+}
+/*Login and Signup Pages CSS Ends*/
+
+
+/* Post Complaint form start */
 .complaint-form {
   padding: 150px 0;
 }
@@ -776,9 +784,9 @@ body {
   color: red;
 }
 
-/* Complaint form end */
+/* Post Complaint form end */
 
-/*Complaint Page CSS Start*/
+/*Complaint Details Page CSS Start*/
 .complaint-description{
   font-size: 20px;
 }
@@ -791,7 +799,7 @@ body {
   cursor: pointer;
 }
 
-.upvoted{
+.upvoted, .followed{
   color: greenyellow;
 }
 
@@ -815,14 +823,16 @@ body {
   border-radius:4px 0px 0px 4px;
 }
 
-.deleteComplaintIcon{
+.deleteComplaintIcon, .editComplaintIcon{
   float: right;
   font-size: 25px;
+  color: white;
 }
 
 
-.deleteComplaintIcon:hover{
+.deleteComplaintIcon:hover, .editComplaintIcon:hover{
   cursor: pointer;
+  color: white;
 }
 
 .complaint-details-header{
@@ -844,4 +854,34 @@ body {
 
 .modal-dialog{
   margin-top: 25%;
+}
+
+.CategorySpan, .currentStatusSpan{
+  text-transform: capitalize;
+}
+
+.currentStatusDropdown{
+  margin-top: 30px;
+}
+
+.currentStatusDropdown button{
+  min-width: 120px !important;
+  margin-top: 5px;
+  font-size: 18px !important;
+}
+
+/*Complaint Details Page CSS End*/
+
+/*Edit Complaint Page CSS Start*/
+.edit-complaint-form{
+  margin-top: 150px;
+  background: white;
+  padding: 50px;
+  border-radius: 5px;
+}
+
+
+.edit-complaint-form span{
+  font-size: 14px;
+  color: red;
 }

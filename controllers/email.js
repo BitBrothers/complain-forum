@@ -1,4 +1,5 @@
 var config = require('../config/secrets');
+var User = require('../models/User');
 var secrets = config()
   , path           = require('path')
   , templatesDir   = path.resolve(__dirname, '..', 'templates')
@@ -74,7 +75,7 @@ exports.sendEmailToFollowers = function(req, res){
             User.findById(req.followers[i]._id,function(err, user1){
                 if(err)
                     res.send(err);
-                else if(!user){
+                else if(!user1){
                     console.log('User Not Found');
                 }
                 else{
@@ -101,7 +102,7 @@ exports.sendEmailToFollowers = function(req, res){
             User.findById(req.followers[i]._id,function(err, user1){
                 if(err)
                     res.send(err);
-                else if(!user){
+                else if(!user1){
                     console.log('User Not Found');
                 }
                 else{
@@ -128,7 +129,7 @@ exports.sendEmailToFollowers = function(req, res){
         User.findById(req.followers[i]._id,function(err, user1){
             if(err)
                 res.send(err);
-            else if(!user){
+            else if(!user1){
                 console.log('User Not Found');
             }
             else{

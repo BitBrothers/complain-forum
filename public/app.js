@@ -1,5 +1,5 @@
 angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 
-                            'mgcrea.ngStrap', 'angularFileUpload', '720kb.socialshare'])
+                            'mgcrea.ngStrap', 'angularFileUpload', '720kb.socialshare', 'multi-select'])
   .config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
@@ -24,6 +24,11 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute',
         templateUrl: 'views/complain-list.html',
         controller: 'ListCtrl'        
 
+      })
+      .when('/complaint-details/:cslug/editComplaint', {
+        templateUrl: 'views/editComplaint.html',
+        controller: 'EditComplaintCtrl'
+      
       })
       .when('/complaint-details/:cslug', {
         templateUrl: 'views/complaintDetails.html',
