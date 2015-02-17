@@ -4,34 +4,92 @@ angular.module('ForChange')
     $scope.followBoolean = '';
     $scope.upvoted = '';
     $scope.followed = '';
+    
+    $scope.currentStatusNew = false;
+    $scope.currentStatusPending = false;
+    $scope.currentStatusResolved = false;
+    $scope.currentStatusUnresolved = false;
+    
+    
   
-      Complaints.default.get({
+    Complaints.default.get({
+        cslug : $routeParams.cslug
+      },
+      function(complaint) {
+        $scope.complaint = complaint;
+        console.log($scope.complaint);
+        console.log($scope.complaint.userId.profile.slug);
+
+
+        if ($scope.complaint.upvote == true) 
+        {
+          $scope.upvoted = 'upvoted';
+        }
+
+
+        if ($scope.complaint.follow == true)
+        {
+          $scope.followBoolean = 'false';
+          $scope.followed = 'followed'
+        }
+        else if ($scope.complaint.follow == false)
+        {
+          $scope.followBoolean = 'true';
+        }
+
+
+        if($scope.complaint.status == 'new'){
+          $scope.currentStatusNew = true;
+        }
+        else if($scope.complaint.status == 'pending'){
+          $scope.currentStatusPending = true;
+        }
+        else if($scope.complaint.status == 'resolved'){
+          $scope.currentStatusResolved = true;
+        }
+        else if($scope.complaint.status == 'unresolved'){
+          $scope.currentStatusUnresolved = true;
+        }
+        $scope.currentStatusDropdown = [
+          { name: "New", ticked:  $scope.currentStatusNew  },
+          { name: "Pending", ticked: $scope.currentStatusPending  },
+          { name: "Resolved", ticked: $scope.currentStatusResolved },
+          { name: "Unresolved", ticked: $scope.currentStatusUnresolved  }
+        ];
+      });
+  
+  
+      $scope.updateCurrentStatus = function(data){
+        $scope.currentStatusDropdownValue = data.name;
+        Complaints.status.update({
           cslug : $routeParams.cslug
+        },{
+          status : $scope.currentStatusDropdownValue
         },
-        function(complaint) {
-          $scope.complaint = complaint;
-          console.log($scope.complaint);
-          console.log($scope.complaint.userId.profile.slug);
-        
-          
-          if ($scope.complaint.upvote == true) 
-          {
-            $scope.upvoted = 'upvoted';
-          }
-        
-          
-          if ($scope.complaint.follow == true)
-          {
-            $scope.followBoolean = 'false';
-            $scope.followed = 'followed'
-          }
-          else if ($scope.complaint.follow == false)
-          {
-            $scope.followBoolean = 'true';
-          }
+        function(data){
+          $alert({
+            content: 'Status successfully updated to ' + $scope.currentStatusDropdownValue,
+            placement: 'right',
+            type: 'success',
+            duration: 5
+          });
+          Complaints.default.get({
+            cslug : $routeParams.cslug
+          },
+          function(complaint) {
+            $scope.complaint = complaint;
+          });
+        },
+        function(data){
+          $alert({
+            content: 'There was an error please try again later.',
+            placement: 'right',
+            type: 'danger',
+            duration: 5
+          });
         });
-  
-        
+
+      };  
  
 
      

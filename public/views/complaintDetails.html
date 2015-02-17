@@ -5,16 +5,25 @@
                 <div class="post-heading">
                     <h1>{{complaint.title}}</h1> <span  ng-show="currentUser.profile.slug == complaint.userId.profile.slug"><a class="editComplaintIcon" href="{{path}}/editComplaint"><i class="fa fa-pencil"></i></a></span>
                     <span class="meta">Posted by <a href="#">{{complaint.userId.profile.slug}}</a> on {{complaint.startdate | date: 'medium'}} </span>
-                    <span class="meta">{{complaint.category}} <i class="fa fa-angle-double-right"></i> {{complaint.subcategory}} </span>
+                    <span class="meta CategorySpan">{{complaint.category}} <i class="fa fa-angle-double-right"></i> {{complaint.subcategory}} </span>
                     <span class="meta"><i class="fa fa-map-marker"></i> {{complaint.location}} </span>
+                    <span class="meta currentStatusSpan">Current Status : <span ng-model="complaint.status">{{complaint.status}}</span> </span>
                     <span ng-click="upvote()"><i class="fa fa-thumbs-up upvotes {{upvoted}}"></i></span><span class="upvotes badge">{{complaint.upvotesCount}} upvotes</span>
-                    <span ng-click="follow()"><i class="fa fa-users followers {{followed}}"></i></span><span class="followers badge">{{complaint.followersCount}} followers</span><span class="deleteComplaintIcon" data-toggle="modal" data-target="#deleteComplaintModal" ng-show="currentUser.profile.slug == complaint.userId.profile.slug"><i class="fa fa-trash-o"></i></span>
+                    <span ng-click="follow()"><i class="fa fa-users followers {{followed}}"></i></span><span class="followers badge">{{complaint.followersCount}} followers</span>
+                    <span class="deleteComplaintIcon" data-toggle="modal" data-target="#deleteComplaintModal" ng-show="currentUser.profile.slug == complaint.userId.profile.slug || currentUser.role == 'staff' || currentUser.role == 'admin'"><i class="fa fa-trash-o"></i></span>
+                    <div class="currentStatusDropdown meta" ng-show="currentUser.role == 'staff' || currentUser.role == 'admin'">  Change current status to:
+                      <multi-select
+                        input-model="currentStatusDropdown"
+                        button-label="name"         
+                        item-label="name" 
+                        tick-property="ticked" 
+                        selection-mode="single"
+                        helper-elements=""
+                        on-item-click="updateCurrentStatus( data )" 
+                      >
+                      </multi-select>
+                    </div>
                     <p class="complaint-description">{{complaint.description}}</p>
-<!--
-                  <div class="upvote-div">
-                    <button class="btn btn-xs"><i class="fa fa-thumbs-up"></i></button> {{complaint.upvotes.length}} 
-                  </div>
--->
                 </div>
             </div>
         </div>

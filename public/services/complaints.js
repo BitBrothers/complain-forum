@@ -2,7 +2,16 @@ angular.module('ForChange')
   .factory('Complaints', function($resource) {
     var Complaints ={
       
-      default :$resource('/api/complaints/:cslug', {cslug: '@cslug'},{
+      default :$resource('/api/complaints/:cslug', {cslug: '@cslug'},
+      {
+        update : {
+          method:'PUT',
+          params: {cslug: '@cslug'}         
+        }
+      }),
+      
+      status :$resource('/api/complaints/:cslug/status', {cslug: '@cslug'},
+      {
         update : {
           method:'PUT',
           params: {cslug: '@cslug'}         
