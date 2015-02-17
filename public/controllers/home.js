@@ -3,13 +3,11 @@ angular.module('ForChange')
 	 console.log($rootScope.currentUser);
 	  
   	$scope.gotoPostComplaint = function () {
-  		console.log('ds');
   		$location.path('/new-complaint');
-
   	};
     
     $scope.exploreComplaint = function () {
-  		$location.path('/list');
+  		$location.path('/complaints');
  	};
 
 });
