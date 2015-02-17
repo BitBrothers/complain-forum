@@ -54,7 +54,7 @@ complaintSchema.index({
   category: 'text',
   subcategory: 'text',
   location: 'text'
-}, {weights:{name:1, status:1}});
+}, {weights:{title:1, status:1}});
 
 //Slug function
 function slugify(text) {

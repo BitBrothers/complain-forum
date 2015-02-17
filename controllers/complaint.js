@@ -657,15 +657,10 @@ exports.filterComplaints = function(req, res){
     var query = Complaint.find();
     var key = "";
 
-    if (req.query.keyword instanceof Array) {
-    for (var i = 0; i < req.query.keyword.length; i++) {
-      key = key + req.query.keyword[i] + " ";
-    };
-    } else {
-    key = req.query.keyword;
-    }
+    key = req.headers.keyword;
+    
 
-    if (req.query.keyword) {
+    if (req.headers.keyword) {
     query = query.find({
       $text: {
         $search: key
@@ -675,17 +670,17 @@ exports.filterComplaints = function(req, res){
     .limit(req.query.l);
     };
 
-    if(req.query.status){
-        if(req.query.status == "new"){
+    if(req.headers.status){
+        if(req.headers.status == "new"){
             if(req.admin){
-                query = query.find({status:req.query.status});
+                query = query.find({status:req.headers.status});
             }
             else{
                 return res.status(401).send('Unauthorized');
             }
         }
         else{
-            query = query.find({status:req.query.status});
+            query = query.find({status:req.headers.status});
         }
         
     }
@@ -698,14 +693,14 @@ exports.filterComplaints = function(req, res){
         }
     }
 
-    if(req.query.location){
-        query = query.find({location:req.query.location});
+    if(req.headers.location){
+        query = query.find({location:req.headers.location});
     }
-    if(req.query.category){
-        query = query.find({category:req.query.category});
+    if(req.headers.category){
+        query = query.find({category:req.headers.category});
     }
-    if(req.query.subcategory){
-        query = query.find({subcategory:req.query.subcategory});
+    if(req.headers.subcategory){
+        query = query.find({subcategory:req.headers.subcategory});
     }
 
     query.exec(function(err, complaints) {
