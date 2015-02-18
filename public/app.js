@@ -20,10 +20,9 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute',
         templateUrl: 'views/postComplaint.html',
         controller: 'PostComplaintCtrl'
         })  
-      .when('/list',{
-        templateUrl: 'views/complain-list.html',
-        controller: 'ListCtrl'        
-
+      .when('/complaints',{
+        templateUrl: 'views/complaintList.html',
+        controller: 'ComplaintListCtrl'        
       })
       .when('/complaint-details/:cslug/editComplaint', {
         templateUrl: 'views/editComplaint.html',
@@ -33,7 +32,6 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute',
       .when('/complaint-details/:cslug', {
         templateUrl: 'views/complaintDetails.html',
         controller: 'ComplaintDetailsCtrl'
-
       })
       .when('/user/:uslug', {
         templateUrl: 'views/userProfile.html',

@@ -3,6 +3,7 @@ var User = require('../models/User');
 
 
 exports.postAddComplaint = function(req, res) {
+    console.log('ADD COMPLAINT');
     User.findById(req.user._id,function(err,user){
         if(err)
             res.send(err);
@@ -142,6 +143,7 @@ exports.deleteComplaint = function(req, res, next) {
         }
     });
 };
+
 
 
 

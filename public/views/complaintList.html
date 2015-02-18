@@ -1,0 +1,60 @@
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('images/home-bg.jpg')">
+        <div class="container">
+            <div class="row search-bar">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <form class="">
+                        <div class="input-group">
+                          <div 
+                              multi-select 
+                              input-model="filterLocation"
+                              output-model="loc"
+                              on-item-click="msClick()" 
+                              button-label="name"         
+                              item-label="icon name maker" 
+                              default-label="<i class='fa fa-map-marker'></i>"
+                              tick-property="ticked" 
+                              selection-mode="single"
+                              orientation="vertical"
+                              group-property="multiSelectGroup"
+                              class="search-filter input-group-addon"     
+                          >
+                          </div>
+                          <div 
+                              multi-select 
+                              input-model="filterCat"
+                              output-model="cat"
+                              on-item-click="msClick()" 
+                              button-label="name"         
+                              item-label="icon name maker" 
+                              default-label="<i class='fa fa-list-ul'></i>"
+                              tick-property="ticked" 
+                              selection-mode="single"
+                              orientation="vertical"
+                              group-property="multiSelectGroup"
+                              class="search-filter input-group-addon"     
+                          >
+                          </div>
+                          <input type="text" class="form-control search-box" ng-model="textQuery" placeholder="Search">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="msClick()"><i class='fa fa-search'></i></button>
+                          </span>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container" ng-cloak>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-preview" ng-repeat="complaint in complaints">
+                  <div ng-include="'../views/partials/complaintListing.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
