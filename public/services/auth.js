@@ -139,6 +139,25 @@ angular.module('ForChange')
             });
           });
       },
+      changePassword: function(user) {
+        return $http.post('/api/user/password', user)
+          .success(function() {
+            $alert({
+              content: "You have successfully changed your password.",
+              placement: 'right',
+              type: 'success',
+              duration: 5
+            });
+          })
+          .error(function(response) {
+            $alert({
+              content: "There was an error.",
+              placement: 'right',
+              type: 'danger',
+              duration: 5
+            });
+          });
+      },
       logout: function() {
         delete $window.localStorage.token;
         delete $window.localStorage.user;

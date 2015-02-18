@@ -17,7 +17,8 @@ exports.changeToStaff = function(req, res, next){
 						res.status(404).send('User Not Found');
 					}
 					else{
-						if(req.body.result == "true"){
+						if(req.body.result == true){
+							console.log('TRUE');
 							user1.role = "staff";
 							user1.save(function(err,newuser1){
 								if(err)
@@ -31,7 +32,8 @@ exports.changeToStaff = function(req, res, next){
 								}
 							});
 						}
-						else if(req.body.result == "false"){
+						else if(req.body.result == false){
+							console.log('FALSE');
 							user1.role = "citizen";
 							user1.save(function(err,newuser1){
 								if(err)

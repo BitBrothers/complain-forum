@@ -33,7 +33,6 @@ exports.isLogin2 = function(req, res, next) {
 };
 
 exports.isLogin = function(req, res, next) {
-
     if (req.headers.authorization) {
         var token = req.headers.authorization;
         //.split(' ')[1];
@@ -53,7 +52,7 @@ exports.isLogin = function(req, res, next) {
             next();
         }
         else{
-         return res.status(401);   
+        res.status(401).send('Unauthorized');   
         }
         
     }
@@ -245,6 +244,7 @@ exports.getUserLog = function(req, res){
 };
 
 exports.changeUserPassword = function(req, res, next){
+    console.log(req.body);
     User.findById(req.user._id,function(err, user){
         if(err)
             res.send(err);

@@ -49,20 +49,11 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container">
+    <div class="container" ng-cloak>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-preview" ng-repeat="complaint in complaints">
-                    <a href="complaint-details/{{complaint.slug}}">
-                        <h2 class="post-title">
-                            {{complaint.title}}
-                        </h2>
-                        <span class="post-subtitle">, in {{complaint.location}}</span>
-                        <h3 class="post-subtitle">
-                            {{complaint.category}} <i class="fa fa-angle-double-right"></i>  {{complaint.subcategory}}
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">{{complaint.userId.profile.slug}}</a> {{complaint.startdate | date: 'medium'}}</p>
+                  <div ng-include="'../views/partials/complaintListing.html'"></div>
                 </div>
             </div>
         </div>

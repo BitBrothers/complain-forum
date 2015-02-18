@@ -705,7 +705,11 @@ exports.filterComplaints = function(req, res){
         query = query.find({subcategory:req.query.subcategory});
     }
 
-    query.exec(function(err, complaints) {
+    query.populate({
+        path:'userId',
+        select: '-_id profile.username profile.slug'
+    })
+    .exec(function(err, complaints) {
     if (err) res.send(err);
     res.json(complaints);
     });

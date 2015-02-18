@@ -27,11 +27,14 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute',
       .when('/complaint-details/:cslug/editComplaint', {
         templateUrl: 'views/editComplaint.html',
         controller: 'EditComplaintCtrl'
-      
       })
       .when('/complaint-details/:cslug', {
         templateUrl: 'views/complaintDetails.html',
         controller: 'ComplaintDetailsCtrl'
+      })
+      .when('/user/:uslug', {
+        templateUrl: 'views/userProfile.html',
+        controller: 'UserCtrl'
       })
       .otherwise({
         redirectTo: '/'
