@@ -33,7 +33,6 @@ exports.isLogin2 = function(req, res, next) {
 };
 
 exports.isLogin = function(req, res, next) {
-
     if (req.headers.authorization) {
         var token = req.headers.authorization;
         //.split(' ')[1];
@@ -53,7 +52,7 @@ exports.isLogin = function(req, res, next) {
             next();
         }
         else{
-         return res.status(401);   
+        res.status(401).send('Unauthorized');   
         }
         
     }
@@ -63,7 +62,6 @@ exports.signup = function(req, res, next) {
     var user = new User({
         email: req.body.email,
         password: req.body.password,
-        anonymous: req.body.anonymous,
         'profile.username': req.body.username
     });
     user.save(function(err, user, numberAffected) {
@@ -210,7 +208,7 @@ exports.getUser = function(req, res){
     .select('-_id profile role complaints')
     .populate({
         path:'complaints._id',
-        select: 'slug title description category subcategory location status startdate enddate'
+        select: '-_id slug title description category subcategory location status startdate enddate'
     })
     .exec(function(err, user){
         if(err)
@@ -219,7 +217,15 @@ exports.getUser = function(req, res){
             res.status(404).send('User Not Found');
         }
         else{
-            res.json(user);
+            var comp = [];
+            for(var i=0;i<user.complaints.length;i++){
+                comp.push(user.complaints[i]._id);
+            };
+            user.complaints.length = 0;
+            res.json({
+                user:user,
+                complaints:comp
+            });
         }
     });
 };
@@ -237,6 +243,7 @@ exports.getUserLog = function(req, res){
 };
 
 exports.changeUserPassword = function(req, res, next){
+    console.log(req.body);
     User.findById(req.user._id,function(err, user){
         if(err)
             res.send(err);

@@ -98,8 +98,9 @@ app.post('/api/complaints', userController.isLogin, complaintController.postAddC
 app.put('/api/complaints/:cslug', userController.isLogin, complaintController.putUpdateComplaint, emailController.sendEmailToFollowers);       
 app.delete('/api/complaints/:cslug', userController.isLogin, complaintController.deleteComplaint, emailController.sendEmailToFollowers);
 
+
 //User APIs
-app.put('/api/user/password', userController.isLogin, userController.changeUserPassword, emailController.sendEmail);
+app.post('/api/user/password', userController.isLogin, userController.changeUserPassword, emailController.sendEmail);
 app.put('/api/user/:uslug/promote', userController.isLogin, adminController.changeToStaff, emailController.sendEmail);
 app.get('/api/user/:uslug/log', userController.isLogin, userController.getUserLog);
 app.get('/api/user/:uslug', userController.isLogin, userController.getUser);

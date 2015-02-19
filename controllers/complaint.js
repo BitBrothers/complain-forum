@@ -3,6 +3,7 @@ var User = require('../models/User');
 
 
 exports.postAddComplaint = function(req, res) {
+    console.log('ADD COMPLAINT');
     User.findById(req.user._id,function(err,user){
         if(err)
             res.send(err);
@@ -27,8 +28,14 @@ exports.postAddComplaint = function(req, res) {
                 entry:"Complaint Added -" + complaint.title
             });
             complaint.log.push({
-                entry:"Complaint Created by -"+ user.profile.username
+                _id: user._id,
+                entry:"Complaint Created by -"
             });
+            if(req.body.anonymous == true){
+                complaint.anonymous.push({
+                    _id:user._id
+                });
+            }
             complaint.save(function(err) {
                 if (err)
                     res.send(err);
@@ -145,7 +152,6 @@ exports.deleteComplaint = function(req, res, next) {
 
 
 
-
 exports.postGetComplaint = function(req, res, next){
     if(req.user){
          User.findById(req.user._id,function(err, user){
@@ -162,6 +168,20 @@ exports.postGetComplaint = function(req, res, next){
                         res.status(404).send('Complaint Not Found');
                     }
                     else{
+                        if(complaint.followers.id(user._id)){
+                            req.follow = true;
+                        }
+                        else{
+                            req.follow = false;
+                        }
+
+                        if(complaint.upvotes.id(user._id)){
+                            req.upvote = true;
+                        }
+                        else{
+                            req.upvote = false;
+                        }
+
                         if(user.complaints.id(complaint._id)){
                             next();
                         }
@@ -206,11 +226,11 @@ exports.getComplaint = function(req, res) {
     Complaint.findOne({slug:req.params.cslug})
     .populate({
         path:'userId',
-        select: '-_id profile.username profile.slug profile.firstname profile.lastname'
+        select: 'profile.username profile.slug profile.firstname profile.lastname'
     })
     .populate({
         path:'comments._id',
-        select: '-_id profile.username profile.slug'
+        select: 'profile.username profile.slug'
     })
     .exec(function(error, complaint) {
         if (error)
@@ -223,120 +243,46 @@ exports.getComplaint = function(req, res) {
             var followersCount = complaint.followers.length;
             var upvotesCount = complaint.upvotes.length;
             if(req.user){
-                User.findById(req.user._id,function(err, user){
-                    if(err)
-                        res.send(err);
-                    else if(!user){
-                        var temp ={
-                            followersCount: followersCount,
-                            upvotesCount: upvotesCount,
-                            follow: false,
-                            upvote: false,
-                            title: complaint.title,
-                            description: complaint.description,
-                            category: complaint.category,
-                            subcategory: complaint.subcategory,
-                            comments: complaint.comments,
-                            enddate: complaint.enddate,
-                            location: complaint.location,
-                            userId: complaint.userId,
-                            slug: complaint.slug,
-                            startdate: complaint.startdate,
-                            status: complaint.status
-                        };
-                        res.json(temp);
+                if(complaint.anonymous.id(complaint.userId)){
+                    complaint.userId.profile.username = "anonymous";
+                    complaint.userId.profile.slug = "anonymous";
+                }
+                for(var i=0;i<complaint.comments.length;i++){
+                    if(complaint.anonymous.id(complaint.comments[i]._id)){
+                        complaint.comments[i]._id.profile.username = "anonymous";
+                        complaint.comments[i]._id.profile.slug = "anonymous";
                     }
-                    else{
-                        if(complaint.followers.id(user._id)){
-                            follow = true;
-                            if(complaint.upvotes.id(user._id)){
-                            var temp ={
-                            followersCount: followersCount,
-                            upvotesCount: upvotesCount,
-                            follow: follow,
-                            upvote: true,
-                            title: complaint.title,
-                            description: complaint.description,
-                            category: complaint.category,
-                            subcategory: complaint.subcategory,
-                            comments: complaint.comments,
-                            enddate: complaint.enddate,
-                            location: complaint.location,
-                            userId: complaint.userId,
-                            slug: complaint.slug,
-                            startdate: complaint.startdate,
-                            status: complaint.status
-                        };
-                        res.json(temp);
-                            }
-                            else{
-                            var temp ={
-                            followersCount: followersCount,
-                            upvotesCount: upvotesCount,
-                            follow: follow,
-                            upvote: false,
-                            title: complaint.title,
-                            description: complaint.description,
-                            category: complaint.category,
-                            subcategory: complaint.subcategory,
-                            comments: complaint.comments,
-                            enddate: complaint.enddate,
-                            location: complaint.location,
-                            userId: complaint.userId,
-                            slug: complaint.slug,
-                            startdate: complaint.startdate,
-                            status: complaint.status
-                        };
-                        res.json(temp);
-                            }
-                        }
-                        else{
-                            follow = false;
-                            if(complaint.upvotes.id(user._id)){
-                            var temp ={
-                            followersCount: followersCount,
-                            upvotesCount: upvotesCount,
-                            follow: follow,
-                            upvote: true,
-                            title: complaint.title,
-                            description: complaint.description,
-                            category: complaint.category,
-                            subcategory: complaint.subcategory,
-                            comments: complaint.comments,
-                            enddate: complaint.enddate,
-                            location: complaint.location,
-                            userId: complaint.userId,
-                            slug: complaint.slug,
-                            startdate: complaint.startdate,
-                            status: complaint.status
-                        };
-                        res.json(temp);
-                            }
-                            else{
-                            var temp ={
-                            followersCount: followersCount,
-                            upvotesCount: upvotesCount,
-                            follow: follow,
-                            upvote: false,
-                            title: complaint.title,
-                            description: complaint.description,
-                            category: complaint.category,
-                            subcategory: complaint.subcategory,
-                            comments: complaint.comments,
-                            enddate: complaint.enddate,
-                            location: complaint.location,
-                            userId: complaint.userId,
-                            slug: complaint.slug,
-                            startdate: complaint.startdate,
-                            status: complaint.status
-                        };
-                        res.json(temp);
-                            }
-                        }
-                    }
-                });
+                };
+                var temp ={
+                    followersCount: followersCount,
+                    upvotesCount: upvotesCount,
+                    follow: req.follow,
+                    upvote: req.upvote,
+                    title: complaint.title,
+                    description: complaint.description,
+                    category: complaint.category,
+                    subcategory: complaint.subcategory,
+                    comments: complaint.comments,
+                    enddate: complaint.enddate,
+                    location: complaint.location,
+                    userId: complaint.userId.profile,
+                    slug: complaint.slug,
+                    startdate: complaint.startdate,
+                    status: complaint.status
+                };
+                res.json(temp);
             }
             else{
+                        if(complaint.anonymous.id(complaint.userId)){
+                            complaint.userId.profile.username = "anonymous";
+                            complaint.userId.profile.slug = "anonymous";
+                        }
+                        for(var i=0;i<complaint.comments.length;i++){
+                            if(complaint.anonymous.id(complaint.comments[i]._id)){
+                                complaint.comments[i]._id.profile.username = "anonymous";
+                                complaint.comments[i]._id.profile.slug = "anonymous";
+                            }
+                        };
                         var temp ={
                             followersCount: followersCount,
                             upvotesCount: upvotesCount,
@@ -349,7 +295,7 @@ exports.getComplaint = function(req, res) {
                             comments: complaint.comments,
                             enddate: complaint.enddate,
                             location: complaint.location,
-                            userId: complaint.userId,
+                            userId: complaint.userId.profile,
                             slug: complaint.slug,
                             startdate: complaint.startdate,
                             status: complaint.status
@@ -360,8 +306,6 @@ exports.getComplaint = function(req, res) {
         }
     });
 };
-
-
 
 
 exports.putUpdateComplaint = function(req, res, next) {
@@ -379,13 +323,13 @@ exports.putUpdateComplaint = function(req, res, next) {
                     }
                     else{
                         if(user.complaints.id(complaint._id) || user.role == "admin" || user.role == "staff"){
-                         // complaint.title = req.body.title;
                          complaint.description = req.body.description;
                          complaint.category = req.body.category;
                          complaint.subcategory = req.body.subcategory;
                          complaint.location = req.body.location;
                          complaint.log.push({
-                            entry:"Complaint Updated -"+ user.profile.username
+                            _id: user._id,
+                            entry:"Complaint Updated -"
                         });
                          for(var i = 0;i <= complaint.followers.length-1;i++){
                             User.findById(complaint.followers[i]._id,function(err, user1){
@@ -446,7 +390,7 @@ exports.followComplaint = function(req, res){
                     res.status(404).send('Complaint Not Found');
                 }
                 else{
-                    if(req.body.result == "true"){
+                    if(req.body.result == true){
                         if(complaint.followers.id(user._id)){
                             res.status(412).send('Already Followed Complaint');
                         }
@@ -465,7 +409,7 @@ exports.followComplaint = function(req, res){
                             });
                         }
                     }
-                    else if(req.body.result == "false"){
+                    else if(req.body.result == false){
                         if(complaint.followers.id(user._id)){
                             complaint.followers.pull({
                                 _id:user._id
@@ -522,7 +466,8 @@ exports.upvoteComplaint = function(req, res){
                             _id:user._id
                         });
                         complaint.log.push({
-                            entry:"Complaint Upvoted -"+ user.profile.username
+                            _id: user._id,
+                            entry:"Complaint Upvoted -"
                         });
                         for(var i = 0;i <= complaint.followers.length-1;i++){
                             User.findById(complaint.followers[i]._id,function(err, user1){
@@ -581,7 +526,8 @@ exports.commentComplaint = function(req, res){
                             entry:"Comment Added -" + complaint.title
                         });
                         complaint.log.push({
-                            entry:"Comment Added by -"+ user.profile.username
+                            _id: user._id,
+                            entry:"Comment Added by -"
                         });
                         for(var i = 0;i <= complaint.followers.length-1;i++){
                             User.findById(complaint.followers[i]._id,function(err, user1){
@@ -616,15 +562,34 @@ exports.commentComplaint = function(req, res){
 
 exports.getComplaintLog = function(req, res){
     Complaint.findOne({
-        slug:req.params.cslug},
-        function(err, complaint){
+        slug:req.params.cslug})
+    .populate({
+        path:'log._id',
+        select: 'profile.username profile.slug'
+    })
+    .exec(function(err, complaint){
             if(err)
                 res.send(err);
             else if(!complaint){
                 res.status(404).send('Complaint Not Found');
             }
             else{
-                res.json(complaint.log);
+                var log = [];
+                for(var i=0;i<complaint.log.length;i++){
+                    if(complaint.anonymous.id(complaint.log[i]._id)){
+                        log.push({
+                            entry:complaint.log[i].entry + "anonymous",
+                            date:complaint.log[i].date
+                        });
+                    }
+                    else{
+                        log.push({
+                            entry:complaint.log[i].entry + complaint.log[i]._id.profile.username,
+                            date:complaint.log[i].date
+                        });
+                    }
+                };
+                res.json(log);
             }
         });
 };
@@ -712,10 +677,42 @@ exports.filterComplaints = function(req, res){
 
     query.populate({
         path:'userId',
-        select: '-_id profile.username profile.slug'
+        select: 'profile.username profile.slug'
     }).exec(function(err, complaints) {
     if (err) res.send(err);
-    res.json(complaints);
+    else{
+        var comp = [];
+        for(var i=0;i<complaints.length;i++){
+            if(complaints[i].anonymous.id(complaints[i].userId)){
+                complaints[i].userId.profile.slug = "anonymous";
+                complaints[i].userId.profile.username = "anonymous";
+                comp.push({
+                    title: complaints[i].title,
+                    category: complaints[i].category,
+                    subcategory: complaints[i].subcategory,
+                    location: complaints[i].location,
+                    status: complaints[i].status,
+                    userId: complaints[i].userId.profile,
+                    startdate: complaints[i].startdate,
+                    enddate: complaints[i].enddate,
+                    slug: complaints[i].slug
+                });
+            }
+            else{
+                comp.push({
+                    title: complaints[i].title,
+                    category: complaints[i].category,
+                    subcategory: complaints[i].subcategory,
+                    location: complaints[i].location,
+                    status: complaints[i].status,
+                    userId: complaints[i].userId.profile,
+                    startdate: complaints[i].startdate,
+                    enddate: complaints[i].enddate,
+                    slug: complaints[i].slug
+                }); 
+            }
+        };
+    }
+    res.json(comp);
     });
 };
-

@@ -19,7 +19,9 @@
     <link href="css/angular-multi-select.css" rel="stylesheet">
 
     <!-- Custom CSS -->
+    <link href="directives/angular-multi-select.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/clean-blog.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="vendor/components-font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
@@ -61,7 +63,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right" ng-if="currentUser">
                     <li>
-                        <a href="/">{{currentUser.profile.username}}</a>
+                        <a href="/user/{{currentUser.profile.slug}}">{{currentUser.profile.username}}</a>
                     </li>
                     <li>
                         <a href="/login" ng-click="logout()">Log Out</a>
@@ -131,9 +133,13 @@
     <script src="vendor/angular-route/angular-route.js"></script>
     <script src="vendor/angular-file-upload/angular-file-upload.js"></script>
     <script src="vendor/angularjs-socialshare/src/js/angular-socialshare.js"></script>
+    <script src="vendor/angular-animate/angular-animate.js"></script>
 
 
     <script src="app.js"></script>
+
+    <script src="directives/passwordStrength.js"></script>
+    <script src="directives/angular-multi-select.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -145,21 +151,21 @@
     <script src="js/main.js"></script>
 
     <script src="controllers/home.js"></script>
-
     <script src="controllers/login.js"></script>
     <script src="controllers/signup.js"></script>
     <script src="controllers/navbar.js"></script>
     <script src="controllers/postComplaint.js"></script>
+    <script src="controllers/user.js"></script>
     <script src="controllers/complaintDetails.js"></script>
+    <script src="controllers/complaintList.js"></script>
     <script src="controllers/editComplaint.js"></script>
 
     <script src="directives/passwordStrength.js"></script>
     <script src="directives/uniqueEmail.js"></script>
+
     <script src="services/auth.js"></script>
+    <script src="services/user.js"></script>
     <script src="services/complaints.js"></script>
-
-    <script src="controllers/list.js"></script>
-
 
 </body>
 
