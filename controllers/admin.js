@@ -17,9 +17,9 @@ exports.changeToStaff = function(req, res, next){
 						res.status(404).send('User Not Found');
 					}
 					else{
-
 						if(user1.role == "admin"){
 							res.status(412).send('User already Admin');
+						}
 						else{
 							if(req.body.result == true){
 								user1.role = "staff";
