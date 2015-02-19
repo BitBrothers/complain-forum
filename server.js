@@ -97,7 +97,7 @@ app.get('/api/complaints/:cslug', userController.isLogin2, userController.isLogi
 app.post('/api/complaints', userController.isLogin, complaintController.postAddComplaint);     
 app.put('/api/complaints/:cslug', userController.isLogin, complaintController.putUpdateComplaint, emailController.sendEmailToFollowers);       
 app.delete('/api/complaints/:cslug', userController.isLogin, complaintController.deleteComplaint, emailController.sendEmailToFollowers);
-
+app.put('api/complaints/:cslug/anonymous', userController.isLogin, complaintController.changeAnonymous);
 
 //User APIs
 app.post('/api/user/password', userController.isLogin, userController.changeUserPassword, emailController.sendEmail);

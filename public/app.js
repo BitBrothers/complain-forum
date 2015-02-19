@@ -1,4 +1,4 @@
-angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
+angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'ngAutocomplete', 
                             'mgcrea.ngStrap', 'angularFileUpload', '720kb.socialshare', 'multi-select'])
   .config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
@@ -9,10 +9,16 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
         controller: 'HomeCtrl'
       })
       .when('/login', {
+        resolve: {
+          factory: checkLogin
+        },
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
       })
       .when('/signup', {
+        resolve: {
+          factory: checkLogin
+        },
         templateUrl: 'views/signup.html',
         controller: 'SignupCtrl'
       })
@@ -70,6 +76,13 @@ var checkRouting= function ($q, $rootScope, $location, $alert) {
         duration: 5
       });
     $location.path("/login");
+  }
+  return null;
+};
+
+var checkLogin= function ($q, $rootScope, $location, $alert) {
+  if ($rootScope.currentUser) {
+    $location.path("/");
   }
   return null;
 };

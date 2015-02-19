@@ -81,9 +81,10 @@ exports.changeComplaintStatus = function(req, res, next){
 				else if(!complaint){
 					res.status(404).send('Complaint Not Found');
 				}
-				else{
+				else{	
 					if(user.role == "admin" || user.role == "staff"){
 						if(req.body.status){
+							//if(req.body.status == "new" || req.body.status == "pending" || req.body.status == "resolved" || )
 							complaint.status = req.body.status;
 							for(var i = 0;i <= complaint.followers.length-1;i++){
 			                    User.findById(complaint.followers[i]._id,function(err, user1){
@@ -118,6 +119,7 @@ exports.changeComplaintStatus = function(req, res, next){
 							res.status(412).send('Status Not Sent');
 						} 
 					}
+
                     else if(complaint.status == "resolved"){
                         complaint.status = "unresolved";
                         for(var i = 0;i <= complaint.followers.length-1;i++){

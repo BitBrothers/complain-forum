@@ -211,7 +211,7 @@ exports.postGetComplaint = function(req, res, next){
                 res.status(404).send('Complaint Not Found');
             }
             else{
-                if(complaint.status == "New"){
+                if(complaint.status == "new"){
                     res.status(404).send('Complaint Not Found');
                 }
                 else{
@@ -242,17 +242,18 @@ exports.getComplaint = function(req, res) {
             var follow,upvote;
             var followersCount = complaint.followers.length;
             var upvotesCount = complaint.upvotes.length;
-            if(req.user){
-                if(complaint.anonymous.id(complaint.userId)){
-                    complaint.userId.profile.username = "anonymous";
-                    complaint.userId.profile.slug = "anonymous";
+            
+            if(complaint.anonymous.id(complaint.userId)){
+                complaint.userId.profile.username = "anonymous";
+                complaint.userId.profile.slug = "anonymous";
+            }
+            for(var i=0;i<complaint.comments.length;i++){
+                if(complaint.anonymous.id(complaint.comments[i]._id)){
+                    complaint.comments[i]._id.profile.username = "anonymous";
+                    complaint.comments[i]._id.profile.slug = "anonymous";
                 }
-                for(var i=0;i<complaint.comments.length;i++){
-                    if(complaint.anonymous.id(complaint.comments[i]._id)){
-                        complaint.comments[i]._id.profile.username = "anonymous";
-                        complaint.comments[i]._id.profile.slug = "anonymous";
-                    }
-                };
+            };
+            if(req.user){
                 var temp ={
                     followersCount: followersCount,
                     upvotesCount: upvotesCount,
@@ -265,7 +266,7 @@ exports.getComplaint = function(req, res) {
                     comments: complaint.comments,
                     enddate: complaint.enddate,
                     location: complaint.location,
-                    userId: complaint.userId.profile,
+                    userId: complaint.userId,
                     slug: complaint.slug,
                     startdate: complaint.startdate,
                     status: complaint.status
@@ -273,16 +274,6 @@ exports.getComplaint = function(req, res) {
                 res.json(temp);
             }
             else{
-                        if(complaint.anonymous.id(complaint.userId)){
-                            complaint.userId.profile.username = "anonymous";
-                            complaint.userId.profile.slug = "anonymous";
-                        }
-                        for(var i=0;i<complaint.comments.length;i++){
-                            if(complaint.anonymous.id(complaint.comments[i]._id)){
-                                complaint.comments[i]._id.profile.username = "anonymous";
-                                complaint.comments[i]._id.profile.slug = "anonymous";
-                            }
-                        };
                         var temp ={
                             followersCount: followersCount,
                             upvotesCount: upvotesCount,
@@ -295,7 +286,7 @@ exports.getComplaint = function(req, res) {
                             comments: complaint.comments,
                             enddate: complaint.enddate,
                             location: complaint.location,
-                            userId: complaint.userId.profile,
+                            userId: complaint.userId,
                             slug: complaint.slug,
                             startdate: complaint.startdate,
                             status: complaint.status
@@ -354,9 +345,9 @@ exports.putUpdateComplaint = function(req, res, next) {
                              if (err)
                                  res.send(err);
                             else{
-                                req.update = true;
-                                req.followers = newcomplaint.followers;
-                                req.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
+                                request.update = true;
+                                request.followers = newcomplaint.followers;
+                                request.email = "Complaint -"+ newcomplaint.title + " was updated." + "\nUnfollow to stop recieving email notifications for this complaint" 
                                 next();
                             }
                         });
@@ -390,7 +381,7 @@ exports.followComplaint = function(req, res){
                     res.status(404).send('Complaint Not Found');
                 }
                 else{
-                    if(req.body.result == true){
+                    if(req.body.result === true){
                         if(complaint.followers.id(user._id)){
                             res.status(412).send('Already Followed Complaint');
                         }
@@ -409,7 +400,7 @@ exports.followComplaint = function(req, res){
                             });
                         }
                     }
-                    else if(req.body.result == false){
+                    else if(req.body.result === false){
                         if(complaint.followers.id(user._id)){
                             complaint.followers.pull({
                                 _id:user._id
@@ -715,4 +706,59 @@ exports.filterComplaints = function(req, res){
     }
     res.json(comp);
     });
+};
+
+exports.changeAnonymous = function(req, res){
+    Complaint.findOne({
+        slug:req.params.cslug},
+        function(err, complaint){
+            if(err)
+                res.send(err);
+            else if(!complaint){
+                res.status(404).send('Complaint Not Found');
+            }
+            else{
+                if(req.body.result === true){
+                    if(complaint.anonymous.id(req.user._id)){
+                        res.status(412).send('Already Anonymous');
+                    }
+                    else{
+                        complaint.anonymous.push({
+                            _id:req.user._id
+                        });
+                        complaint.save(function(err){
+                            if(err)
+                                res.send(err);
+                            else{
+                                res.json({
+                                    message:'Successfully changed to anonymous for this complaint'
+                                });
+                            }
+                        });
+                    }
+                }
+                else if(req.body.result === false){
+                    if(complaint.anonymous.id(req.user._id)){
+                        complaint.anonymous.pull({
+                            _id:req.user._id
+                        });
+                        complaint.save(function(err){
+                            if(err)
+                                res.send(err);
+                            else{
+                                res.json({
+                                    message:'Successfully changed to normal for this complaint'
+                                });
+                            }
+                        });
+                    }
+                    else{
+                        res.status(412).send('Not Anonymous');
+                    }
+                }
+                else{
+                    res.status(412).send('Result Not Sent');
+                }
+            }
+        });
 };
