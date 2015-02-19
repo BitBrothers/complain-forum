@@ -56,6 +56,9 @@ angular.module('ForChange')
           },
           url: '/api/complaints/:cslug/follow'
         }
+      }),
+      log: $resource('/api/complaints/:cslug/log', {
+        cslug: '@cslug'
       })
     };
     return Complaints;

@@ -7,4 +7,4 @@
         {{complaint.category}} <i class="fa fa-angle-double-right"></i>  {{complaint.subcategory}}
     </h3>
 </a>
-<p class="post-meta">Posted by <a href="#">{{complaint.userId.profile.slug}}</a> {{complaint.startdate | date: 'medium'}}</p>
+<p class="post-meta">Posted by <a href="/user/{{complaint.userId.profile.slug}}">{{complaint.userId.profile.username}}</a> {{complaint.startdate | date: 'medium'}}</p>

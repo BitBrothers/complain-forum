@@ -1,4 +1,4 @@
-angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 
+angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
                             'mgcrea.ngStrap', 'angularFileUpload', '720kb.socialshare', 'multi-select'])
   .config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);

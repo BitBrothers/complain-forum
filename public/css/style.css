@@ -926,3 +926,33 @@ body {
   font-size: 14px;
   color: red;
 }
+
+
+/*.complaint-list.ng-enter,
+.complaint-list.ng-leave{
+  transition: 0.3s linear all;
+}
+.complaint-list.ng-enter.ng-enter-active, .complaint-list.ng-leave {
+  height: 100px;
+}
+.complaint-list.ng-leave.ng-leave-active, .complaint-list.ng-enter {
+  height: 0px;
+}*/
+
+/*Test animation*/
+.complaint-list.ng-enter, .complaint-list.ng-leave {
+transition: 300ms ease-in all;
+position: relative;
+} 
+.complaint-list.ng-enter.ng-enter-active, .complaint-list.ng-leave {
+left: 0;
+opacity: 1;
+}
+.complaint-list.ng-leave.ng-leave-active, .complaint-list.ng-enter {
+left: 500px;
+opacity: 0;
+}
+
+
+
+
