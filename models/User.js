@@ -11,7 +11,6 @@ var userSchema = new mongoose.Schema({
   
   password: String,
   role: {type: String,default:'citizen',lowercase: true},
-  anonymous: Boolean,
   complaints:[{
     _id:{type: mongoose.Schema.Types.ObjectId, ref: 'Complaint'}
   }],

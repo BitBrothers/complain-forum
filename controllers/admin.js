@@ -82,9 +82,10 @@ exports.changeComplaintStatus = function(req, res, next){
 				else if(!complaint){
 					res.status(404).send('Complaint Not Found');
 				}
-				else{
+				else{	
 					if(user.role == "admin" || user.role == "staff"){
 						if(req.body.status){
+							//if(req.body.status == "new" || req.body.status == "pending" || req.body.status == "resolved" || )
 							complaint.status = req.body.status;
 							for(var i = 0;i <= complaint.followers.length-1;i++){
 			                    User.findById(complaint.followers[i]._id,function(err, user1){
@@ -119,38 +120,41 @@ exports.changeComplaintStatus = function(req, res, next){
 							res.status(412).send('Status Not Sent');
 						} 
 					}
-                        else if(complaint.status == "resolved"){
-                            complaint.status = "unresolved";
-                            for(var i = 0;i <= complaint.followers.length-1;i++){
-			                    User.findById(complaint.followers[i]._id,function(err, user1){
-			                        if(err)
-			                            res.send(err);
-			                        else if(!user){
-			                            console.log('User Not Found');
-			                        }
-			                        else{
-			                            user1.log.push({
-			                                entry:"Complaint Status Updated -"+ complaint.title + "--" + complaint.status
-			                            });
-			                            user1.save(function(err){
-			                            	if(err)
-			                            		res.send(err);
-			                            });
-			                        }
-			                    });
-			                };
-                            complaint.save(function(err, newcomplaint){
-                                if(err)
-                                    res.send(err);
-                                else{
-                                	req.status = true;
-									req.email = "Complaint -" + complaint.title + " status has been changed to " + complaint.status +"\n Unfollow to stop getting emails for this complaint";
-									req.followers =newcomplaint.followers;
-									next();
-                                }
-                            });
-                        }
+
+                    else if(complaint.status == "resolved"){
+                        complaint.status = "unresolved";
+                        for(var i = 0;i <= complaint.followers.length-1;i++){
+		                    User.findById(complaint.followers[i]._id,function(err, user1){
+		                        if(err)
+		                            res.send(err);
+		                        else if(!user){
+		                            console.log('User Not Found');
+		                        }
+		                        else{
+		                            user1.log.push({
+		                                entry:"Complaint Status Updated -"+ complaint.title + "--" + complaint.status
+		                            });
+		                            user1.save(function(err){
+		                            	if(err)
+		                            		res.send(err);
+		                            });
+		                        }
+		                    });
+		                };
+                        complaint.save(function(err, newcomplaint){
+                            if(err)
+                                res.send(err);
+                            else{
+                            	req.status = true;
+								req.email = "Complaint -" + complaint.title + " status has been changed to " + complaint.status +"\n Unfollow to stop getting emails for this complaint";
+								req.followers = newcomplaint.followers;
+								next();
+                            }
+                        });
+                    }
+
 					else{
+						console.log('here');
 						res.status(401).send('Un-Authorized');
 					}
 				}

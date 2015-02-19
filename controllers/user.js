@@ -62,7 +62,6 @@ exports.signup = function(req, res, next) {
     var user = new User({
         email: req.body.email,
         password: req.body.password,
-        anonymous: req.body.anonymous,
         'profile.username': req.body.username
     });
     user.save(function(err, user, numberAffected) {
@@ -209,7 +208,7 @@ exports.getUser = function(req, res){
     .select('-_id profile role complaints')
     .populate({
         path:'complaints._id',
-        select: 'slug title description category subcategory location status startdate enddate'
+        select: '-_id slug title description category subcategory location status startdate enddate'
     })
     .exec(function(err, user){
         if(err)
@@ -218,7 +217,15 @@ exports.getUser = function(req, res){
             res.status(404).send('User Not Found');
         }
         else{
-            res.json(user);
+            var comp = [];
+            for(var i=0;i<user.complaints.length;i++){
+                comp.push(user.complaints[i]._id);
+            };
+            user.complaints.length = 0;
+            res.json({
+                user:user,
+                complaints:comp
+            });
         }
     });
 };

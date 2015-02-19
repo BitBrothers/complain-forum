@@ -1,7 +1,6 @@
 angular.module('ForChange')
   .controller('ComplaintDetailsCtrl', function($scope, $rootScope, Complaints, $routeParams, $http, $alert, $location) {
     $scope.path = $location.path();
-    $scope.followBoolean = '';
     $scope.upvoted = '';
     $scope.followed = '';
 
@@ -14,9 +13,11 @@ angular.module('ForChange')
         cslug: $routeParams.cslug
       },
       function(complaint) {
+
         $scope.complaint = complaint;
         console.log($scope.complaint);
-
+          console.log($rootScope.currentUser.profile.slug);
+    console.log($scope.complaint.userId.profile.slug);
 
         if ($scope.complaint.upvote == true) {
           $scope.upvoted = 'upvoted';
@@ -24,10 +25,10 @@ angular.module('ForChange')
 
 
         if ($scope.complaint.follow == true) {
-          $scope.followBoolean = 'false';
+          $scope.followBoolean = false;
           $scope.followed = 'followed'
         } else if ($scope.complaint.follow == false) {
-          $scope.followBoolean = 'true';
+          $scope.followBoolean = true;
         }
 
 //      Set value of current status
@@ -228,15 +229,15 @@ angular.module('ForChange')
               type: 'success',
               duration: 5
             });
-               if ($scope.followBoolean == 'true')
+               if ($scope.followBoolean == true)
               {
-                $scope.followBoolean = 'false';
+                $scope.followBoolean = false;
                 $scope.followed = 'followed';
                 $scope.complaint.followersCount++; 
               }
-              else if ($scope.followBoolean == 'false')
+              else if ($scope.followBoolean == false)
               {
-                $scope.followBoolean = 'true';
+                $scope.followBoolean = true;
                 $scope.followed = '';
                 $scope.complaint.followersCount--;
               }
