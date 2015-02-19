@@ -83,12 +83,7 @@ angular.module('ForChange')
             type: 'success',
             duration: 5
           });
-          Complaints.default.get({
-            cslug : $routeParams.cslug
-          },
-          function(complaint) {
-            $scope.complaint = complaint;
-          });
+          $scope.complaint.status = $scope.currentStatusDropdownValue
         },
         function(data){
           $alert({
@@ -199,7 +194,6 @@ angular.module('ForChange')
             function(complaint) {
               $scope.complaint = complaint;
 
-              $scope.upvoted = '';
             if ($scope.complaint.upvote == true) 
             {
               $scope.upvoted = 'upvoted';
@@ -241,22 +235,18 @@ angular.module('ForChange')
               type: 'success',
               duration: 5
             });
-            Complaints.default.get({
-            cslug : $routeParams.cslug
-            },
-            function(complaint) {
-              $scope.complaint = complaint;
-               if ($scope.complaint.follow == true)
+               if ($scope.followBoolean == 'true')
               {
                 $scope.followBoolean = 'false';
-                $scope.followed = 'followed'
+                $scope.followed = 'followed';
+                $scope.complaint.followersCount++; 
               }
-              else if ($scope.complaint.follow == false)
+              else if ($scope.followBoolean == 'false')
               {
                 $scope.followBoolean = 'true';
-                $scope.followed = ''
+                $scope.followed = '';
+                $scope.complaint.followersCount--;
               }
-            });
           }, function(object) {
             $alert({
               content: object.data,
@@ -284,7 +274,6 @@ angular.module('ForChange')
       
       
       $scope.reopenComplaint = function(data){
-//        $scope.newStatus = 'new';
         Complaints.status.update({
           cslug : $routeParams.cslug
         },{
@@ -292,17 +281,13 @@ angular.module('ForChange')
         },
         function(data){
           $alert({
-            content: 'Status successfully updated',
+            content: data.message,
             placement: 'right',
             type: 'success',
             duration: 5
           });
-          Complaints.default.get({
-            cslug : $routeParams.cslug
-          },
-          function(complaint) {
-            $scope.complaint = complaint;
-          });
+          $scope.complaint.status = "unresolved";
+          $('#reopenComplaintModal').modal('hide');
         },
         function(data){
           $alert({

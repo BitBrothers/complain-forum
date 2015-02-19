@@ -119,7 +119,7 @@ exports.changeComplaintStatus = function(req, res, next){
 						} 
 					}
                         else if(complaint.status == "resolved"){
-                            complaint.status == "unresolved";
+                            complaint.status = "unresolved";
                             for(var i = 0;i <= complaint.followers.length-1;i++){
 			                    User.findById(complaint.followers[i]._id,function(err, user1){
 			                        if(err)

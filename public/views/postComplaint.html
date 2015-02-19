@@ -31,20 +31,8 @@
           </div>  
           <div class="form-group">
             <label for="desc">Location</label>
-            <input type="text" class="form-control" ng-model="complaint.location" placeholder="Where did you experince the problem?" ng-autocomplete options="autocompleteOptions" details="details" required>
-            <p> {{details.address_components}} </p>
+            <input type="text" class="form-control" ng-model="complaint.location" placeholder="Where did you experince the problem?" required>
           </div>
-<!--
-          <div >
-            <ui-gmap-google-map center='map.center' zoom='map.zoom' >
-            <style>.angular-google-map-container { height: 400px; }</style>
-              <ui-gmap-marker idKey='marker.id' coords='marker.coords'>
-              </ui-gmap-marker>
-
-            </ui-gmap-google-map>
-
-          </div>
--->
 
           <button ng-click="post()" ng-disabled="postComplaint.$invalid" class="btn btn-default">Submit</button>
           <span ng-show="postComplaint.$invalid">Please fill in all fields to submit.</span>
