@@ -20,7 +20,7 @@ exports.changeToStaff = function(req, res, next){
 						if(user1.role == "admin"){
 							res.status(412).send('User already Admin');
 						}
-						else{
+						else {
 							if(req.body.result == true){
 								user1.role = "staff";
 								user1.save(function(err,newuser1){
@@ -35,7 +35,7 @@ exports.changeToStaff = function(req, res, next){
 									}
 								});
 							}
-							else if(req.body.result == true){
+							else if(req.body.result == false){
 								user1.role = "citizen";
 								user1.save(function(err,newuser1){
 									if(err)
@@ -48,10 +48,11 @@ exports.changeToStaff = function(req, res, next){
 			                            next();
 									}
 								});
+
 							}
-							else{
-								res.status(412).send('Result Not Sent');
-							}	
+								else{
+									res.status(412).send('Result Not Sent');
+								}	
 						}
 	
 					}

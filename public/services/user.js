@@ -20,16 +20,6 @@ angular.module('ForChange')
             uslug: '@uslug'
           }
         }
-      }),
-      makeAnon: $resource('/api/user/:uslug/anonymous', {
-        uslug: '@uslug'
-      }, {
-        update: {
-          method: 'PUT',
-          params: {
-            uslug: '@uslug'
-          }
-        }
       })
     };
     return User;
