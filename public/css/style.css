@@ -853,7 +853,7 @@ body {
 }
 
 .modal-dialog{
-  margin-top: 25%;
+  margin-top: 15%;
 }
 
 .CategorySpan, .currentStatusSpan{
@@ -868,6 +868,19 @@ body {
   min-width: 120px !important;
   margin-top: 5px;
   font-size: 18px !important;
+  display: inline !important;
+}
+
+.checkboxLayer.show{
+  position: absolute;
+  left: 255px;
+}
+
+.reopenComplaint{
+  padding-left: 50px;
+}
+.reopenComplaint small:hover{
+  cursor: pointer;
 }
 
 /*Complaint Details Page CSS End*/

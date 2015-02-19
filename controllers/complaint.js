@@ -202,8 +202,8 @@ exports.postGetComplaint = function(req, res, next){
     }
 };
 
-exports.getComplaint = function(request, response) {
-    Complaint.findOne({slug:request.params.cslug})
+exports.getComplaint = function(req, res) {
+    Complaint.findOne({slug:req.params.cslug})
     .populate({
         path:'userId',
         select: '-_id profile.username profile.slug profile.firstname profile.lastname'
@@ -214,16 +214,16 @@ exports.getComplaint = function(request, response) {
     })
     .exec(function(error, complaint) {
         if (error)
-            response.send(error);
+            res.send(error);
         else if(!complaint){
-            response.status(404).send('Complaint Not Found');
+            res.status(404).send('Complaint Not Found');
         }
         else {
             var follow,upvote;
             var followersCount = complaint.followers.length;
             var upvotesCount = complaint.upvotes.length;
-            if(request.user){
-                User.findById(request.user._id,function(err, user){
+            if(req.user){
+                User.findById(req.user._id,function(err, user){
                     if(err)
                         res.send(err);
                     else if(!user){
@@ -244,7 +244,7 @@ exports.getComplaint = function(request, response) {
                             startdate: complaint.startdate,
                             status: complaint.status
                         };
-                        response.json(temp);
+                        res.json(temp);
                     }
                     else{
                         if(complaint.followers.id(user._id)){
@@ -267,7 +267,7 @@ exports.getComplaint = function(request, response) {
                             startdate: complaint.startdate,
                             status: complaint.status
                         };
-                        response.json(temp);
+                        res.json(temp);
                             }
                             else{
                             var temp ={
@@ -287,7 +287,7 @@ exports.getComplaint = function(request, response) {
                             startdate: complaint.startdate,
                             status: complaint.status
                         };
-                        response.json(temp);
+                        res.json(temp);
                             }
                         }
                         else{
@@ -310,7 +310,7 @@ exports.getComplaint = function(request, response) {
                             startdate: complaint.startdate,
                             status: complaint.status
                         };
-                        response.json(temp);
+                        res.json(temp);
                             }
                             else{
                             var temp ={
@@ -330,7 +330,7 @@ exports.getComplaint = function(request, response) {
                             startdate: complaint.startdate,
                             status: complaint.status
                         };
-                        response.json(temp);
+                        res.json(temp);
                             }
                         }
                     }
@@ -354,7 +354,7 @@ exports.getComplaint = function(request, response) {
                             startdate: complaint.startdate,
                             status: complaint.status
                         };
-                        response.json(temp);
+                        res.json(temp);
             }
 
         }
@@ -364,26 +364,26 @@ exports.getComplaint = function(request, response) {
 
 
 
-exports.putUpdateComplaint = function(request, response, next) {
-    User.findById(request.user._id, function(err,user){
+exports.putUpdateComplaint = function(req, res, next) {
+    User.findById(req.user._id, function(err,user){
         if(err)
-            response.send(err);
+            res.send(err);
         else{
             Complaint.findOne({
-                slug:request.params.cslug},
+                slug:req.params.cslug},
                 function(err,complaint){
                     if(err)
-                        response.send(err);
+                        res.send(err);
                     else if(!complaint){
-                        response.status(404).send('Complaint not found');
+                        res.status(404).send('Complaint not found');
                     }
                     else{
                         if(user.complaints.id(complaint._id) || user.role == "admin" || user.role == "staff"){
-                         // complaint.title = request.body.title;
-                         complaint.description = request.body.description;
-                         complaint.category = request.body.category;
-                         complaint.subcategory = request.body.subcategory;
-                         complaint.location = request.body.location;
+                         // complaint.title = req.body.title;
+                         complaint.description = req.body.description;
+                         complaint.category = req.body.category;
+                         complaint.subcategory = req.body.subcategory;
+                         complaint.location = req.body.location;
                          complaint.log.push({
                             entry:"Complaint Updated -"+ user.profile.username
                         });
@@ -408,7 +408,7 @@ exports.putUpdateComplaint = function(request, response, next) {
 
                          complaint.save(function(err, newcomplaint) {
                              if (err)
-                                 response.send(err);
+                                 res.send(err);
                             else{
                                 request.update = true;
                                 request.followers = newcomplaint.followers;
@@ -418,7 +418,7 @@ exports.putUpdateComplaint = function(request, response, next) {
                         });
                         }
                         else{
-                            response.status(401).send('Unauthorized');
+                            res.status(401).send('Unauthorized');
                         }
                     }
                 });
@@ -654,7 +654,12 @@ exports.postFilterComplaints = function(req, res, next){
 };
 
 exports.filterComplaints = function(req, res){
+    if(req.admin){
     var query = Complaint.find();
+    }
+    else{
+        var query = Complaint.find({status:{$ne:"new"}})
+    }
     var key = "";
 
     key = req.query.keyword;
@@ -703,7 +708,12 @@ exports.filterComplaints = function(req, res){
         query = query.find({subcategory:req.query.subcategory});
     }
 
-    query.exec(function(err, complaints) {
+    
+
+    query.populate({
+        path:'userId',
+        select: '-_id profile.username profile.slug'
+    }).exec(function(err, complaints) {
     if (err) res.send(err);
     res.json(complaints);
     });

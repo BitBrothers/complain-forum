@@ -97,23 +97,21 @@ angular.module('ForChange')
             $window.localStorage.token = data.token;
             $window.localStorage.user = JSON.stringify(data.user);
             $rootScope.currentUser = data.user;
-            $location.path('/teams');
+            $location.path('/');
             $alert({
-              title: 'Cheers!',
-              content: 'You have successfully logged in.',
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 3
+              content: 'Cheers! You have successfully logged in!',
+              placement: 'right',
+              type: 'success',
+              duration: 5
             });
           })
           .error(function() {
             delete $window.localStorage.token;
             $alert({
-              title: 'Error!',
-              content: 'Invalid username or password.',
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 3
+              content: 'Error! Invalid username or password.',
+              placement: 'right',
+              type: 'danger',
+              duration: 5
             });
           });
       },
@@ -122,20 +120,18 @@ angular.module('ForChange')
           .success(function() {
             $location.path('/login');
             $alert({
-              title: 'Congratulations!',
-              content: 'Your account has been created.',
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 3
+              content: 'Congratulations! Your account has successfully been created! Please log in to continue.',
+              placement: 'right',
+              type: 'success',
+              duration: 5
             });
           })
           .error(function(response) {
             $alert({
-              title: 'Error!',
-              content: response.data,
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 3
+              content: 'Error! Invalid username or password.',
+              placement: 'right',
+              type: 'danger',
+              duration: 5
             });
           });
       },
