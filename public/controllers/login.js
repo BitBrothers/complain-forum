@@ -1,5 +1,5 @@
 angular.module('ForChange')
-  .controller('LoginCtrl', function($scope, Auth) {
+  .controller('LoginCtrl', function($scope, $rootScope, Auth, $location) {
     $scope.login = function() {
       Auth.login({ email: $scope.email, password: $scope.password });
     };
@@ -11,11 +11,4 @@ angular.module('ForChange')
     };
     $scope.pageClass = 'fadeZoom';
   
-//    $scope.navbarTextColor = 'blackText';
-//    $scope.changeTextColorWhite = function(){
-//      if($scope.navbarTextColor == 'blackText')
-//      {
-//        $scope.navbarTextColor = 'whiteText';
-//      }
-//    }  
   });

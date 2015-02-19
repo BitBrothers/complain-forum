@@ -10,15 +10,12 @@ angular.module('ForChange')
     $scope.currentStatusResolved = false;
     $scope.currentStatusUnresolved = false;
 
-
-
     Complaints.default.get({
         cslug: $routeParams.cslug
       },
       function(complaint) {
         $scope.complaint = complaint;
         console.log($scope.complaint);
-        console.log($scope.complaint.userId.profile.slug);
 
 
         if ($scope.complaint.upvote == true) {
@@ -33,8 +30,9 @@ angular.module('ForChange')
           $scope.followBoolean = 'true';
         }
 
-
-        if ($scope.complaint.status == 'new') {
+//      Set value of current status
+      
+        if($scope.complaint.status == 'new'){
           $scope.currentStatusNew = true;
         } else if ($scope.complaint.status == 'pending') {
           $scope.currentStatusPending = true;
@@ -43,19 +41,24 @@ angular.module('ForChange')
         } else if ($scope.complaint.status == 'unresolved') {
           $scope.currentStatusUnresolved = true;
         }
-        $scope.currentStatusDropdown = [{
-          name: "New",
-          ticked: $scope.currentStatusNew
-        }, {
-          name: "Pending",
-          ticked: $scope.currentStatusPending
-        }, {
-          name: "Resolved",
-          ticked: $scope.currentStatusResolved
-        }, {
-          name: "Unresolved",
-          ticked: $scope.currentStatusUnresolved
-        }];
+
+        $scope.currentStatusDropdown = [
+          { name: "New", ticked: $scope.currentStatusNew},
+          { name: "Pending", ticked: $scope.currentStatusPending},
+          { name: "Resolved", ticked: $scope.currentStatusResolved},
+          { name: "Unresolved", ticked: $scope.currentStatusUnresolved}
+        ];
+
+//      Ends      
+      
+      }, function(err){
+          $location.path('/')
+          $alert({
+            content: 'No such Complaint',
+            placement: 'right',
+            type: 'danger',
+            duration: 5
+        });
       });
 
 
@@ -73,12 +76,7 @@ angular.module('ForChange')
             type: 'success',
             duration: 5
           });
-          Complaints.default.get({
-              cslug: $routeParams.cslug
-            },
-            function(complaint) {
-              $scope.complaint = complaint;
-            });
+          $scope.complaint.status = $scope.currentStatusDropdownValue
         },
         function(data) {
           $alert({
@@ -88,26 +86,18 @@ angular.module('ForChange')
             duration: 5
           });
         });
-
     };
 
-
-
-    //   Comment Section JS Begins
-
-    $scope.btn_add = function() {
-      if ($scope.txtcomment != '') {
-        //        $scope.comment.push($scope.txtcomment);
-        pushChat($scope.txtcomment);
-        $scope.txtcomment = "";
-        //          Complaint.get({
-        //          cslug : $routeParams.cslug
-        //          },
-        //          function(complaint) {
-        //            $scope.complaint = complaint;
-        //          });
+  
+//   Comment Section JS Begins
+  
+      $scope.btn_add = function() {
+        if ($scope.txtcomment != '') {
+          pushChat($scope.txtcomment);
+          $scope.txtcomment = "";
+        };
       };
-    };
+
     var pushChat = function(abc) {
       Complaints.comment.save({
         cslug: $routeParams.cslug
@@ -176,90 +166,92 @@ angular.module('ForChange')
 
     console.log($scope.isLoggedIn);
 
-    //    Upvote Complaint JS Begins
-
-    $scope.upvote = function() {
-      if ($rootScope.currentUser) {
-        Complaints.upvote.update({
-          cslug: $routeParams.cslug
-        }, {
-          _id: null
-        }, function(object) {
-          $alert({
-            content: object.message,
-            placement: 'right',
-            type: 'success',
-            duration: 5
-          });
-          Complaints.default.get({
-              cslug: $routeParams.cslug
+//    Upvote Complaint JS Begins
+  
+      $scope.upvote = function(){
+        if($rootScope.currentUser){
+          Complaints.upvote.update({
+            cslug : $routeParams.cslug
+          },{
+            _id: null
+          },function(object) {
+            $alert({
+              content: object.message,
+              placement: 'right',
+              type: 'success',
+              duration: 5
+            });
+            Complaints.default.get({
+            cslug : $routeParams.cslug
             },
             function(complaint) {
               $scope.complaint = complaint;
 
-              $scope.upvoted = '';
-              if ($scope.complaint.upvote == true) {
-                $scope.upvoted = 'upvoted';
-              }
+            if ($scope.complaint.upvote == true) 
+            {
+              $scope.upvoted = 'upvoted';
+            }
             });
-        }, function(object) {
-          $alert({
-            content: object.data,
-            placement: 'right',
-            type: 'danger',
-            duration: 5
+          }, function(object) {
+            $alert({
+              content: object.data,
+              placement: 'right',
+              type: 'danger',
+              duration: 5
+            });
           });
-        });
-      } else {
+        }
+      else{
         $alert({
-          content: "You need to be logged in to upvote this complaint.",
-          placement: 'right',
-          type: 'danger',
-          duration: 5
-        });
-      }
-    };
-    //    Upvote Complaint JS Ends
-
-
-    //    Follow Complaint JS Begins
-
-    $scope.follow = function() {
-      if ($rootScope.currentUser) {
-        Complaints.follow.update({
-          cslug: $routeParams.cslug
-        }, {
-          result: $scope.followBoolean
-        }, function(object) {
-          $alert({
-            content: object.message,
-            placement: 'right',
-            type: 'success',
-            duration: 5
-          });
-          Complaints.default.get({
-              cslug: $routeParams.cslug
-            },
-            function(complaint) {
-              $scope.complaint = complaint;
-              if ($scope.complaint.follow == true) {
-                $scope.followBoolean = 'false';
-                $scope.followed = 'followed'
-              } else if ($scope.complaint.follow == false) {
-                $scope.followBoolean = 'true';
-                $scope.followed = ''
-              }
+              content: "You need to be logged in to upvote this complaint.",
+              placement: 'right',
+              type: 'danger',
+              duration: 5
             });
+        }
+      };
+//    Upvote Complaint JS Ends
+  
+  
+//    Follow Complaint JS Begins
+
+      $scope.follow = function(){
+        if($rootScope.currentUser){
+          Complaints.follow.update({
+            cslug : $routeParams.cslug
+          },{
+            result : $scope.followBoolean
+          },function(object) {
+            $alert({
+              content: object.message,
+              placement: 'right',
+              type: 'success',
+              duration: 5
+            });
+               if ($scope.followBoolean == 'true')
+              {
+                $scope.followBoolean = 'false';
+                $scope.followed = 'followed';
+                $scope.complaint.followersCount++; 
+              }
+              else if ($scope.followBoolean == 'false')
+              {
+                $scope.followBoolean = 'true';
+                $scope.followed = '';
+                $scope.complaint.followersCount--;
+              }
+            
         }, function(object) {
-          $alert({
-            content: object.data,
-            placement: 'right',
-            type: 'danger',
-            duration: 5
+            $alert({
+              content: object.data,
+              placement: 'right',
+              type: 'danger',
+              duration: 5
+            });
+            console.log('error function entered');
           });
-          console.log('error function entered');
-        });
-      } else {
+        }
+        else {
         $alert({
           content: "You need to be logged in to follow this complaint.",
           placement: 'right',
@@ -288,5 +280,35 @@ angular.module('ForChange')
       });
     }
 
+//    Reopen Complaint JS Begins
+      
+      
+      
+      $scope.reopenComplaint = function(data){
+        Complaints.status.update({
+          cslug : $routeParams.cslug
+        },{
+          status : null
+        },
+        function(data){
+          $alert({
+            content: data.message,
+            placement: 'right',
+            type: 'success',
+            duration: 5
+          });
+          $scope.complaint.status = "unresolved";
+          $('#reopenComplaintModal').modal('hide');
+        },
+        function(data){
+          $alert({
+            content: 'There was an error please try again later.',
+            placement: 'right',
+            type: 'danger',
+            duration: 5
+          });
+        });
 
+      }; 
+  
   });
