@@ -16,7 +16,10 @@
     <link href="css/bootstrap.css" rel="stylesheet">
   
     <!-- Angular Multi-Select Core CSS -->
-    <link href="css/angular-multi-select.css" rel="stylesheet">
+    <link href="css/angular-multi-select.css" rel="stylesheet">  
+  
+    <!-- Angular Google Autocomplete CSS -->
+<!--    <link href="vendor/angular-google-places-autocomplete/dist/autocomplete.min.css" rel="stylesheet">-->
 
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
@@ -83,7 +86,7 @@
     
 
     <!-- Footer -->
-    <footer>
+    <footer ng-cloak class="ng-cloak">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -131,6 +134,10 @@
     <script src="vendor/angular-route/angular-route.js"></script>
     <script src="vendor/angular-file-upload/angular-file-upload.js"></script>
     <script src="vendor/angularjs-socialshare/src/js/angular-socialshare.js"></script>
+<!--    <script src="vendor/angular-google-places-autocomplete/dist/autocomplete.min.js"></script>-->
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=en&v=3.17"></script>
+<!--    <script src="vendor/angular-google-maps/dist/angular-google-maps.min.js"></script>-->
+<!--    <script src="vendor/lodash/dist/lodash.min.js"></script>-->
 
 
     <script src="app.js"></script>
@@ -143,6 +150,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/main.js"></script>
+  
+    <script src="js/ngAutocomplete.js"></script>
 
     <script src="controllers/home.js"></script>
 
@@ -157,6 +166,7 @@
     <script src="directives/uniqueEmail.js"></script>
     <script src="services/auth.js"></script>
     <script src="services/complaints.js"></script>
+<!--    <script src="services/mapAddressLocator.js"></script>-->
 
     <script src="controllers/list.js"></script>
 

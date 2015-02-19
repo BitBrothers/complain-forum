@@ -2,6 +2,8 @@ angular.module('ForChange')
   .controller('PostComplaintCtrl', function($scope, $alert, $location, $http, $rootScope, Complaints) {
   	$scope.cats = [{'value':'Cat1'}, {'value':'Cat2'}, {'value':'Cat3'}];
 	  $scope.subCats = [{'value':'subCat1'}, {'value':'subCat2'}, {'value':'subCat3'}];
+  
+  
   	$scope.post = function() {
   		console.log($scope.complaint.cat);
       Complaints.default.save({
@@ -27,4 +29,24 @@ angular.module('ForChange')
         });
       });
     };
+  
+  
+ 		 SW = new google.maps.LatLng(14.8945089, 73.6893279);
+		 NE = new google.maps.LatLng(15.799917, 74.3405329);
+ 		 bounds11 = new google.maps.LatLngBounds(SW, NE);
+
+        $scope.autocompleteOptions = {
+          componentRestrictions: { country: 'in' },
+          bounds: bounds11,
+          types: 'geocode'
+
+         };
+    
+  
+          $scope.$watch('details',
+ function(address_components){
+            console.log(address_components);
+          });
+
+
 });

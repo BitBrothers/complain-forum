@@ -10,7 +10,6 @@ angular.module('ForChange')
     $scope.currentStatusResolved = false;
     $scope.currentStatusUnresolved = false;
     
-    
   
     Complaints.default.get({
         cslug : $routeParams.cslug
@@ -18,7 +17,6 @@ angular.module('ForChange')
       function(complaint) {
         $scope.complaint = complaint;
         console.log($scope.complaint);
-        console.log($scope.complaint.userId.profile.slug);
 
 
         if ($scope.complaint.upvote == true) 
@@ -37,7 +35,8 @@ angular.module('ForChange')
           $scope.followBoolean = 'true';
         }
 
-
+//      Set value of current status
+      
         if($scope.complaint.status == 'new'){
           $scope.currentStatusNew = true;
         }
@@ -51,11 +50,22 @@ angular.module('ForChange')
           $scope.currentStatusUnresolved = true;
         }
         $scope.currentStatusDropdown = [
-          { name: "New", ticked:  $scope.currentStatusNew  },
-          { name: "Pending", ticked: $scope.currentStatusPending  },
-          { name: "Resolved", ticked: $scope.currentStatusResolved },
-          { name: "Unresolved", ticked: $scope.currentStatusUnresolved  }
+          { name: "New", ticked: $scope.currentStatusNew},
+          { name: "Pending", ticked: $scope.currentStatusPending},
+          { name: "Resolved", ticked: $scope.currentStatusResolved},
+          { name: "Unresolved", ticked: $scope.currentStatusUnresolved}
         ];
+
+//      Ends      
+      
+      }, function(err){
+          $location.path('/')
+          $alert({
+            content: 'No such Complaint',
+            placement: 'right',
+            type: 'danger',
+            duration: 5
+        });
       });
   
   
@@ -97,15 +107,8 @@ angular.module('ForChange')
   
       $scope.btn_add = function() {
         if ($scope.txtcomment != '') {
-          //        $scope.comment.push($scope.txtcomment);
           pushChat($scope.txtcomment);
           $scope.txtcomment = "";
-//          Complaint.get({
-//          cslug : $routeParams.cslug
-//          },
-//          function(complaint) {
-//            $scope.complaint = complaint;
-//          });
         };
       };
       var pushChat = function(abc) {
@@ -175,8 +178,6 @@ angular.module('ForChange')
         $scope.isLoggedIn = 'false'
       }
     
-      console.log($scope.isLoggedIn);
-      
 //    Upvote Complaint JS Begins
   
       $scope.upvote = function(){
@@ -278,6 +279,40 @@ angular.module('ForChange')
       };
 //    Follow Complaint JS Ends
       
-  
+//    Reopen Complaint JS Begins
+      
+      
+      
+      $scope.reopenComplaint = function(data){
+//        $scope.newStatus = 'new';
+        Complaints.status.update({
+          cslug : $routeParams.cslug
+        },{
+          status : null
+        },
+        function(data){
+          $alert({
+            content: 'Status successfully updated',
+            placement: 'right',
+            type: 'success',
+            duration: 5
+          });
+          Complaints.default.get({
+            cslug : $routeParams.cslug
+          },
+          function(complaint) {
+            $scope.complaint = complaint;
+          });
+        },
+        function(data){
+          $alert({
+            content: 'There was an error please try again later.',
+            placement: 'right',
+            type: 'danger',
+            duration: 5
+          });
+        });
+
+      }; 
   
   });
