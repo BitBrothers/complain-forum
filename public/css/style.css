@@ -782,6 +782,14 @@ body {
   color: red;
 }
 
+.complaint-form .anon-check {
+  font-size: 14px;
+}
+
+.complaint-form .valid-text {
+  font-size: 14px;
+}
+
 /* Post Complaint form end */
 
 /*Complaint Details Page CSS Start*/

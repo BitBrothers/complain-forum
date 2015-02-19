@@ -53,6 +53,7 @@ angular.module('ForChange')
             duration: 5
           });
           $scope.staff = newValue;
+          console.log('success');
         }, function(object) {
           $alert({
             content: object.data,
@@ -61,31 +62,6 @@ angular.module('ForChange')
             duration: 5
           });
           $scope.staff = oldValue;
-        });
-    };
-
-    $scope.makeAnon = function (newValue) {
-      var oldValue = !newValue;
-      User.makeAnon.update({
-          uslug : $routeParams.uslug
-        },{
-          result : newValue
-        },function(object) {
-          $alert({
-            content: object.message,
-            placement: 'right',
-            type: 'success',
-            duration: 5
-          });
-          $scope.user.anon = newValue;
-        }, function(object) {
-          $alert({
-            content: object.data,
-            placement: 'right',
-            type: 'danger',
-            duration: 5
-          });
-          $scope.user.anon = oldValue;
         });
     };
 

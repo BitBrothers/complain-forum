@@ -59,6 +59,16 @@ angular.module('ForChange')
       }),
       log: $resource('/api/complaints/:cslug/log', {
         cslug: '@cslug'
+      }),
+      makeAnon: $resource('/api/complaints/:cslug/anonymous', {
+        cslug: '@cslug'
+      }, {
+        update: {
+          method: 'PUT',
+          params: {
+            cslug: '@cslug'
+          }
+        }
       })
     };
     return Complaints;

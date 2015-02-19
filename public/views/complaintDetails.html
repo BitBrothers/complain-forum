@@ -17,6 +17,11 @@
             <multi-select input-model="currentStatusDropdown" button-label="name" item-label="name" tick-property="ticked" selection-mode="single" helper-elements="" on-item-click="updateCurrentStatus( data )">
             </multi-select>
           </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="complaint.anon" ng-click="makeAnon(complaint.anon)"> Go anonymous
+            </label>
+          </div>
           <p class="complaint-description">{{complaint.description}}</p>
         </div>
       </div>

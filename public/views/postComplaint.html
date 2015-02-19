@@ -33,8 +33,13 @@
             <label for="desc">Location</label>
             <input type="text" class="form-control" ng-model="complaint.location" placeholder="Where did you experince the problem?" required>
           </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" class="anon-check" ng-model="complaint.anon" ng-click="makeAnon(complaint.anon)"> Post this complaint Anonymously
+            </label>
+          </div>
           <button ng-click="post()" ng-disabled="postComplaint.$invalid" class="btn btn-default">Submit</button>
-          <span ng-show="postComplaint.$invalid">Please fill in all fields to submit.</span>
+          <span ng-show="postComplaint.$invalid" class="valid-text">Please fill in all fields to submit.</span>
         </form>               
       </div>
     </div>
