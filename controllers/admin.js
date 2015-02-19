@@ -17,37 +17,43 @@ exports.changeToStaff = function(req, res, next){
 						res.status(404).send('User Not Found');
 					}
 					else{
-						if(req.body.result == "true"){
-							user1.role = "staff";
-							user1.save(function(err,newuser1){
-								if(err)
-									res.send(err);
-								else{
-		                            req.promote = true;
-		                            req.to = newuser1.email;
-		                            req.subject = "ForChange Role Promotion";
-		                            req.email = "You have been promoted to Staff by the current Admin";
-		                            next();
-								}
-							});
-						}
-						else if(req.body.result == "false"){
-							user1.role = "citizen";
-							user1.save(function(err,newuser1){
-								if(err)
-									res.send(err);
-								else{
-									req.demote = true;
-		                            req.to = newuser1.email;
-		                            req.subject = "ForChange Role Demoted";
-		                            req.email = "You have been demoted to Citizen by the current Admin";
-		                            next();
-								}
-							});
+						if(user1.role == "admin"){
+							res.status(412).send('User already Admin');
 						}
 						else{
-							res.status(412).send('Result Not Sent');
+							if(req.body.result == "true"){
+								user1.role = "staff";
+								user1.save(function(err,newuser1){
+									if(err)
+										res.send(err);
+									else{
+			                            req.promote = true;
+			                            req.to = newuser1.email;
+			                            req.subject = "ForChange Role Promotion";
+			                            req.email = "You have been promoted to Staff by the current Admin";
+			                            next();
+									}
+								});
+							}
+							else if(req.body.result == "false"){
+								user1.role = "citizen";
+								user1.save(function(err,newuser1){
+									if(err)
+										res.send(err);
+									else{
+										req.demote = true;
+			                            req.to = newuser1.email;
+			                            req.subject = "ForChange Role Demoted";
+			                            req.email = "You have been demoted to Citizen by the current Admin";
+			                            next();
+									}
+								});
+							}
+							else{
+								res.status(412).send('Result Not Sent');
+							}	
 						}
+	
 					}
 				});
 			}
@@ -112,7 +118,7 @@ exports.changeComplaintStatus = function(req, res, next){
 							res.status(412).send('Status Not Sent');
 						} 
 					}
-                     else if(complaint.status == "resolved"){
+                        else if(complaint.status == "resolved"){
                             complaint.status == "unresolved";
                             for(var i = 0;i <= complaint.followers.length-1;i++){
 			                    User.findById(complaint.followers[i]._id,function(err, user1){
