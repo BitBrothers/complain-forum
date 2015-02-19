@@ -185,15 +185,7 @@ exports.googleAuth = function(req, res) {
     });
 };
 
-exports.getUser = function(res, req){
-    User.findOne({slug: req.params.uslug},function(err, user){
-        if(err)
-            res.send(err);
-        else{
-            res.json(user);
-        }
-    });
-};
+
 
 exports.hasEmail = function(req, res, next) {
     if (!req.query.email) {
