@@ -204,30 +204,74 @@ exports.hasEmail = function(req, res, next) {
 }; 
 
 exports.getUser = function(req, res){
-    User.findOne({'profile.slug':req.params.uslug})
-    .select('-_id profile role complaints')
-    .populate({
-        path:'complaints._id',
-        select: '-_id slug title description category subcategory location status startdate enddate'
-    })
-    .exec(function(err, user){
-        if(err)
-            res.send(err);
-        else if(!user){
-            res.status(404).send('User Not Found');
-        }
-        else{
-            var comp = [];
-            for(var i=0;i<user.complaints.length;i++){
-                comp.push(user.complaints[i]._id);
-            };
-            user.complaints.length = 0;
-            res.json({
-                user:user,
-                complaints:comp
-            });
-        }
-    });
+    if(req.user.slug == req.params.uslug){
+        User.findById(req.user._id)
+        .select('-_id profile role complaints')
+        .populate({
+            path:'complaints._id',
+            select: 'slug title description category subcategory location status startdate enddate userId anonymous'
+        })
+        .exec(function(err, user){
+            if(err)
+                res.send(err);
+            else if(!user){
+                res.status(404).send('User Not Found');
+            }
+            else{
+                User.populate(user.complaints,{
+            path:'_id.userId',
+            model:'User',
+            select:'profile.slug profile.username'
+        },function(err, user1){
+            if(err)
+                res.send(err);
+            else{
+                // console.log(user1);
+                var comp = [];
+                for(var i=0;i<user1.length;i++){
+                    console.log(user1[i]._id);
+                        if(user1[i]._id.anonymous.id(req.user._id)){
+    
+                           comp.push({
+                            slug: user1[i]._id.slug,
+                            title: user1[i]._id.title,
+                            userId:{
+                                profile: {
+                                slug:'anonymous',
+                                username: 'anonymous',
+                            }},
+                            category: user1[i]._id.category,
+                            subcategory: user1[i]._id.subcategory,
+                            location: user1[i]._id.location,
+                            startdate: user1[i]._id.startdate,
+                            enddate: user1[i]._id.enddate,
+                            status: user1[i]._id.status
+                           }); 
+                        }
+                        else{
+                        
+                            comp.push(user1[i]._id);
+                        }
+
+                    
+                    // console.log(comp[i]);
+                };
+                user1.length = 0;
+                res.json({
+                    user:user,
+                    complaints:comp
+                }); 
+            }
+
+        });
+
+            }
+        });
+    }
+    else{
+
+    }
+
 };
 
 exports.getUserLog = function(req, res){
