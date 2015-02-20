@@ -1,5 +1,5 @@
 angular.module('ForChange')
-  .controller('HomeCtrl', function($scope, $alert, $location, $http, $rootScope) {
+  .controller('HomeCtrl', function($scope, $alert, $location, $http, $rootScope, Complaints) {
 	 console.log($rootScope.currentUser);
 	  
   	$scope.gotoPostComplaint = function () {
@@ -9,5 +9,12 @@ angular.module('ForChange')
     $scope.exploreComplaint = function () {
   		$location.path('/complaints');
  	};
+    
+    $scope.p = {};
+    $scope.p.featured = true;
+    $scope.complaints = Complaints.default.query($scope.p); 
+    
+    console.log($scope.complaints);
+    
 
 });

@@ -436,6 +436,9 @@ body > .right {
     text-align: center;
 }
 
+.homeComplaintStatus{
+  text-transform: capitalize;
+}
 /*      Just for presentation        */
 
 

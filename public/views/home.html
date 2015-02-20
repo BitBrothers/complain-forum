@@ -114,6 +114,7 @@
             </div>
         </div>
     </section>
+
     <section id="complaints" class="content-section container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -121,9 +122,10 @@
                 <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
         </div>
+      
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-                 <div class="col-md-4 col-sm-6">
+                 <div class="col-md-4 col-sm-6" ng-repeat="complaint in complaints">
                      <div class="complaint-container">
                         <div class="complaint">
                             <div class="front">
@@ -133,25 +135,29 @@
                                     <img class="img-circle" src="images/agro-icon.jpg">
                                 </div>
                                 <div class="content">
-                                    <h3 class="title">I believe every human has a finite number of heartbeats. I don't intend..</h3>
+                                    <h3 class="title">{{complaint.title}}</h3>
                                 </div>
                                 <div class="footer">
-                                    <i class="fa fa-map-marker"> Panjim, Goa</i>
+                                    <i class="fa fa-map-marker"> {{complaint.location}} </i>
                                 </div>
                             </div> <!-- end front panel -->
                             <div class="back">
                                 <div class="header">
-                                    <h5 class="motto">Pending</h5>
+                                    <h5 class="motto homeComplaintStatus"> {{complaint.status}} </h5>
                                 </div> 
                                 <div class="content">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                                    <button class="btn btn-sm btn-sucess">Read more</button>
+                                    <div class="main">
+                                        <p class="text-muted">{{complaint.description}}</p>
+                                        <div class="read-more-btn">
+                                            <a href="http://localhost:3000/complaint-details/{{complaint.slug}}">Read more</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="footer">
                                     <div class="social-links text-center">
-                                        <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                        <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                        <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                        <a href="#" class="facebook" socialshare="" socialshare-provider="facebook" socialshare-url="{{sharingUrl}}"><i class="fa fa-facebook fa-fw"></i></a>
+                                        <a href="#" class="google" socialshare="" socialshare-provider="google+" socialshare-url="{{sharingUrl}}"><i class="fa fa-google-plus fa-fw"></i></a>
+                                        <a href="#" class="twitter" socialshare="" socialshare-provider="twitter" socialshare-url="{{sharingUrl}}"><i class="fa fa-twitter fa-fw"></i></a>
                                     </div>
                                 </div>
                             </div> <!-- end back panel -->
@@ -159,86 +165,7 @@
                     </div> <!-- end complaint-container -->
                 </div> <!-- end col sm 3 -->
 <!--         <div class="col-sm-1"></div> -->
-                <div class="col-md-4 col-sm-6">
-                     <div class="complaint-container">
-                        <div class="complaint">
-                            <div class="front">
-                                <div class="cover">
-                                </div>
-                                <div class="user">
-                                    <img class="img-circle" src="images/naturalresource-icon.jpg">
-                                </div>
-                                <div class="content">
-                                    <h3 class="title">Science has not yet mastered prophecy</h3>
-                                </div>
-                                <div class="footer">
-                                        <i class="fa fa-map-marker"> Panjim, Goa</i>
-                                </div>
-                            </div> <!-- end front panel -->
-                            <div class="back">
-                                <div class="header">
-                                    <h5 class="motto">Work in progress</h5>
-                                </div> 
-                                <div class="content">
-                                    <div class="main">
-                                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                                        <div class="read-more-btn">
-                                            <a href="#">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="footer">
-                                    <div class="social-links text-center">
-                                        <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                        <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                        <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div> <!-- end back panel -->
-                        </div> <!-- end complaint -->
-                    </div> <!-- end complaint-container -->
-                </div> <!-- end col sm 3 -->
-<!--         <div class="col-sm-1"></div> -->
-                <div class="col-md-4 col-sm-6">
-                    <div class="complaint-container">
-                        <div class="complaint">
-                            <div class="front">
-                                <div class="cover">
-                                </div>
-                                <div class="user">
-                                    <img class="img-circle" src="images/administration-icon.jpg">
-                                </div>
-                                <div class="content">
-                                    <h3 class="title">Man must explore, and this is exploration at its greatest</h3>
-                                    
-                                </div>
-                                <div class="footer">
-                                        <i class="fa fa-map-marker"> Panjim, Goa</i>
-                                </div>
-                            </div> <!-- end front panel -->
-                            <div class="back">
-                                <div class="header">
-                                    <h5 class="motto">Work in progress</h5>
-                                </div> 
-                                <div class="content">
-                                    <div class="main">
-                                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                                        <div class="read-more-btn">
-                                            <a href="#">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="footer">
-                                    <div class="social-links text-center">
-                                        <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                        <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                        <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div> <!-- end back panel -->
-                        </div> <!-- end complaint -->
-                    </div> <!-- end complaint-container -->
-                </div> <!-- end col-sm-3 -->
+                
             </div>
         </div><!-- End of Row -->
         <div class="row">

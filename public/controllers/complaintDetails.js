@@ -354,7 +354,7 @@ angular.module('ForChange')
             type: 'success',
             duration: 5
           });
-          $scope.flag.op = newValue;
+          $scope.complaint.featured = newValue;
         }, function(object) {
           $alert({
             content: object.data,
@@ -362,7 +362,7 @@ angular.module('ForChange')
             type: 'danger',
             duration: 5
           });
-          $scope.flag.op = oldValue;
+          $scope.complaint.featured = oldValue;
           });
         };
   

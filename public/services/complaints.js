@@ -35,6 +35,7 @@ angular.module('ForChange')
           url: '/api/complaints/:cslug/upvote'
         }
       }),
+      
       comment: $resource('/api/complaints/:cslug', {
         cslug: '@cslug'
       }, {
@@ -46,6 +47,7 @@ angular.module('ForChange')
           url: '/api/complaints/:cslug/comment'
         }
       }),
+      
       follow: $resource('/api/complaints/:cslug', {
         cslug: '@cslug'
       }, {
@@ -57,9 +59,11 @@ angular.module('ForChange')
           url: '/api/complaints/:cslug/follow'
         }
       }),
+      
       log: $resource('/api/complaints/:cslug/log', {
         cslug: '@cslug'
       }),
+      
       makeAnon: $resource('/api/complaints/:cslug/anonymous', {
         cslug: '@cslug'
       }, {
@@ -81,5 +85,6 @@ angular.module('ForChange')
         }
       })
     };
+  
     return Complaints;
   });

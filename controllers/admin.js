@@ -181,11 +181,16 @@ exports.makeFeatured = function(req, res){
 				else{
 					if(user.role == "admin" || user.role == "staff"){
 						if(req.body.result === true){
-							if(Complaint.count({featured:true})>3){
-								res.status(412).send('Cant make more featured');
-							}
-							else{
-								if(complaint.featured == true){
+                          Complaint.find({featured:true}).count(function(err,count){
+                                                          console.log(count);
+
+                            if(err)
+                              res.send(err);
+                            else if(count>=3){
+                              res.status(412).send('Cant make more featured');
+                            }
+                            else{
+                              if(complaint.featured == true){
 									res.status(412).send('Complaint Already featured');
 								}
 								else{
@@ -200,7 +205,8 @@ exports.makeFeatured = function(req, res){
 										}
 									});
 								}
-							}
+                            }
+                          });
 						}
 						else if(req.body.result === false){
 							if(complaint.featured == false){
