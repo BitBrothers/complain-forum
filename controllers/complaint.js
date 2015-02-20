@@ -267,6 +267,7 @@ exports.getComplaint = function(req, res) {
                         op:op,
                         anon:anon
                     },
+                    featured: complaint.featured,
                     followersCount: followersCount,
                     upvotesCount: upvotesCount,
                     follow: req.follow,
@@ -291,6 +292,7 @@ exports.getComplaint = function(req, res) {
                                 op:false,
                                 anon:false
                             },
+                            featured: complaint.featured,
                             followersCount: followersCount,
                             upvotesCount: upvotesCount,
                             follow: false,
