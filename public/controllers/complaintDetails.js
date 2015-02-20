@@ -321,7 +321,7 @@ angular.module('ForChange')
             type: 'success',
             duration: 5
           });
-          $scope.complaint.anon = newValue;
+          $scope.flag.anon = newValue;
         }, function(object) {
           $alert({
             content: object.data,
@@ -329,7 +329,31 @@ angular.module('ForChange')
             type: 'danger',
             duration: 5
           });
-          $scope.complaint.anon = oldValue;
+          $scope.flag.anon = oldValue;
+          });
+        };
+    $scope.makeFeatured = function (newValue) {
+      var oldValue = !newValue;
+      Complaints.makeFeatured.update({
+          cslug : $routeParams.cslug
+        },{
+          result : newValue
+        },function(object) {
+          $alert({
+            content: object.message,
+            placement: 'right',
+            type: 'success',
+            duration: 5
+          });
+          $scope.flag.op = newValue;
+        }, function(object) {
+          $alert({
+            content: object.data,
+            placement: 'right',
+            type: 'danger',
+            duration: 5
+          });
+          $scope.flag.op = oldValue;
           });
         };
   

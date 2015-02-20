@@ -69,6 +69,16 @@ angular.module('ForChange')
             cslug: '@cslug'
           }
         }
+      }),
+      makeFeatured: $resource('/api/complaints/:cslug/featured', {
+        cslug: '@cslug'
+      }, {
+        update: {
+          method: 'PUT',
+          params: {
+            cslug: '@cslug'
+          }
+        }
       })
     };
     return Complaints;
