@@ -1,18 +1,13 @@
-<header class="intro-header" style="background-image: url('images/contact-bg.jpg')">
+<header class="intro-header user-profile">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-heading">
-          <h3>{{user.profile.username}}</h3>
+          <h3>{{user.user.profile.username}}</h3>
           <hr class="small">
-          <span class="subheading">{{user.profile.location}}</span>
-          <p class="text-muted">Joined on: {{user.profile.joinDate  | date: 'medium'}}</p>
-          <div ng-if="isCurrUser" class="checkbox">
-            <label>
-              <input type="checkbox" ng-model="user.anon" ng-click="makeAnon(user.anon)"> Go anonymous
-            </label>
-          </div>
-          <div class="checkbox" ng-if="currentUser.role == 'admin'">
+          <span class="subheading">{{user.user.profile.location}}</span>
+          <p class="text-muted">Joined on: {{user.user.profile.joinDate  | date: 'medium'}}</p>
+          <div class="checkbox" ng-if="currentuser.user.role == 'admin'">
             <label>
               <input type="checkbox" ng-change="makeStaff(staff)" ng-model="staff"> This user is staff.
             </label>

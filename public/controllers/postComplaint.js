@@ -12,6 +12,7 @@ angular.module('ForChange')
         category: $scope.complaint.cat.value,
         subcategory: $scope.complaint.subCat.value,
         location: $scope.complaint.location,
+        anonymous: $scope.complaint.anon
       }, function(err, data) {
         $alert({
           content: "Complaint was successfuly posted. It will be displayed after admin approval.",

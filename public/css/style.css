@@ -155,16 +155,30 @@ header, .content-section{
     transform: translate3d(0, 100%, 0);
   }
 }
+
 .intro-header {
-  background-color: #808080;
-  background: no-repeat center center;
-  background-attachment: scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
+  background-image: url(../images/complaint-cover.png);
+  -webkit-background-size: initial;
+  -moz-background-size: initial;
+  -o-background-size: initial;
+  background-size: initial;
+  background-repeat: initial;
   margin-bottom: 50px;
   min-height: 34vh;
+}
+.intro-header.complaint-details-header {
+  background-color: #295776;
+}
+
+.intro-header.user-profile {
+  background-color: #046951;
+}
+
+.intro-header.post-complaint{
+  background-color: #1BA39C;
+}
+.intro-header.edit-complaint{
+  background-color: #1BA39C;
 }
 .intro-header .site-heading,
 .intro-header .post-heading,
@@ -777,9 +791,13 @@ body {
   padding: 150px 0;
 }
 
-.complaint-form span{
+.complaint-form .anon-check {
   font-size: 14px;
-  color: red;
+}
+
+.complaint-form .valid-text {
+  font-size: 14px;
+  color: #96281B;
 }
 
 /* Post Complaint form end */
@@ -836,7 +854,9 @@ body {
 .complaint-details-header{
   margin-bottom: 0px;
 }
-
+.complaint-details-header .make-featured{
+  float: right;
+}
 .commentSection small
 {
   font-size: 13px;
@@ -929,7 +949,6 @@ body {
 /*Edit Complaint Page CSS Start*/
 .edit-complaint-form{
   margin-top: 150px;
-  background: white;
   padding: 50px;
   border-radius: 5px;
 }

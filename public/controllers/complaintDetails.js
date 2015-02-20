@@ -281,11 +281,7 @@ angular.module('ForChange')
       });
     }
 
-//    Reopen Complaint JS Begins
-      
-      
-      
-      $scope.reopenComplaint = function(data){
+    $scope.reopenComplaint = function(data){
         Complaints.status.update({
           cslug : $routeParams.cslug
         },{
@@ -311,5 +307,54 @@ angular.module('ForChange')
         });
 
       }; 
+      
+    $scope.makeAnon = function (newValue) {
+      var oldValue = !newValue;
+      Complaints.makeAnon.update({
+          cslug : $routeParams.cslug
+        },{
+          result : newValue
+        },function(object) {
+          $alert({
+            content: object.message,
+            placement: 'right',
+            type: 'success',
+            duration: 5
+          });
+          $scope.flag.anon = newValue;
+        }, function(object) {
+          $alert({
+            content: object.data,
+            placement: 'right',
+            type: 'danger',
+            duration: 5
+          });
+          $scope.flag.anon = oldValue;
+          });
+        };
+    $scope.makeFeatured = function (newValue) {
+      var oldValue = !newValue;
+      Complaints.makeFeatured.update({
+          cslug : $routeParams.cslug
+        },{
+          result : newValue
+        },function(object) {
+          $alert({
+            content: object.message,
+            placement: 'right',
+            type: 'success',
+            duration: 5
+          });
+          $scope.flag.op = newValue;
+        }, function(object) {
+          $alert({
+            content: object.data,
+            placement: 'right',
+            type: 'danger',
+            duration: 5
+          });
+          $scope.flag.op = oldValue;
+          });
+        };
   
   });
