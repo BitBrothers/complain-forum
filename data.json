@@ -1,0 +1,14 @@
+{
+	"anonymous": "anonymous",
+	"cnf": "Complaint Not Found",
+	"unf": "User Not Found",
+	"at" : "Access token has expired",
+	"et" : "Error parsing token",
+	"unauth" : "UnAuthorized",
+	"signup" : "Succesfully Signed Up",
+	"inep" : "Invalid email and/or password",
+	"iop" : "Invalid old password",
+	"uncomp" : "Sorry! This Complaint has not yet approved",
+	"unresolved" : "unresolved"
+
+}

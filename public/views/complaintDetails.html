@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
-          <h1>{{complaint.title}}</h1> <span ng-if="complaint.op"><a class="editComplaintIcon" href="{{path}}/editComplaint"><i class="fa fa-pencil"></i></a></span>
+          <h1>{{complaint.title}}</h1> <span ng-if="complaint.flag.op"><a class="editComplaintIcon" href="{{path}}/editComplaint"><i class="fa fa-pencil"></i></a></span>
           <span class="meta">Posted by <a href="/user/{{complaint.userId.profile.slug}}">{{complaint.userId.profile.username}}</a> on {{complaint.startdate | date: 'medium'}} </span>
           <span class="meta CategorySpan">{{complaint.category}} <i class="fa fa-angle-double-right"></i> {{complaint.subcategory}} </span>
           <span class="deleteComplaintIcon" data-toggle="modal" ng-click="getLog()" data-target="#logModal"><i class="fa fa-list-alt"></i></span>

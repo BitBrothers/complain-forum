@@ -6,6 +6,7 @@ var complaintSchema = new mongoose.Schema({
   category: String,
   subcategory: String,
   slug: String,
+  featured: {type:Boolean,default:false},
   status: {
     type: String,
     default: 'new',

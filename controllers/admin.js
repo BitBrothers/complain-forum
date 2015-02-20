@@ -1,12 +1,13 @@
 var Complaint = require('../models/Complaint');
 var User = require('../models/User');
+var datas = require('../data');
 
 exports.changeToStaff = function(req, res, next){
 	User.findById(req.user._id,function(err, user){
 		if(err)
 			res.send(err);
 		else if(!user){
-			res.status(404).send('User Not Found');
+			res.status(404).send(datas.unf);
 		}
 		else{
 			if(user.role == "admin"){
@@ -14,7 +15,7 @@ exports.changeToStaff = function(req, res, next){
 					if(err)
 						res.send(err);
 					else if(!user){
-						res.status(404).send('User Not Found');
+						res.status(404).send(datas.unf);
 					}
 					else{
 						if(user1.role == "admin"){
@@ -71,7 +72,7 @@ exports.changeComplaintStatus = function(req, res, next){
 		if(err)
 			res.send(err);
 		else if(!user){
-			res.status(404).send('User Not Found');
+			res.status(404).send(datas.unf);
 		}
 		else{
 			Complaint.findOne({
@@ -80,7 +81,7 @@ exports.changeComplaintStatus = function(req, res, next){
 				if(err)
 					res.send(err);
 				else if(!complaint){
-					res.status(404).send('Complaint Not Found');
+					res.status(404).send(datas.cnf);
 				}
 				else{	
 					if(user.role == "admin" || user.role == "staff"){
@@ -92,7 +93,7 @@ exports.changeComplaintStatus = function(req, res, next){
 			                        if(err)
 			                            res.send(err);
 			                        else if(!user){
-			                            console.log('User Not Found');
+			                            console.log(datas.unf);
 			                        }
 			                        else{
 			                            user1.log.push({
@@ -128,7 +129,7 @@ exports.changeComplaintStatus = function(req, res, next){
 		                        if(err)
 		                            res.send(err);
 		                        else if(!user){
-		                            console.log('User Not Found');
+		                            console.log(datas.unf);
 		                        }
 		                        else{
 		                            user1.log.push({
@@ -155,7 +156,7 @@ exports.changeComplaintStatus = function(req, res, next){
 
 					else{
 						console.log('here');
-						res.status(401).send('Un-Authorized');
+						res.status(401).send(datas.unauth);
 					}
 				}
 			});
@@ -163,3 +164,70 @@ exports.changeComplaintStatus = function(req, res, next){
 	});
 };
 
+exports.makeFeatured = function(req, res){
+	User.findById(req.user._id,function(err,user){
+		if(err)
+			res.send(err);
+		else if(!user){
+			res.status(404).send(datas.unf);
+		}
+		else{
+			Complaint.findOne({slug:req.params.cslug},function(err,complaint){
+				if(err)
+					res.send(err);
+				else if(!complaint){
+					res.status(404).send(datas.cnf);
+				}
+				else{
+					if(user.role == "admin" || user.role == "staff"){
+						if(req.body.result === true){
+							if(Complaint.count({featured:true})>3){
+								res.status(412).send('Cant make more featured');
+							}
+							else{
+								if(complaint.featured == true){
+									res.status(412).send('Complaint Already featured');
+								}
+								else{
+									complaint.featured = true;
+									complaint.save(function(err){
+										if(err)
+											res.send(err);
+										else{
+											res.json({
+												message:'Successfully added featured'
+											});
+										}
+									});
+								}
+							}
+						}
+						else if(req.body.result === false){
+							if(complaint.featured == false){
+								res.status(412).send('Complaint Not Featured');
+							}
+							else{
+								complaint.featured = false;
+								complaint.save(function(err){
+									if(err)
+										res.send(err);
+									else{
+										res.json({
+											message:'Successfully removed featured'
+										});
+									}
+								});
+							}
+						}
+						else{
+							res.status(412).send('Result Not Found');
+						}
+					}
+					else{
+						res.status(401).send(datas.unauth);
+					}
+				}
+			});
+		}
+	});
+};

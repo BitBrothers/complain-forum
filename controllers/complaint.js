@@ -1,6 +1,6 @@
 var Complaint = require('../models/Complaint');
 var User = require('../models/User');
-
+var datas = require('../data');
 
 exports.postAddComplaint = function(req, res) {
     console.log('ADD COMPLAINT');
@@ -8,7 +8,7 @@ exports.postAddComplaint = function(req, res) {
         if(err)
             res.send(err);
         else if(!user){
-            res.status(404).send('User Not Found');
+            res.status(404).send(datas.unf);
         }
         else{
             var complaint = new Complaint();
@@ -62,7 +62,7 @@ exports.deleteComplaint = function(req, res, next) {
         if(err)
             res.send(err);
         else if(!user){
-            res.status(404).send('User Not Found');
+            res.status(404).send(datas.unf);
         }
         else{
             Complaint.findOne({
@@ -71,7 +71,7 @@ exports.deleteComplaint = function(req, res, next) {
                     if(err)
                         res.send(err);
                     else if(!complaint){
-                        res.status(404).send('Complaint not found');
+                        res.status(404).send(data.cnf);
                     }
                     else{
                         if(user.complaints.id(complaint._id)){
@@ -85,7 +85,7 @@ exports.deleteComplaint = function(req, res, next) {
                                     if(err)
                                         res.send(err);
                                     else if(!user){
-                                        console.log('User Not Found');
+                                        console.log(datas.unf);
                                     }
                                     else{
                                         user1.log.push({
@@ -108,7 +108,7 @@ exports.deleteComplaint = function(req, res, next) {
                                 if(err)
                                     res.send(err);
                                 else if(!user){
-                                    res.status(404).send('User Not Found');
+                                    res.status(404).send(datas.unf);
                                 }
                                 else{
                                     user.complaints.pull({
@@ -121,7 +121,7 @@ exports.deleteComplaint = function(req, res, next) {
                                             if(err)
                                                 res.send(err);
                                             else if(!user){
-                                                console.log('User Not Found');
+                                                console.log(datas.unf);
                                             }
                                             else{
                                                 user1.log.push({
@@ -142,7 +142,7 @@ exports.deleteComplaint = function(req, res, next) {
                             });
                         }
                         else{
-                            res.status(401).send('Unauthorized');
+                            res.status(401).send(datas.unauth);
                         }
                     }
                 });
@@ -158,14 +158,14 @@ exports.postGetComplaint = function(req, res, next){
             if(err)
                 res.send(err);
             else if(!user){
-                res.status(404).send('User Not Found');
+                res.status(404).send(datas.unf);
             }
             else{
                 Complaint.findOne({slug:req.params.cslug},function(err, complaint){
                     if(err)
                         res.send(err);
                     else if(!complaint){
-                        res.status(404).send('Complaint Not Found');
+                        res.status(404).send(data.cnf);
                     }
                     else{
                         if(complaint.followers.id(user._id)){
@@ -190,7 +190,7 @@ exports.postGetComplaint = function(req, res, next){
                         }
                         else{
                             if(complaint.status == "new"){
-                                res.status(404).send('Complaint Not Found');
+                                res.status(404).send('Sorry! This Complaint has not yet approved');
                             }
                             else{
                                 next();
@@ -208,11 +208,11 @@ exports.postGetComplaint = function(req, res, next){
             if(err)
                 res.send(err);
             else if(!complaint){
-                res.status(404).send('Complaint Not Found');
+                res.status(404).send(data.cnf);
             }
             else{
                 if(complaint.status == "new"){
-                    res.status(404).send('Complaint Not Found');
+                    res.status(404).send(data.cnf);
                 }
                 else{
                     next();
@@ -236,25 +236,37 @@ exports.getComplaint = function(req, res) {
         if (error)
             res.send(error);
         else if(!complaint){
-            res.status(404).send('Complaint Not Found');
+            res.status(404).send(data.cnf);
         }
         else {
-            var follow,upvote;
+            var op = false,anon=false;
             var followersCount = complaint.followers.length;
             var upvotesCount = complaint.upvotes.length;
-            
+            console.log(complaint.userId._id);
             if(complaint.anonymous.id(complaint.userId)){
-                complaint.userId.profile.username = "anonymous";
-                complaint.userId.profile.slug = "anonymous";
+                complaint.userId.profile.username = datas.anonymous;
+                complaint.userId.profile.slug = datas.anonymous;
+            }
+            if(req.user){
+                if(complaint.userId._id.equals(req.user._id)){
+                    op = true;
+                }
+                if(complaint.anonymous.id(req.user._id)){
+                    anon = true;
+                }
             }
             for(var i=0;i<complaint.comments.length;i++){
                 if(complaint.anonymous.id(complaint.comments[i]._id)){
-                    complaint.comments[i]._id.profile.username = "anonymous";
-                    complaint.comments[i]._id.profile.slug = "anonymous";
+                    complaint.comments[i]._id.profile.username = datas.anonymous;
+                    complaint.comments[i]._id.profile.slug = datas.anonymous;
                 }
             };
             if(req.user){
                 var temp ={
+                    flag:{
+                        op:op,
+                        anon:anon
+                    },
                     followersCount: followersCount,
                     upvotesCount: upvotesCount,
                     follow: req.follow,
@@ -275,6 +287,10 @@ exports.getComplaint = function(req, res) {
             }
             else{
                         var temp ={
+                            flag:{
+                                op:false,
+                                anon:false
+                            },
                             followersCount: followersCount,
                             upvotesCount: upvotesCount,
                             follow: false,
@@ -310,7 +326,7 @@ exports.putUpdateComplaint = function(req, res, next) {
                     if(err)
                         res.send(err);
                     else if(!complaint){
-                        res.status(404).send('Complaint not found');
+                        res.status(404).send(data.cnf);
                     }
                     else{
                         if(user.complaints.id(complaint._id) || user.role == "admin" || user.role == "staff"){
@@ -327,7 +343,7 @@ exports.putUpdateComplaint = function(req, res, next) {
                                 if(err)
                                     res.send(err);
                                 else if(!user){
-                                    console.log('User Not Found');
+                                    console.log(datas.unf);
                                 }
                                 else{
                                     user1.log.push({
@@ -353,7 +369,7 @@ exports.putUpdateComplaint = function(req, res, next) {
                         });
                         }
                         else{
-                            res.status(401).send('Unauthorized');
+                            res.status(401).send(datas.unauth);
                         }
                     }
                 });
@@ -368,7 +384,7 @@ exports.followComplaint = function(req, res){
         if(err)
             res.send(err);
         else if(!user){
-            res.status(404).send('User Not Found');
+            res.status(404).send(datas.unf);
         }
         else{
             Complaint.findOne({
@@ -378,7 +394,7 @@ exports.followComplaint = function(req, res){
                 if(err)
                     res.send(err);
                 else if(!complaint){
-                    res.status(404).send('Complaint Not Found');
+                    res.status(404).send(data.cnf);
                 }
                 else{
                     if(req.body.result === true){
@@ -436,7 +452,7 @@ exports.upvoteComplaint = function(req, res){
         if(err)
             res.send(err);
         else if(!user){
-            res.status(404).send('User Not Found');
+            res.status(404).send(datas.unf);
         }
         else{
             Complaint.findOne({
@@ -446,7 +462,7 @@ exports.upvoteComplaint = function(req, res){
                 if(err)
                     res.send(err);
                 else if(!complaint){
-                    res.status(404).send('Complaint Not Found');
+                    res.status(404).send(data.cnf);
                 }
                 else{
                     if(complaint.upvotes.id(user._id)){
@@ -496,7 +512,7 @@ exports.commentComplaint = function(req, res){
         if(err)
             res.send(err);
         else if(!user){
-            res.status(404).send('User Not Found');
+            res.status(404).send(datas.unf);
         }
         else{
             Complaint.findOne({
@@ -505,7 +521,7 @@ exports.commentComplaint = function(req, res){
                 if(err)
                     res.send(err);
                 else if(!complaint){
-                    res.status(404).send('Complaint Not Found');
+                    res.status(404).send(data.cnf);
                 }
                 else{
                     if(req.body.description && req.body.description != ""){
@@ -562,14 +578,14 @@ exports.getComplaintLog = function(req, res){
             if(err)
                 res.send(err);
             else if(!complaint){
-                res.status(404).send('Complaint Not Found');
+                res.status(404).send(data.cnf);
             }
             else{
                 var log = [];
                 for(var i=0;i<complaint.log.length;i++){
                     if(complaint.anonymous.id(complaint.log[i]._id)){
                         log.push({
-                            entry:complaint.log[i].entry + "anonymous",
+                            entry:complaint.log[i].entry + datas.anonymous,
                             date:complaint.log[i].date
                         });
                     }
@@ -591,7 +607,7 @@ exports.postFilterComplaints = function(req, res, next){
             if(err)
                 res.send(err);
             else if(!user){
-                res.status(404).send('User Not Found');
+                res.status(404).send(datas.unf);
             }
             else{
                 if(user.role == "admin" || user.role == "staff"){
@@ -611,7 +627,7 @@ exports.postFilterComplaints = function(req, res, next){
 
 exports.filterComplaints = function(req, res){
     if(req.admin){
-    var query = Complaint.find();
+        var query = Complaint.find();
     }
     else{
         var query = Complaint.find({status:{$ne:"new"}})
@@ -631,13 +647,17 @@ exports.filterComplaints = function(req, res){
     .limit(req.query.l);
     };
 
+    if(req.query.featured){
+        query = query.find({featured:true});
+    }
+
     if(req.query.status){
         if(req.query.status == "new"){
             if(req.admin){
                 query = query.find({status:req.query.status});
             }
             else{
-                return res.status(401).send('Unauthorized');
+                return res.status(401).send(datas.unauth);
             }
         }
         else{
@@ -675,32 +695,64 @@ exports.filterComplaints = function(req, res){
         var comp = [];
         for(var i=0;i<complaints.length;i++){
             if(complaints[i].anonymous.id(complaints[i].userId)){
-                complaints[i].userId.profile.slug = "anonymous";
-                complaints[i].userId.profile.username = "anonymous";
-                comp.push({
-                    title: complaints[i].title,
-                    category: complaints[i].category,
-                    subcategory: complaints[i].subcategory,
-                    location: complaints[i].location,
-                    status: complaints[i].status,
-                    userId: complaints[i].userId.profile,
-                    startdate: complaints[i].startdate,
-                    enddate: complaints[i].enddate,
-                    slug: complaints[i].slug
-                });
+                complaints[i].userId.profile.slug = datas.anonymous;
+                complaints[i].userId.profile.username = datas.anonymous;
+                if(req.query.featured){
+                    comp.push({
+                        title: complaints[i].title,
+                        category: complaints[i].category,
+                        subcategory: complaints[i].subcategory,
+                        location: complaints[i].location,
+                        status: complaints[i].status,
+                        description: complaints[i].description,
+                        userId:{profile: complaints[i].userId.profile},
+                        startdate: complaints[i].startdate,
+                        enddate: complaints[i].enddate,
+                        slug: complaints[i].slug
+                    });
+                }
+                else{
+                    comp.push({
+                        title: complaints[i].title,
+                        category: complaints[i].category,
+                        subcategory: complaints[i].subcategory,
+                        location: complaints[i].location,
+                        status: complaints[i].status,
+                        userId:{profile: complaints[i].userId.profile},
+                        startdate: complaints[i].startdate,
+                        enddate: complaints[i].enddate,
+                        slug: complaints[i].slug
+                    });
+                }
             }
             else{
-                comp.push({
-                    title: complaints[i].title,
-                    category: complaints[i].category,
-                    subcategory: complaints[i].subcategory,
-                    location: complaints[i].location,
-                    status: complaints[i].status,
-                    userId: complaints[i].userId.profile,
-                    startdate: complaints[i].startdate,
-                    enddate: complaints[i].enddate,
-                    slug: complaints[i].slug
-                }); 
+                if(req.query.featured){
+                    comp.push({
+                        title: complaints[i].title,
+                        category: complaints[i].category,
+                        subcategory: complaints[i].subcategory,
+                        location: complaints[i].location,
+                        status: complaints[i].status,
+                        description: complaints[i].description,
+                        userId:{profile: complaints[i].userId.profile},
+                        startdate: complaints[i].startdate,
+                        enddate: complaints[i].enddate,
+                        slug: complaints[i].slug
+                    });
+                }
+                else{
+                    comp.push({
+                        title: complaints[i].title,
+                        category: complaints[i].category,
+                        subcategory: complaints[i].subcategory,
+                        location: complaints[i].location,
+                        status: complaints[i].status,
+                        userId:{profile: complaints[i].userId.profile},
+                        startdate: complaints[i].startdate,
+                        enddate: complaints[i].enddate,
+                        slug: complaints[i].slug
+                    });
+                }
             }
         };
     }
@@ -715,7 +767,7 @@ exports.changeAnonymous = function(req, res){
             if(err)
                 res.send(err);
             else if(!complaint){
-                res.status(404).send('Complaint Not Found');
+                res.status(404).send(data.cnf);
             }
             else{
                 if(req.body.result === true){

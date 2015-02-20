@@ -111,10 +111,17 @@ angular.module('ForChange')
           type: 'success',
           duration: 5
         });
+        var temp;
+        if($scope.complaint.flag.anon){
+          temp = "anonymous";
+        }
+        else{
+          temp = $rootScope.currentUser.profile.username;
+        }
         $scope.complaint.comments.push({
           _id: {
             profile: {
-              username: $rootScope.currentUser.profile.username
+              username: temp
             }
           },
           description: abc,
@@ -321,7 +328,7 @@ angular.module('ForChange')
             type: 'success',
             duration: 5
           });
-          $scope.flag.anon = newValue;
+          $scope.complaint.flag.anon = newValue;
         }, function(object) {
           $alert({
             content: object.data,
@@ -329,7 +336,7 @@ angular.module('ForChange')
             type: 'danger',
             duration: 5
           });
-          $scope.flag.anon = oldValue;
+          $scope.complaint.flag.anon = oldValue;
           });
         };
     $scope.makeFeatured = function (newValue) {
