@@ -1,9 +1,9 @@
-<header class="intro-header complaint-details-header" style="background-image: url('images/post-bg.jpg')">
+<header class="intro-header complaint-details-header" ng-cloak>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
-          <h1>{{complaint.title}}</h1> <span ng-show="currentUser.profile.slug == complaint.userId.profile.slug"><a class="editComplaintIcon" href="{{path}}/editComplaint"><i class="fa fa-pencil"></i></a></span>
+          <h1>{{complaint.title}}</h1> <span ng-if="complaint.flag.op"><a class="editComplaintIcon" href="{{path}}/editComplaint"><i class="fa fa-pencil"></i></a></span>
           <span class="meta">Posted by <a href="/user/{{complaint.userId.profile.slug}}">{{complaint.userId.profile.username}}</a> on {{complaint.startdate | date: 'medium'}} </span>
           <span class="meta CategorySpan">{{complaint.category}} <i class="fa fa-angle-double-right"></i> {{complaint.subcategory}} </span>
           <span class="deleteComplaintIcon" data-toggle="modal" ng-click="getLog()" data-target="#logModal"><i class="fa fa-list-alt"></i></span>
@@ -35,7 +35,7 @@
                             </a>
                         </li>
                     </ul></span>
-          <span class="deleteComplaintIcon" data-toggle="modal" data-target="#deleteComplaintModal" ng-show="currentUser.profile.slug == complaint.userId.profile.slug || currentUser.role == 'staff' || currentUser.role == 'admin'"><i class="fa fa-trash-o"></i></span>
+          <span class="deleteComplaintIcon" data-toggle="modal" data-target="#deleteComplaintModal" ng-if="complaint.flag.op || currentUser.role == 'staff' || currentUser.role == 'admin'"><i class="fa fa-trash-o"></i></span>
       
           <div class="currentStatusDropdown meta" ng-show="currentUser.role == 'staff' || currentUser.role == 'admin'">  <span>Change current status to : 
             <multi-select
@@ -49,9 +49,14 @@
             >
             </multi-select>
           </div>
+          <div class="checkbox make-featured">
+            <label>
+              <input type="checkbox" ng-model="complaint.featured" ng-click="makeFeatured(complaint.featured)"> Make Featured
+            </label>
+          </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" ng-model="complaint.anon" ng-click="makeAnon(complaint.anon)"> Go anonymous
+              <input type="checkbox" ng-model="complaint.flag.anon" ng-click="makeAnon(complaint.flag.anon)"> Go anonymous
             </label>
           </div>
           <p class="complaint-description">{{complaint.description}}</p>

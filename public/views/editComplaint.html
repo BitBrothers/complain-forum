@@ -1,4 +1,4 @@
-<header class="intro-header complaint-details-header" style="background-image: url('images/about-bg.jpg')">
+<header class="intro-header complaint-details-header edit-complaint">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -36,7 +36,7 @@
               <label for="location">Location</label>
               <input type="text" class="form-control" ng-model="complaint.location" placeholder="Where did you experince the problem?" required>
             </div>
-            <button ng-click="update()" ng-disabled="editComplaint.$invalid" class="btn btn-default">Submit</button>
+            <button ng-click="update()" ng-disabled="editComplaint.$invalid" class="btn btn-default">Update</button>
             <span ng-show="editComplaint.$invalid">Please fill in all fields to submit.</span>
           </form>               
         </div>

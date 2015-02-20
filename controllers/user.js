@@ -4,7 +4,7 @@ var crypto = require('crypto');
 var path = require('path');
 var secrets = require('../config/secrets');
 var config = secrets();
-
+var datas = require('../data');
 /**
  * Model.
  */
@@ -39,20 +39,20 @@ exports.isLogin = function(req, res, next) {
         try {
             var decoded = jwt.decode(token, tokenSecret);
             if (decoded.exp <= Date.now()) {
-                res.status(400).send('Access token has expired');
+                res.status(400).send(datas.et);
             } else {
                 req.user = decoded.user;
                 return next();
             }
         } catch (err) {
-            return res.status(500).send('Error parsing token');
+            return res.status(500).send(datas.at);
         }
     } else {
         if(req.flag){
             next();
         }
         else{
-        res.status(401).send('Unauthorized');   
+        res.status(401).send(datas.unauth);   
         }
         
     }
@@ -67,7 +67,7 @@ exports.signup = function(req, res, next) {
     user.save(function(err, user, numberAffected) {
         if (err) res.send(err);
         else {
-         res.status(200).send('Succesfully Signed Up');
+         res.status(200).send(datas.signup);
         }
 
     });
@@ -77,9 +77,9 @@ exports.login = function(req, res) {
     User.findOne({
         email: req.body.email
     }, function(err, user) {
-        if (!user) return res.status(401).send('User does not exist');
+        if (!user) return res.status(401).send(datas.unf);
         user.comparePassword(req.body.password, function(err, isMatch) {
-            if (!isMatch) return res.status(401).send('Invalid email and/or password');
+            if (!isMatch) return res.status(401).send(datas.inep);
             var token = createJwtToken(user);
             var tempy = {
                 profile: user.profile,
@@ -204,30 +204,112 @@ exports.hasEmail = function(req, res, next) {
 }; 
 
 exports.getUser = function(req, res){
-    User.findOne({'profile.slug':req.params.uslug})
-    .select('-_id profile role complaints')
-    .populate({
-        path:'complaints._id',
-        select: '-_id slug title description category subcategory location status startdate enddate'
-    })
-    .exec(function(err, user){
-        if(err)
-            res.send(err);
-        else if(!user){
-            res.status(404).send('User Not Found');
-        }
-        else{
-            var comp = [];
-            for(var i=0;i<user.complaints.length;i++){
-                comp.push(user.complaints[i]._id);
-            };
-            user.complaints.length = 0;
-            res.json({
-                user:user,
-                complaints:comp
-            });
-        }
-    });
+    if(req.user.slug == req.params.uslug){
+        User.findById(req.user._id)
+        .select('-_id profile role complaints')
+        .populate({
+            path:'complaints._id',
+            select: 'slug title description category subcategory location status startdate enddate userId anonymous'
+        })
+        .exec(function(err, user){
+            if(err)
+                res.send(err);
+            else if(!user){
+                res.status(404).send(datas.unf);
+            }
+            else{
+                User.populate(user.complaints,{
+            path:'_id.userId',
+            model:'User',
+            select:'profile.slug profile.username'
+        },function(err, user1){
+            if(err)
+                res.send(err);
+            else{
+                // console.log(user1);
+                var comp = [];
+                for(var i=0;i<user1.length;i++){
+                    console.log(user1[i]._id);
+                        if(user1[i]._id.anonymous.id(req.user._id)){
+    
+                           comp.push({
+                            slug: user1[i]._id.slug,
+                            title: user1[i]._id.title,
+                            userId:{
+                                profile: {
+                                slug:datas.anonymous,
+                                username: datas.anonymous,
+                            }},
+                            category: user1[i]._id.category,
+                            subcategory: user1[i]._id.subcategory,
+                            location: user1[i]._id.location,
+                            startdate: user1[i]._id.startdate,
+                            enddate: user1[i]._id.enddate,
+                            status: user1[i]._id.status
+                           }); 
+                        }
+                        else{
+                        
+                            comp.push(user1[i]._id);
+                        }
+
+                    
+                    // console.log(comp[i]);
+                };
+                user1.length = 0;
+                res.json({
+                    user:user,
+                    complaints:comp
+                }); 
+            }
+
+        });
+
+            }
+        });
+    }
+    else{
+         User.findOne({'profile.slug':req.params.uslug})
+        .select('-_id profile role complaints')
+        .populate({
+            path:'complaints._id',
+            select: 'slug title description category subcategory location status startdate enddate userId anonymous'
+        })
+        .exec(function(err, user){
+            if(err)
+                res.send(err);
+            else if(!user){
+                res.status(404).send(datas.unf);
+            }
+            else{
+                User.populate(user.complaints,{
+            path:'_id.userId',
+            model:'User',
+            select:'profile.slug profile.username'
+        },function(err, user1){
+            if(err)
+                res.send(err);
+            else{
+                // console.log(user1);
+                var comp = [];
+                for(var i=0;i<user1.length;i++){
+                        if(!user1[i]._id.anonymous.id(user._id)){
+                            comp.push(user1[i]._id);
+                        }                
+                };
+                user1.length = 0;
+                res.json({
+                    user:user,
+                    complaints:comp
+                }); 
+            }
+
+        });
+
+            }
+        });
+    }
+
 };
 
 exports.getUserLog = function(req, res){
@@ -248,14 +330,14 @@ exports.changeUserPassword = function(req, res, next){
         if(err)
             res.send(err);
         else if(!user){
-            res.status(404).send('User Not Found');
+            res.status(404).send(datas.unf);
         }
         else{
             user.comparePassword(req.body.oldPassword,function(err, isMatch){
                 if(err)
                     res.send(err);
                 else if(!isMatch){
-                    res.status(401).send('Invalid Old Password');
+                    res.status(401).send(datas.iop);
                 }
                 else{
                     user.password = req.body.newPassword;
