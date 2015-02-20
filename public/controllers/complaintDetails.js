@@ -8,7 +8,9 @@ angular.module('ForChange')
     $scope.currentStatusPending = false;
     $scope.currentStatusResolved = false;
     $scope.currentStatusUnresolved = false;
-
+  
+    $scope.sharingUrl = $location.absUrl();
+  
     Complaints.default.get({
         cslug: $routeParams.cslug
       },

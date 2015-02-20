@@ -910,7 +910,7 @@ body {
 }
 
 .currentStatusDropdown{
-  margin-top: 30px;
+  margin-top: 0px;
 }
 
 .currentStatusDropdown button{
@@ -932,11 +932,40 @@ body {
   cursor: pointer;
 }
 
+.socialShareSpan{
+  margin-top: 10px;
+}
+
+.socialShareUl{
+  margin-bottom: 0px;
+  margin-left: -15px;
+  font-size: 22px;
+}
+
+.twitterShare:hover{
+  background-color: #2AA9E0;
+  color: white;
+  border-radius: 50%;
+}
+
+.facebookShare:hover{
+  background-color: #3B5998;
+  color: white;
+  border-radius: 50%;
+}
+
+.googlePlusShare:hover{
+  background-color: #bf3431;
+  color: white;
+  border-radius: 50%;
+}
+
 /*Complaint Details Page CSS End*/
 
 /*Edit Complaint Page CSS Start*/
 .edit-complaint-form{
   margin-top: 150px;
+  margin-bottom: 150px;
   background: white;
   padding: 50px;
   border-radius: 5px;

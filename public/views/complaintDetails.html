@@ -12,6 +12,29 @@
           <span class="meta currentStatusSpan">Current Status : <span ng-model="complaint.status">{{complaint.status}}</span> <span class="reopenComplaint" ng-show="complaint.status == 'resolved' && currentUser.role == 'citizen'"> <small  data-toggle="modal" data-target="#reopenComplaintModal">Not resolved? reopen this complaint! </small></span></span>
           <span ng-click="upvote()"><i class="fa fa-thumbs-up upvotes {{upvoted}}"></i></span><span class="upvotes badge">{{complaint.upvotesCount}} upvotes</span>
           <span ng-click="follow()"><i class="fa fa-users followers {{followed}}"></i></span><span class="followers badge">{{complaint.followersCount}} followers</span>
+          <span class="meta socialShareSpan"><ul class="list-inline socialShareUl">
+                        <li socialshare="" socialshare-provider="twitter" socialshare-url="{{sharingUrl}}">
+                            <a href="#">
+                                <span class="fa-stack">
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse twitterShare"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li socialshare="" socialshare-provider="facebook" socialshare-url="{{sharingUrl}}">
+                            <a href="#">
+                                <span class="fa-stack">
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse facebookShare"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li socialshare="" socialshare-provider="google+" socialshare-url="{{sharingUrl}}">
+                            <a href="#">
+                                <span class="fa-stack">
+                                    <i class="fa fa-google-plus fa-stack-1x fa-inverse googlePlusShare"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul></span>
           <span class="deleteComplaintIcon" data-toggle="modal" data-target="#deleteComplaintModal" ng-show="currentUser.profile.slug == complaint.userId.profile.slug || currentUser.role == 'staff' || currentUser.role == 'admin'"><i class="fa fa-trash-o"></i></span>
       
           <div class="currentStatusDropdown meta" ng-show="currentUser.role == 'staff' || currentUser.role == 'admin'">  <span>Change current status to : 

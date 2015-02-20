@@ -3,12 +3,4 @@ angular.module('ForChange')
     $scope.logout = function() {
       Auth.logout();
     };
-  
-//    $scope.navbarTextColor = '';
-//    $scope.changeTextColorGrey = function(){
-//      $scope.navbarTextColor = 'blackText';
-//    }
-//    $scope.changeTextColorWhite = function(){
-//      $scope.navbarTextColor = '';
-//    }
   });
