@@ -14,7 +14,8 @@ angular.module('ForChange')
     $scope.p.featured = true;
     $scope.complaints = Complaints.default.query($scope.p); 
     
-    console.log($scope.complaints);
+    $scope.url = $location.absUrl();
+    console.log($scope.url);
     
 
 });
