@@ -1019,5 +1019,18 @@ opacity: 0;
 }
 
 
+/*FAQ Page CSS Begins*/
+
+.intro-header.faq-header{
+  background-color: #872A31;
+}
+
+.faq-question{
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: -20px;
+}
+
+
 
 

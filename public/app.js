@@ -1,5 +1,4 @@
-angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'ngAutocomplete', 
-                            'mgcrea.ngStrap', 'angularFileUpload', '720kb.socialshare', 'multi-select','truncate'])
+angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'ngAutocomplete', 'mgcrea.ngStrap', 'angularFileUpload', '720kb.socialshare', 'multi-select','truncate'])
   .config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
@@ -41,6 +40,10 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
       .when('/user/:uslug', {
         templateUrl: 'views/userProfile.html',
         controller: 'UserCtrl'
+      })
+      .when('/faq', {
+        templateUrl: 'views/faq.html',
+        controller: 'FaqCtrl'
       })
       .otherwise({
         redirectTo: '/'
