@@ -21,12 +21,12 @@ var transporter = nodemailer.createTransport({
  * @param name
  * @param message
  */
-// exports.contactUs = function(req, res, next){
-//   req.to = 'mail@bbitbrothers.in';
-//   req.subject = req.body.subject;
-//   req.email = 'Name: ' + req.body.name + '\nEmail: ' + req.body.email + '\nMessage ' + req.body.message;
-//   next();
-// };
+ exports.contactUs = function(req, res, next){
+   req.to = 'sobingt@bitbrothers.in';
+   req.subject = req.body.subject;
+   req.email = 'Name: ' + req.body.name + '\nEmail: ' + req.body.email + '\nMessage: ' + req.body.message + '\nPhone no: ' + req.body.phoneno;
+   next();
+ };
 
 exports.sendEmail = function(req, res) {
   var from = 'mail@goahack.com';

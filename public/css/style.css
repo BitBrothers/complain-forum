@@ -1165,6 +1165,11 @@ opacity: 0;
   height: 100vh;
   background-color: #1BA39C;
 }
+.slide4 .main-page{
+  height: 100vh;
+  background-color: #86201E;
+;
+}
 .contact-us {
   text-align: center;
 }
@@ -1180,6 +1185,35 @@ opacity: 0;
     padding-top: 25% !important;
 }
 /*Landing Page CSS Ends*/
+
+
+/*Unlock City CSS*/
+
+.intro-header.unlock-city{
+    background-color: #046951;
+    height: 100vh;
+}
+
+.intro-header.unlock-city h1{
+    padding-top: 20%;
+}
+
+/*Unlock City CSS*/
+
+
+/*Register NGO CSS*/
+
+.intro-header.register-NGO{
+    background-color: #046951;
+}
+
+.intro-header.unlock-city h1{
+    padding-top: 20%;
+}
+
+/*Register NGO CSS*/
+
+
 
 
 

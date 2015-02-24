@@ -86,7 +86,7 @@ app.post('/api/auth/google', userController.googleAuth);
 app.get('/api/users', userController.hasEmail);
 
 //Complaint APIs
-
+app.post('/api/contactus', emailController.contactUs,emailController.sendEmail);
 app.put('/api/complaints/:cslug/featured', userController.isLogin, adminController.makeFeatured);
 app.put('/api/complaints/:cslug/status', userController.isLogin, adminController.changeComplaintStatus, emailController.sendEmailToFollowers);
 app.put('/api/complaints/:cslug/follow', userController.isLogin, complaintController.followComplaint);  

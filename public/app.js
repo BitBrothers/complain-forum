@@ -49,6 +49,14 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
         templateUrl: 'views/forChangeLanding.html',
         controller: 'ForChangeLandingCtrl'
       })
+      .when('/unlock-city', {
+        templateUrl: 'views/unlockYourCity.html',
+        controller: 'UnlockCityCtrl'
+      })
+      .when('/register-NGO', {
+        templateUrl: 'views/registerNGO.html',
+        controller: 'RegisterNGOCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
