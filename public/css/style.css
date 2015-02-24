@@ -1031,6 +1031,158 @@ opacity: 0;
     margin-bottom: -20px;
 }
 
+/*FAQ Page CSS Ends*/
+
+
+/*Landing Page CSS Begins*/
+
+.goa-card, .mumbai-card, .chennai-card, .kolkata-card, .delhi-card, .add-card{
+    height: 300px;
+    margin-bottom: 30px;
+    text-align: center;
+    padding-top: 75px;
+    font-size: 30px;
+    font-weight: 600;
+    border-radius: 4px;
+    color: white;
+    border: 1px solid #fff;
+}
+
+.goa-card:hover, .mumbai-card:hover, .chennai-card:hover, .kolkata-card:hover, .delhi-card:hover{
+    cursor: pointer;
+    border: 1px solid #0085a1;
+}
+
+/*
+.content p{
+    color: black;
+    background-color: white;
+    width: 60%;
+    margin-left: 20%;
+    border-radius: 4px;
+}
+*/
+.content h1, .content i{
+    font-size: 50px;
+}
+
+.goa-card{
+    background-image: url('../images/goa.jpg');
+    background-size: cover;
+    padding-top: 125px;
+}
+
+.mumbai-card{
+    background-image: url('../images/mumbai.jpg');
+    background-size: cover;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+
+.kolkata-card{
+    background-image: url('../images/kolkata.jpg');
+    background-size: cover;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+
+.chennai-card{
+    background-image: url('../images/chennai.jpg');
+    background-size: cover;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+
+.delhi-card{
+    background-image: url('../images/delhi.jpg');
+    background-size: cover;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+
+.add-card img{
+    width: 75px;
+}
+
+.add-card{
+    padding-top: 50px;
+    border: 1px solid #fff;
+    color: #0085a1;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+
+.add-card:hover{
+    border: 1px solid #0085a1;
+    color: #0085a1;
+    cursor: pointer;
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+}
+
+.fill {
+    width: 100%;
+    height: 100vh;
+    background-image: url(../images/complaint-cover.png);
+    -webkit-background-size: initial;
+    -moz-background-size: initial;
+    -o-background-size: initial;
+    background-size: initial;
+    background-repeat: initial;
+    min-height: 34vh;
+}
+
+.intro-header.about-us{
+  background-color: #0E5753;
+}
+.about-us .page-heading{
+  padding: 50px 0;
+}
+.slide1 .main-page{
+  height: 100vh;
+  background-color: #295776;
+}
+.slide2 .main-page{
+  height: 100vh;
+  background-color: #046951;
+}
+.slide2 .you, .slide1 .city, .slide3 .unlock{
+  fill: white;
+}
+.slide1 .city{
+  fill: white;
+}
+.carousel-inner .page-heading{
+  padding: 50px 0;
+}
+.slide3 .main-page{
+  height: 100vh;
+  background-color: #1BA39C;
+}
+.contact-us {
+  text-align: center;
+}
+.contact-us hr{
+  border-color: rgb(64, 64, 64);
+}
+
+.addCityModal{
+    margin-top: 150px;
+}
+
+.carouselText{
+    padding-top: 25% !important;
+}
+/*Landing Page CSS Ends*/
+
+
+
 
 
 

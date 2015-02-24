@@ -45,6 +45,10 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
         templateUrl: 'views/faq.html',
         controller: 'FaqCtrl'
       })
+      .when('/for-change', {
+        templateUrl: 'views/forChangeLanding.html',
+        controller: 'ForChangeLandingCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
