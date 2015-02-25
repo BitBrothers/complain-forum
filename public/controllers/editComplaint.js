@@ -9,8 +9,6 @@ angular.module('ForChange')
       },
       function(complaint) {
         $scope.complaint = complaint;
-        console.log($scope.complaint);
-        console.log($routeParams.cslug);
       });
 
     

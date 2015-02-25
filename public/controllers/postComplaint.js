@@ -5,7 +5,6 @@ angular.module('ForChange')
   
   
   	$scope.post = function() {
-  		console.log($scope.complaint.cat);
       Complaints.default.save({
         title: $scope.complaint.title,
         description: $scope.complaint.desc,

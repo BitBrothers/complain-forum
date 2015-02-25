@@ -604,7 +604,7 @@ exports.getComplaintLog = function(req, res){
 };
 
 exports.postFilterComplaints = function(req, res, next){
-    if(req.user._id){
+    if(req.user){
         User.findById(req.user._id,function(err, user){
             if(err)
                 res.send(err);

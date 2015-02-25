@@ -17,9 +17,6 @@ angular.module('ForChange')
       function(complaint) {
 
         $scope.complaint = complaint;
-        console.log($scope.complaint);
-          console.log($rootScope.currentUser.profile.slug);
-    console.log($scope.complaint.userId.profile.slug);
 
         if ($scope.complaint.upvote == true) {
           $scope.upvoted = 'upvoted';
@@ -174,7 +171,6 @@ angular.module('ForChange')
       $scope.isLoggedIn = 'false'
     }
 
-    console.log($scope.isLoggedIn);
 
 //    Upvote Complaint JS Begins
   
@@ -258,7 +254,6 @@ angular.module('ForChange')
               type: 'danger',
               duration: 5
             });
-            console.log('error function entered');
           });
         }
         else {
@@ -278,7 +273,6 @@ angular.module('ForChange')
         cslug: $routeParams.cslug
       }, function(log) {
         $scope.log = log;
-        console.log($scope.log);
       }, function(object) {
         $alert({
           content: object.data,
@@ -286,7 +280,6 @@ angular.module('ForChange')
           type: 'danger',
           duration: 5
         });
-        console.log('error function entered');
       });
     }
 

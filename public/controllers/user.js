@@ -10,7 +10,6 @@ angular.module('ForChange')
         $scope.staff = true;
       };
       
-      console.log($scope.user);
   	},function(err){
       $location.path('/')
       $alert({
@@ -40,7 +39,6 @@ angular.module('ForChange')
 
     $scope.makeStaff = function (newValue) {
       var oldValue = !newValue;
-      console.log(newValue + " " + oldValue);
       User.makeStaff.update({
           uslug : $routeParams.uslug
         },{
@@ -53,7 +51,6 @@ angular.module('ForChange')
             duration: 5
           });
           $scope.staff = newValue;
-          console.log('success');
         }, function(object) {
           $alert({
             content: object.data,

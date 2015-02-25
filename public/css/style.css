@@ -696,6 +696,11 @@ body {
 
 /*Login and Signup Pages CSS Begins*/
 
+.intro-header.login-header,.intro-header.signup-header{
+  background-color: #872A31;
+    min-height: 100vh;
+}
+
 .center-form {
   width: 330px;
   margin: 10% auto;
@@ -1138,9 +1143,20 @@ opacity: 0;
     min-height: 34vh;
 }
 
+/*
 .intro-header.about-us{
   background-color: #0E5753;
 }
+*/
+
+.about-us h2{
+    text-align: center;
+}
+
+.about-us hr{
+    border-color: rgb(64,64,64);
+}
+
 .about-us .page-heading{
   padding: 50px 0;
 }
@@ -1182,7 +1198,7 @@ opacity: 0;
 }
 
 .carouselText{
-    padding-top: 25% !important;
+    padding-top: 15% !important;
 }
 /*Landing Page CSS Ends*/
 
@@ -1209,6 +1225,10 @@ opacity: 0;
 
 .intro-header.unlock-city h1{
     padding-top: 20%;
+}
+
+.unlock-city-cards hr{
+    border-color: rgb(64, 64, 64);
 }
 
 /*Register NGO CSS*/

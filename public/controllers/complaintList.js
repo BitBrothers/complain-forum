@@ -2,24 +2,19 @@ angular.module('ForChange')
   .controller('ComplaintListCtrl', function($scope, $alert, $location, $http, $rootScope, Complaints) {
     
     $scope.complaints = Complaints.default.query();
-    console.log($scope.complaints);
     $scope.msClick = function() {
       $scope.p= {};
       if(!angular.isUndefined($scope.textQuery) && $scope.textQuery !== ""){ 
         $scope.p.keyword = $scope.textQuery; 
       };
       angular.forEach($scope.loc, function(value, key) {
-      	console.log($scope.loc);
         $scope.p.location = value.value;
       });
       angular.forEach($scope.cat, function(value, key) {
-      	// console.log($scope.cat);
         $scope.p.category = value.value;
       });
 
-      console.log($scope.p);
       $scope.complaints = Complaints.default.query( $scope.p );
-    	console.log($scope.complaints);
     };
 
     $scope.$watch('cat', function(newValue, oldValue) {
