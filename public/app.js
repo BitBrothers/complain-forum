@@ -2,59 +2,62 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
   .config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
+    var isSubDomain = window.location.host.indexOf("goa") == 0
+    var urlPath = isSubDomain ? "goa.forchange.io" : "forchange.io";
+
     $routeProvider
       .when('/', {
-        templateUrl: 'views/home.html',
+        templateUrl: 'views/' + urlPath + 'home.html',
         controller: 'HomeCtrl'
       })
       .when('/login', {
         resolve: {
           factory: checkLogin
         },
-        templateUrl: 'views/login.html',
+        templateUrl: 'views/' + urlPath + 'login.html',
         controller: 'LoginCtrl'
       })
       .when('/signup', {
         resolve: {
           factory: checkLogin
         },
-        templateUrl: 'views/signup.html',
+        templateUrl: 'views/' + urlPath + 'signup.html',
         controller: 'SignupCtrl'
       })
       .when('/new-complaint', {
-        templateUrl: 'views/postComplaint.html',
+        templateUrl: 'views/' + urlPath + 'postComplaint.html',
         controller: 'PostComplaintCtrl'
         })  
       .when('/complaints',{
-        templateUrl: 'views/complaintList.html',
+        templateUrl: 'views/' + urlPath + 'complaintList.html',
         controller: 'ComplaintListCtrl'        
       })
       .when('/complaint-details/:cslug/editComplaint', {
-        templateUrl: 'views/editComplaint.html',
+        templateUrl: 'views/' + urlPath + 'editComplaint.html',
         controller: 'EditComplaintCtrl'
       })
       .when('/complaint-details/:cslug', {
-        templateUrl: 'views/complaintDetails.html',
+        templateUrl: 'views/' + urlPath + 'complaintDetails.html',
         controller: 'ComplaintDetailsCtrl'
       })
       .when('/user/:uslug', {
-        templateUrl: 'views/userProfile.html',
+        templateUrl: 'views/' + urlPath + 'userProfile.html',
         controller: 'UserCtrl'
       })
       .when('/faq', {
-        templateUrl: 'views/faq.html',
+        templateUrl: 'views/' + urlPath + 'faq.html',
         controller: 'FaqCtrl'
       })
-      .when('/for-change', {
-        templateUrl: 'views/forChangeLanding.html',
-        controller: 'ForChangeLandingCtrl'
-      })
+//      .when('/for-change', {
+//        templateUrl: 'views/forChangeLanding.html',
+//        controller: 'ForChangeLandingCtrl'
+//      })
       .when('/unlock-city', {
-        templateUrl: 'views/unlockYourCity.html',
+        templateUrl: 'views/' + urlPath + 'unlockYourCity.html',
         controller: 'UnlockCityCtrl'
       })
       .when('/register-NGO', {
-        templateUrl: 'views/registerNGO.html',
+        templateUrl: 'views/' + urlPath + 'registerNGO.html',
         controller: 'RegisterNGOCtrl'
       })
       .otherwise({
