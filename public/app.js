@@ -4,48 +4,49 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
 
     var isSubDomain = window.location.host.indexOf("goa") == 0
     var urlPath = isSubDomain ? "goa.forchange.io" : "forchange.io";
+    console.log(urlPath);
 
     $routeProvider
       .when('/', {
-        templateUrl: 'views/' + urlPath + 'home.html',
+        templateUrl: 'views/' + urlPath + '/home.html',
         controller: 'HomeCtrl'
       })
       .when('/login', {
         resolve: {
           factory: checkLogin
         },
-        templateUrl: 'views/' + urlPath + 'login.html',
+        templateUrl: 'views/' + urlPath + '/login.html',
         controller: 'LoginCtrl'
       })
       .when('/signup', {
         resolve: {
           factory: checkLogin
         },
-        templateUrl: 'views/' + urlPath + 'signup.html',
+        templateUrl: 'views/' + urlPath + '/signup.html',
         controller: 'SignupCtrl'
       })
       .when('/new-complaint', {
-        templateUrl: 'views/' + urlPath + 'postComplaint.html',
+        templateUrl: 'views/' + urlPath + '/postComplaint.html',
         controller: 'PostComplaintCtrl'
         })  
       .when('/complaints',{
-        templateUrl: 'views/' + urlPath + 'complaintList.html',
+        templateUrl: 'views/' + urlPath + '/complaintList.html',
         controller: 'ComplaintListCtrl'        
       })
       .when('/complaint-details/:cslug/editComplaint', {
-        templateUrl: 'views/' + urlPath + 'editComplaint.html',
+        templateUrl: 'views/' + urlPath + '/editComplaint.html',
         controller: 'EditComplaintCtrl'
       })
       .when('/complaint-details/:cslug', {
-        templateUrl: 'views/' + urlPath + 'complaintDetails.html',
+        templateUrl: 'views/' + urlPath + '/complaintDetails.html',
         controller: 'ComplaintDetailsCtrl'
       })
       .when('/user/:uslug', {
-        templateUrl: 'views/' + urlPath + 'userProfile.html',
+        templateUrl: 'views/' + urlPath + '/userProfile.html',
         controller: 'UserCtrl'
       })
       .when('/faq', {
-        templateUrl: 'views/' + urlPath + 'faq.html',
+        templateUrl: 'views/' + urlPath + '/faq.html',
         controller: 'FaqCtrl'
       })
 //      .when('/for-change', {
@@ -53,11 +54,11 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
 //        controller: 'ForChangeLandingCtrl'
 //      })
       .when('/unlock-city', {
-        templateUrl: 'views/' + urlPath + 'unlockYourCity.html',
+        templateUrl: 'views/' + urlPath + '/unlockYourCity.html',
         controller: 'UnlockCityCtrl'
       })
       .when('/register-NGO', {
-        templateUrl: 'views/' + urlPath + 'registerNGO.html',
+        templateUrl: 'views/' + urlPath + '/registerNGO.html',
         controller: 'RegisterNGOCtrl'
       })
       .otherwise({
