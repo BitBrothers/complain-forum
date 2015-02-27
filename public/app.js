@@ -1,5 +1,5 @@
-angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'ngAutocomplete', 'mgcrea.ngStrap', 'angularFileUpload', '720kb.socialshare', 'multi-select','truncate'])
-  .config(function ($routeProvider, $locationProvider) {
+angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'ngAutocomplete', 'mgcrea.ngStrap', 'angularFileUpload', '720kb.socialshare', 'multi-select', 'truncate'])
+  .config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
     var isSubDomain = window.location.host.indexOf("goa") == 0
@@ -8,19 +8,20 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
 
     $routeProvider
       .when('/', {
-        templateUrl: 'views/' + urlPath + '/home.html',
-        controller: 'HomeCtrl'
+        templateUrl: 'views/' + urlPath + '/home.html'
       })
       .when('/login', {
         resolve: {
-          factory: checkLogin
+          factory: checkLogin,
+          factory: checkRouting
         },
         templateUrl: 'views/' + urlPath + '/login.html',
         controller: 'LoginCtrl'
       })
       .when('/signup', {
         resolve: {
-          factory: checkLogin
+          factory: checkLogin,
+          factory: checkRouting
         },
         templateUrl: 'views/' + urlPath + '/signup.html',
         controller: 'SignupCtrl'
@@ -28,20 +29,32 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
       .when('/new-complaint', {
         templateUrl: 'views/' + urlPath + '/postComplaint.html',
         controller: 'PostComplaintCtrl'
-        })  
-      .when('/complaints',{
+      })
+      .when('/complaints', {
+        resolve: {
+          factory: checkRouting
+        },
         templateUrl: 'views/' + urlPath + '/complaintList.html',
-        controller: 'ComplaintListCtrl'        
+        controller: 'ComplaintListCtrl'
       })
       .when('/complaint-details/:cslug/editComplaint', {
+        resolve: {
+          factory: checkRouting
+        },
         templateUrl: 'views/' + urlPath + '/editComplaint.html',
         controller: 'EditComplaintCtrl'
       })
       .when('/complaint-details/:cslug', {
+        resolve: {
+          factory: checkRouting
+        },
         templateUrl: 'views/' + urlPath + '/complaintDetails.html',
         controller: 'ComplaintDetailsCtrl'
       })
       .when('/user/:uslug', {
+        resolve: {
+          factory: checkRouting
+        },
         templateUrl: 'views/' + urlPath + '/userProfile.html',
         controller: 'UserCtrl'
       })
@@ -49,10 +62,6 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
         templateUrl: 'views/' + urlPath + '/faq.html',
         controller: 'FaqCtrl'
       })
-//      .when('/for-change', {
-//        templateUrl: 'views/forChangeLanding.html',
-//        controller: 'ForChangeLandingCtrl'
-//      })
       .when('/unlock-city', {
         templateUrl: 'views/' + urlPath + '/unlockYourCity.html',
         controller: 'UnlockCityCtrl'
@@ -65,8 +74,8 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
         redirectTo: '/'
       });
   })
-  .config(function ($httpProvider) {
-    $httpProvider.interceptors.push(function ($rootScope, $q, $window, $location) {
+  .config(function($httpProvider) {
+    $httpProvider.interceptors.push(function($rootScope, $q, $window, $location) {
       return {
         request: function(config) {
           if ($window.localStorage.token) {
@@ -84,22 +93,16 @@ angular.module('ForChange', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate',
     });
   });
 
-var checkRouting= function ($q, $rootScope, $location, $alert) {
-  if ($rootScope.currentUser) {
-      return true;
-  } else {
-    $alert({
-        content: 'You need to login to view that page.',
-        placement: 'right',
-        type: 'warning',
-        duration: 5
-      });
-    $location.path("/login");
+
+
+var checkRouting = function($q, $rootScope, $location, $alert) {
+  if (!window.location.host.indexOf("goa") == 0) {
+    $location.path("/");
   }
   return null;
 };
 
-var checkLogin= function ($q, $rootScope, $location, $alert) {
+var checkLogin = function($q, $rootScope, $location, $alert) {
   if ($rootScope.currentUser) {
     $location.path("/");
   }
