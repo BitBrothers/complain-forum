@@ -65,7 +65,7 @@ angular.module('ForChange')
       },
       googleLogin: function() {
         gapi.auth.authorize({
-          client_id: '55262601920-5jhf3qth89okujq6a7lh8bqc9epr8475.apps.googleusercontent.com',
+          client_id: '167064513374-2sv345a9sgpe868ht1l4s2q3vpd7s45s.apps.googleusercontent.com',
           scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
           immediate: false
         }, function(token) {
