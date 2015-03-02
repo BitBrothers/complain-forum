@@ -3,8 +3,8 @@ angular.module('ForChange')
     $scope.logout = function() {
       Auth.logout();
     };
-    $scope.routeCheck = true;
-    if($location.host() == "forchange.io"){
-    	$scope.routeCheck = false;
+    $scope.routeCheck = false;
+    if($location.host() == "goa.forchange.io"){
+    	$scope.routeCheck = true;
     }
   });
