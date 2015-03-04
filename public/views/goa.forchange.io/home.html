@@ -151,15 +151,15 @@
                                     <div class="main">
                                         <p class="text-muted">{{complaint.description | characters:200: false}}</p>
                                         <div class="read-more-btn">
-                                            <a href="http://localhost:3000/complaint-details/{{complaint.slug}}">Read more</a>
+                                            <a href="{{url}}complaint-details/{{complaint.slug}}">Read more</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="footer">
                                     <div class="social-links text-center">
-                                        <a href="#" class="facebook" socialshare="" socialshare-provider="facebook" socialshare-url="{{url}}complaint-details/{{complaint.slug}}"><i class="fa fa-facebook fa-fw"></i></a>
-                                        <a href="#" class="google" socialshare="" socialshare-provider="google+" socialshare-url="{{url}}complaint-details/{{complaint.slug}}"><i class="fa fa-google-plus fa-fw"></i></a>
-                                        <a href="#" class="twitter" socialshare="" socialshare-provider="twitter" socialshare-url="{{url}}complaint-details/{{complaint.slug}}"><i class="fa fa-twitter fa-fw"></i></a>
+                                        <i class="fa fa-facebook fa-fw facebook featuredComplaintFacebookShare" socialshare="" socialshare-provider="facebook" socialshare-url="{{url}}complaint-details/{{complaint.slug}}"></i>
+                                        <i class="fa fa-google-plus fa-fw google featuredComplaintGooglePlusShare" socialshare="" socialshare-provider="google+" socialshare-url="{{url}}complaint-details/{{complaint.slug}}"></i>
+                                        <i class="fa fa-twitter fa-fw twitter featuredComplaintTwitterShare" socialshare="" socialshare-provider="twitter" socialshare-url="{{url}}complaint-details/{{complaint.slug}}"></i>
                                     </div>
                                 </div>
                             </div>

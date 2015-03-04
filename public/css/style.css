@@ -439,6 +439,26 @@ body > .right {
 .homeComplaintStatus{
   text-transform: capitalize;
 }
+
+.featuredComplaintFacebookShare, .featuredComplaintGooglePlusShare, .featuredComplaintTwitterShare{
+    margin: 5px;
+}
+
+.featuredComplaintFacebookShare:hover{
+    color: #3B5998;
+    cursor: pointer;
+}
+
+.featuredComplaintGooglePlusShare:hover{
+    color: #bf3431;
+    cursor: pointer;
+}
+
+.featuredComplaintTwitterShare:hover{
+    color: #2AA9E0;
+    cursor: pointer;
+}
+
 /*      Just for presentation        */
 
 
@@ -954,6 +974,7 @@ body {
 
 .socialShareSpan{
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .socialShareUl{
@@ -965,18 +986,21 @@ body {
 .twitterShare:hover{
   background-color: #2AA9E0;
   color: white;
+    cursor: pointer;
   border-radius: 50%;
 }
 
 .facebookShare:hover{
   background-color: #3B5998;
   color: white;
+    cursor: pointer;
   border-radius: 50%;
 }
 
 .googlePlusShare:hover{
   background-color: #bf3431;
   color: white;
+    cursor: pointer;
   border-radius: 50%;
 }
 
