@@ -2,7 +2,16 @@ angular.module('ForChange')
   .controller('PostComplaintCtrl', function($scope, $alert, $location, $http, $rootScope, Complaints) {
   	$scope.cats = [{'value':'Cat1'}, {'value':'Cat2'}, {'value':'Cat3'}];
 	  $scope.subCats = [{'value':'subCat1'}, {'value':'subCat2'}, {'value':'subCat3'}];
-  
+
+   SW = new google.maps.LatLng(14.8945089, 73.6893279);
+   NE = new google.maps.LatLng(15.799917, 74.3405329);
+   bounds11 = new google.maps.LatLngBounds(SW, NE);
+
+  $scope.autocompleteOptions = {
+       componentRestrictions: { country: 'in' },
+        bounds:bounds11
+         
+       }
   
   	$scope.post = function() {
       Complaints.default.save({
